@@ -6,14 +6,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
-import hu.repository.user.UserRepository;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
@@ -22,12 +21,10 @@ import hu.web.util.ViewNameHolder;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	private final static Logger logger = Logger.getLogger(GlobalExceptionHandler.class); 
 	
-	@Autowired
-	private UserRepository citizenRepository;
-
 	@ExceptionHandler(value = Exception.class)
-	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
 		
 		// Otherwise setup and send the user to a default error-view.
 		ModelAndView mav = new ModelAndView();
@@ -43,7 +40,6 @@ public class GlobalExceptionHandler {
 		}
 		
 		map.put(ModelKeys.DisplayMessage, new CustomMessage(CustomMessageSeverity.ERROR, content));
-		
 		
 		StringBuilder builder = new StringBuilder(req.getRequestURL());
 		Set<Entry<String, String[]>> entrySet = req.getParameterMap().entrySet();
@@ -69,8 +65,7 @@ public class GlobalExceptionHandler {
 		
 		mav.setViewName(ViewNameHolder.VIEW_HOME);
 		
-		
-		e.printStackTrace();
+		logger.error("Hbia történt" , e);
 		
 		return mav;
 	}
