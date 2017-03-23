@@ -30,3 +30,4 @@ src/main/resources/configs/appContext.xml
 
 # PDT-specific
 .buildpath
+src/main/resources/configs/appContext.xml
