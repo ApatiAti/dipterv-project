@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page</title>
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" layout:replace="fragments/menu :: navbar">
+		<!-- /* Menü a fragments/navbar fileban  */-->
+	</nav>
+
+	<div class="container">
+		<div class="page-header" layout:fragment="page_Header">
+			<h3>Hello World! This is some shiny header from mainTemplate!</h3>
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-4	 col-md-4" >
+				<th:block th:object="${currentUser}">
+					<div style="border-color: #3D7DCC; border: 3px; border-style: outset;">
+	
+						<ul style="list-style-type: none;">
+							<li class="col-md-10" style="padding-bottom: 20px;">
+								<img style="box-shadow: 5px 5px 20px 2px #888888; width: 75px; height: 75px;" alt="75x75"
+									src="http://static1.squarespace.com/static/5500cbf0e4b027a44b143baf/t/5505bd20e4b015246aa32962/1426439457940/?format=100w" />
+							</li>
+	
+							<li style="line-height: 2em;"><strong>UserName:</strong>
+							</li>
+							<li>
+								<p style="word-wrap: break-word;" th:text="*{username}">Default UserName place which is so long it want to
+									pass the border! But cannot!</p>
+							</li>
+	
+							<li><strong> Energy: </strong>
+							</li>
+							<li>
+								<div class="progress" style="width: 75%;">
+									<span id="currentUserEnergy" style="position: absolute; width: 60%; text-align: center" th:text="|*{fatigue} / 100|"> 65 / 100 </span>
+									<div id="currentUserEnergyBar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" style="width: 55%"
+										th:style="|width: __*{fatigue}__%|"></div>
+								</div>
+								<button id="button-relax" th:href="@{/citizen/relax}" class="btn-xs btn-success"
+									title="Last Relax Time" th:title="|Last relax time: *{lastRelaxTime}|">Relax</button>
+								
+								<button id="button-drink" th:href="@{/citizen/drinkEnergy}" class="btn-xs btn-success">Drink energy drink</button>
+							</li>
+							
+							<li><strong>Experience Points:</strong>
+							</li>
+							<li><p th:text="*{experiencePoints}">100,100,100,100</p>
+							</li>
+	
+							<li><strong>Email:</strong>
+							</li>
+							<li>
+								<p th:text="*{email}">default@default.def</p>
+							</li>
+							
+							<li>
+							<strong>Money:</strong>
+							</li>
+							<li>
+								<p id="money" th:text="*{money}">120Ft</p>
+							</li>
+						</ul>
+	
+					</div>
+				</th:block>
+			</div>
+			<div class="col-sm-8 col-md-8" style="left: 20px">
+
+				<th:block id="alert" layout:fragment="messageBox(displayMessage)" th:if="${displayMessage ne null}"
+					th:object="${displayMessage}">
+					<div id="alertBox" class="alert" th:classappend="|alert-*{severity.value}|" role="alert">
+						<strong id="alert_severity_text" th:text="*{severity}">Message Header!</strong>
+						<p id="alert_url" th:text="${errorUrl}" th:if="${errorUrl ne null}">http://error.url/valami</p>
+						<p id="alert_text" th:text="*{content}">Some brilliant message content!!!!</p>
+
+						<th:block th:if="${errorFields ne null}" th:each="errorField : ${errorFields}" th:object="${errorField}">
+							<p th:text="#{*{field}}"> mező </p>
+							<p th:text="#{*{code}}"> hiba </p>
+						</th:block>
+					</div>
+				</th:block>
+				
+				<th:block id="alert" th:unless="${displayMessage ne null}" >
+					<div id="alertBox" class="alert" role="alert" th:hidden="${displayMessage eq null}">
+						<strong id="alert_severity_text" ></strong>
+						<p id="alert_url" ></p>
+						<p id="alert_text"></p>
+					</div>
+				</th:block>
+
+
+				<section layout:fragment="page-content"></section>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--/*-->
+		<!--  Ne mozgasd el a custom Scripteknek fentartott section-t -->
+	<!--*/-->
+	<script src="#" th:src="@{/template_files/myScripts.js}"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$("#button-relax, #button-drink").each(function(){
+			$(this).click(function() {
+				
+				var url = $(this).attr("href");
+	
+				$.ajax({
+					context: this,
+					type : 'post',
+					url : url,
+					dataType : 'json'
+				}).done(function(data) {
+					updateCitizen(data);
+				}).fail(function(data) {
+					var responseText = JSON.parse(data.responseText);
+					putAlertBox("danger","Error", responseText.errorMessage);				
+				});
+			});
+		});
+
+	});
+
+	
+
+
+		
+		
+		
+	</script>
+	<section layout:fragment="scripts"></section>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login Page</title>
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/signin/signin.css"
+	rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+
+		<p th:if="${param.error}"> Hiba történt a feldolgozás során</p>
+		<br />
+		<p th:if="${param.logout}">Sikeres kijelentkezés</p>
+		<br />
+
+
+
+		<form class="form-signin" action="#" th:action="@{/login}" method="post">
+			<h2 class="form-signin-heading" th:text="#{login.welcome}">Kérjük jelentkezzen be</h2>
+			
+			<label for="inputUsername" class="sr-only" th:text="#{login.username}"> Felhasználó név</label> 
+			<input type="text" id="inputUsername" class="form-control" placeholder="Felhasználó név" th:placeholder="#{login.username}" required="true" name="username" />
+			
+			<label for="inputPassword" class="sr-only" th:text="#{login.password}">Jelszó</label>
+			<input type="password" id="inputPassword" class="form-control" placeholder="Jelszó" th:placeholder="#{login.password}" required="true" name="password"/>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit" th:value="#{login.login}">Bejelentkezés</button>
+			
+		</form>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" layout:fragment="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>                        
+			    </button>
+				<a class="navbar-brand" href="/home" th:href="@{/home}">The Game</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li th:if="${currentUser ne null}">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" > Home <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#" th:href="@{/citizen(citizenId=${currentUser.id})}">Your citizen</a>
+							</li>
+						
+							<li>
+								<a href="#" th:href="@{/invertory}">Your invertory</a>
+							</li>
+						</ul>
+					</li>
+										
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" > Places <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li >
+								<a href="#" th:href="@{/country(countryId=${currentUser.region.country.id})}">Your Country</a>
+							</li>
+							<li>
+								<a href="#" th:href="@{/region(regionId=${currentUser.region.id})}">Your Region</a>
+							</li>
+							<li>
+								<a href="#" th:href="@{/company/list}">Companies</a>
+							</li>
+							<li>
+								<a href="#" th:href="@{/jobOffers}">JobOffers</a>
+							</li>
+							<li>
+								<a href="#" th:href="@{/marketplace}">Marketplace</a>
+							</li>
+						</ul>
+					</li>
+					<li >
+						<a href="#" th:href="@{/battles}">Battles</a>
+					</li>
+
+<!-- 					<li th:if="${currentUser ne null and currentUser.region.country.countryLeader.id eq currentUser.id}"> -->
+					<li sec:authorize="hasRole('COUNTRY_LEADER')">
+						<a href="#" th:href="|@{/diplomaticCenter/}${currentUser.region.country.id}|">Presidential Room</a>
+					</li>
+					<li>
+						<a href="#" th:href="@{/presidentalVote}">Presidential Vote</a>
+					</li>
+					
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+		        	<li><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+		     	</ul>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>

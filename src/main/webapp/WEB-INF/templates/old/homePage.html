@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<div class="page-header" layout:fragment="page_Header">
+		<h3>Home Page!</h3>
+	</div>
+	<section layout:fragment="page-content">
+		<div>
+			<p th:text="|username principalbol ${username}|">Valami</p>
+			<p th:text="|username httpsessionbol ${currentUser.username}|">Valami</p>
+			<p th:text="|password httpsessionbol ${currentUser.password}|">Valami</p>
+			
+			<p>Home page</p>			
+		</div>
+	</section>
+</body>
+</html>

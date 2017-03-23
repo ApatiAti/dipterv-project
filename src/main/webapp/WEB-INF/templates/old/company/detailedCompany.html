@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org" layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css"
+	rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css"
+	rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<div class="page-header" layout:fragment="page_Header">
+		<h3>Page Header</h3>
+	</div>
+
+	<section layout:fragment="page-content">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Company information</h3>
+			</div>
+			<div class="panel-body">
+				<th:block th:object="${detailedCompany.company}">
+					<div class="col-sm-5 col-md-5" th:switch="*{productType.name()}">
+						<img th:case="'WEAPON'" alt="320x240"
+							style="width: 320px; height: 240px;" class="img-thumbnail"
+							src="http://www.jesuismonreve.org/wp-content/uploads/2010/11/the_cloud_factory_01.jpg"
+							data-holder-rendered="true" /> <img th:case="'ENERGYDRINK'"
+							alt="320x240" style="width: 320px; height: 240px;"
+							class="img-thumbnail"
+							src="http://cdn.phys.org/newman/gfx/news/hires/2013/1-smokebillows.jpg"
+							data-holder-rendered="true" />
+					</div>
+					<div class="col-sm-7 col-md-7">
+						<ul>
+							<li style="line-height: 2em;"><strong>Company name:</strong></li>
+							<li>
+								<p style="word-wrap: break-word;" th:text="*{name}">Gyár</p> <span
+								id="detailedCompanyId" hidden="true" th:text="*{id}"></span>
+							</li>
+
+							<li style="line-height: 2em;"><strong>Owner name:</strong></li>
+							<li>
+								<p style="word-wrap: break-word;" th:text="*{owner.username}">Gyár</p>
+							</li>
+
+							<li><strong> Product type: </strong></li>
+							<li>
+								<p th:text="*{productType}">WEPON</p>
+							</li>
+
+							<li><strong>Region:</strong></li>
+							<li>
+								<p>
+									<a href="#" th:href="@{/region(regionId=*{region.id})}"><span
+										th:text="*{region.name}"> Region name</span></a>
+								</p>
+							</li>
+
+							<li><strong>Your last work date</strong></li>
+							<li><th:block
+									th:switch="${detailedCompany.company.ownerLastWorkTime ne null}">
+									<p id="myLastWorkDate" th:case="${true}"
+										th:text="${{detailedCompany.company.ownerLastWorkTime}}">2015-05-42</p>
+									<p id="myLastWorkDate" th:case="${false}">Never</p>
+								</th:block></li>
+							<li sec:authorize="hasRole('COMPANY_OWNER')">
+								<p>
+								<form id="myWorkPlaceWorkFormId"
+									th:action="@{/company/mine/work/__*{id}__}" method="post">
+									<input type="submit" class="btn btn-default btn-info"
+										value="Work" />
+								</form>
+								</p>
+							</li>
+
+							<!-- 							<li> -->
+							<!--  								<a class="btn btn-default btn-info" th:href="@{/company/mine/travel/__*{id}__}" >Relocate Company</a>  -->
+							<!-- 									<button class="btn btn-default btn-info">Relocate Company (ez hozná le a kitöltendő ablakot)</button> -->
+							<!-- 							</li> -->
+						</ul>
+					</div>
+				</th:block>
+				<th:block sec:authorize="hasRole('COUNTRY_LEADER')"
+					th:if="#{detailedCompany.company.owner.id eq currentUser.id }">
+
+					<div class="panel panel-default" style="margin: 0px 10px 0px 10px;">
+						<div class="panel-heading" style="overflow: auto;">
+							<h3 class="panel-title">
+								<span> Relocate Company </span>
+								<button style="float: right" data-toggle="collapse"
+									data-target="#regionPicker">
+									<span class="glyphicon glyphicon-chevron-down"></span>
+								</button>
+							</h3>
+						</div>
+
+						<div class="collapse in" id="regionPicker">
+							<div class="panel-body"
+								layout:include="fragments/regionPicker :: regionPicker"
+								th:with="url=@{/company/__${detailedCompany.company.id}__/searchRegion}">
+								<section layout:fragment="buttons">
+									<a class="btn btn-default btn-danger" role="button" href="#"
+										th:href="@{/company/mine/travel/__${region.id}__}"
+										th:if="${detailedCompany.company.region.id ne region.id}">
+										Relocate</a>
+								</section>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+
+			<th:block sec:authorize="hasRole('COUNTRY_LEADER')"
+				th:if="#{detailedCompany.company.owner.id eq currentUser.id }">
+
+
+				<div class="panel-body">
+
+					<h3>Active Workers</h3>
+					<table id="activeJobs"
+						class="col-sm-12 col-md-12 table table-striped">
+						<tr>
+							<th>Name</th>
+							<th>Region</th>
+							<th>Wage</th>
+							<th>Last work time</th>
+							<th></th>
+						</tr>
+						<tr th:each="job : ${detailedCompany.activeWorkers}"
+							th:object="${job}"
+							th:if="${not #lists.isEmpty(detailedCompany.activeWorkers)}">
+							<td th:text="*{employee.username}">valami</td>
+							<td th:text="*{company.region.name}">valahol</td>
+							<td th:text="*{wage}">10</td>
+							<td><th:block th:switch="${lastWorkTime ne null}">
+									<p id="myLastWorkDate" th:case="${true}"
+										th:text="*{{lastWorkTime}}">2015-05-42</p>
+									<p id="myLastWorkDate" th:case="${false}">Never</p>
+								</th:block></td>
+							<td>
+								<button id="fireWorker" type="submit"
+									class="btn btn-default btn-info" href="#"
+									th:href="@{/company/mine/__*{company.id}__/fireWorker/__${job.id}__}">Fire
+									worker</button>
+							</td>
+						</tr>
+						<tr
+							th:unless="${not #lists.isEmpty(detailedCompany.activeWorkers)}">
+							<td colspan="4"><span> No workers</span></td>
+						</tr>
+					</table>
+
+					<h3>Job offers</h3>
+
+					<table id="activeJobOffers"
+						class="col-sm-12 col-md-12 table table-striped">
+						<tr>
+							<th>Wage</th>
+							<th>Begin date</th>
+							<th>Amount</th>
+							<th></th>
+						</tr>
+						<tr th:each="jobOffer : ${detailedCompany.activeJobOffers}"
+							th:object="${jobOffer}"
+							th:if="${not #lists.isEmpty(detailedCompany.activeJobOffers)}">
+							<td th:text="*{wage}">20</td>
+							<td th:text="*{{beginDate}}">2015-01-25</td>
+							<td th:text="*{amount}">5</td>
+							<td>
+								<button id="cancelJobOffer" class="btn btn-default btn-info"
+									href="#" th:href="@{/jobOffers/cancel/__*{id}__}">
+									Cancel Job Offer</button>
+							</td>
+						</tr>
+						<tr
+							th:unless="${not #lists.isEmpty(detailedCompany.activeJobOffers)}">
+							<td colspan="4"><span> No job offer</span></td>
+						</tr>
+					</table>
+
+				</div>
+				<div class="row">
+					<div class="panel panel-default" style="margin: 0px 10px 0px 10px;">
+						<div class="panel-heading" style="overflow: auto;">
+							<h3 class="panel-title">
+								<span> Create new jobOffer </span>
+								<button style="float: right" data-toggle="collapse"
+									data-target="#createJobOffer">
+									<span class="glyphicon glyphicon-chevron-down"></span>
+								</button>
+							</h3>
+						</div>
+
+						<div class="collapse" id="createJobOffer">
+							<div class="panel-body"
+								layout:include="fragments/createJobOffer :: createJobOffer"
+								th:with="companyId=${detailedCompany.company.id}"></div>
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</section>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+
+
+	<section layout:fragment="scripts">
+		<script>
+
+			// work
+			$(document).ready(function() {
+				// TODO ha kiemelem ezt a függvényt akkor nem ajaxos JSON-nel tér vissza hanem magával az viewwal
+				$('#myWorkPlaceWorkFormId').submit(function(event) {
+					event.preventDefault(); // Prevent the form from submitting via the browser.
+					
+					var form = $(this);
+
+					$.ajax({
+						type : form.attr('method'),
+						url : form.attr('action'),
+						data : form.serialize(),
+						dataType : 'json'
+					}).done(function(data) {
+						updateCitizen(data);
+						putAlertBox("info","Info", "Succesfully worked.");
+						
+					}).fail(function(data) {
+						var responseText = JSON.parse(data.responseText);
+						putAlertBox("danger","Error", responseText.errorMessage);				
+					});
+	
+				});
+
+				// JobOffer cancel
+				$("#activeJobOffers > tbody > tr > td > button").each(function(){
+					 $(this).click(function(){
+							var url = $(this).attr("href");
+							
+						 	$.ajax({
+							 	context: this,
+								type : 'post',
+								url : url,
+								dataType : 'json'
+							}).done(function(data) {
+								$(this).parent().parent().remove();
+								var tableRows = $("#activeJobOffers > tbody > tr ");
+								if ( tableRows.length == 1){
+									tableRows.after("<tr><td colspan='+ 4 +' ><span> No job offer</span></td></tr>");
+								}
+
+								putAlertBox("succes","Succes", data.content);
+								
+							}).fail(function(data) {
+								var responseText = JSON.parse(data.responseText);
+								putAlertBox("danger","Error", responseText.errorMessage);				
+							});
+
+					 })
+					  
+				});
+
+				// TODO post üzenetté alakítani a job-ot hogy ne kelljen findolni.
+				// Job cancel
+				$("#activeJobs > tbody > tr > td > button").each(function(){
+					 $(this).click(function(){
+							var url = $(this).attr("href");
+							
+						 	$.ajax({
+							 	context: this,
+								type : 'post',
+								url : url,
+								dataType : 'json'
+							}).done(function(data) {
+
+								$(this).parent().parent().parent.remove();
+								var tableRows = $("#activeJobs > tbody > tr ");
+								if ( tableRows.length == 1){
+									tableRows.after("<tr><td colspan='+ 4 +' ><span> No workers</span></td></tr>");
+								}	
+	
+								putAlertBox("info","Info", data.content);
+
+							}).fail(function(data) {
+								var responseText = JSON.parse(data.responseText);
+								putAlertBox("danger","Error", responseText.errorMessage);				
+							});
+					 });
+				});
+				
+			});
+		</script>
+	</section>
+</body>
+</html>

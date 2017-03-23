@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+          http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd
+          http://www.springframework.org/schema/task
+		  http://www.springframework.org/schema/task/spring-task-3.0.xsd
+">
+
+<!-- 	spring security -->
+	
+	<!-- Global Security Settings -->
+    <sec:global-method-security pre-post-annotations="enabled" />
+
+<!-- 	<sec:debug /> -->
+
+	<sec:http auto-config="true" >
+		<sec:access-denied-handler error-page="/home?security=forbidden" />
+	
+		<!-- A logout ki kényszerítésé miatt -->
+<!-- 		<sec:custom-filter ref="concurrencyFilter" after="CONCURRENT_SESSION_FILTER"/> -->
+	
+<!-- 		<sec:session-management invalid-session-url="/login?time=1" session-authentication-strategy-ref="sas"> -->
+<!--             <sec:concurrency-control max-sessions="1" expired-url="/login?time=1" /> -->
+<!--         </sec:session-management> -->
+
+		<sec:session-management invalid-session-url="/login?time=1">
+            <sec:concurrency-control max-sessions="1" expired-url="/login?time=1" />
+        </sec:session-management>
+ 
+        <sec:form-login login-page="/login" 
+	        				login-processing-url="/login" 
+	        				default-target-url="/home" 
+	        				always-use-default-target="true" 
+	        				authentication-failure-url="/login?error" 
+	        				username-parameter="username" 
+	        				password-parameter="password" />
+ 
+        <sec:logout logout-url="/logout" 
+				        logout-success-url="/login?logout" 
+				        delete-cookies="JSESSIONID"
+				        invalidate-session="true" />
+ 
+ 
+		<sec:intercept-url pattern="/department/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
+		<sec:intercept-url pattern="/department/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" />
+		
+		<sec:intercept-url pattern="/department/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" />
+		<sec:intercept-url pattern="/myAppointments**" access="hasRole('LIST_MY_APPOINTMENTS')" />
+		<sec:intercept-url pattern="/appointment/**" access="hasRole('VIEW_APPOINTMENT')" />
+		<sec:intercept-url pattern="/appointment**" access="hasRole('CREATE_APPOINTMENT')" />
+		<sec:intercept-url pattern="/appointment/modify/**" access="hasRole('MODIFY_APPOINTMENT')" />
+		<sec:intercept-url pattern="/appointment/delete**" access="hasRole('CANCEL_APPOINTMENT')" />
+		
+		<sec:intercept-url pattern="/getDocument**" access="hasRole('UPLOAD_DOCUMENT')" />
+		<sec:intercept-url pattern="/uploadDocuments/**" access="hasRole('DOWNLOAD_DOCUMENT')" />
+		
+		<sec:intercept-url pattern="/personalDataEdit**" access="hasRole('MODIFY_PERSONAL_DATA')" />
+		 
+
+		
+		<sec:intercept-url pattern="/login**" access="permitAll()" />
+		<sec:intercept-url pattern="/**" access="hasRole('USER')" />
+		
+		
+		<sec:csrf disabled="true" />
+	</sec:http>
+
+
+
+	<sec:authentication-manager>
+		<sec:authentication-provider>
+			<sec:password-encoder ref="bcyritEncoder" />
+			<sec:jdbc-user-service data-source-ref="dipterv" 
+		 		users-by-username-query="select c.username,c.password,c.enabled from user c where c.username=?"
+		 		authorities-by-username-query="select c.username, r.code from user c , user_to_rolegroup u_t_rg , rolegroup rg , role_to_rolegroup r_t_rg , role r where c.username = ? and c.id = u_t_rg.idUser and u_t_rg.idRoleGroup = rg.id and rg.id = r_t_rg.idRoleGroup and r_t_rg.idRole = r.id" />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+	<bean id="bcyritEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg name="strength" value="10" /> 
+	</bean>
+	
+	<bean id="dipterv" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/jdbc/dipterv" />
+<!-- 		<property name="jndiName" value="jdbc:h2:./target/webshoptest" /> -->
+	</bean>
+
+
+	<!--  User kényszerített kiléptetéséhez -->
+<!-- 	<bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter"> -->
+<!--         <constructor-arg name="sessionRegistry" ref="sessionRegistry" /> -->
+<!--         <constructor-arg name="expiredUrl" value="/login?time=1" /> -->
+<!--     </bean> -->
+    
+    <!-- Nem biztos hogy kell mivel nincs automatikus kijelenetkeztetés -->
+    <!-- User kilogoltatásához kellett -->
+<!--     <bean id="sas" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy"> -->
+<!-- 	  <constructor-arg> -->
+<!-- 	    <list> -->
+<!-- 	      <bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy"> -->
+<!-- 	        <constructor-arg ref="sessionRegistry"/> -->
+<!-- 	        <property name="maximumSessions" value="1" /> -->
+<!-- 	        <property name="exceptionIfMaximumExceeded" value="true" /> -->
+<!-- 	      </bean> -->
+<!-- 	      <bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"> -->
+<!-- 	      </bean> -->
+<!-- 	      <bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy"> -->
+<!-- 	        <constructor-arg ref="sessionRegistry"/> -->
+<!-- 	      </bean> -->
+<!-- 	    </list> -->
+<!-- 	  </constructor-arg> -->
+<!-- 	</bean> -->
+
+<!--  Át kellett rakni a appContext.xml-be hogy működjön -->
+<!-- 	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" /> -->
+
+</beans>

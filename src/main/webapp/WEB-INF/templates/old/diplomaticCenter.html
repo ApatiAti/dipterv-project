@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<div class="page-header" layout:fragment="page_Header">
+		<h3 th:text="|Presidental room of ${currentCountry.name} country.|">Presidental room of CountryName country.</h3>
+	</div>
+
+	<section layout:fragment="page-content">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title" th:text="|(${currentCountry.id})${currentCountry.name}'s diplomatic center|">Diplomatic
+					Center</h3>
+			</div>
+
+			<div class="panel-body">
+
+				<h4>Active Diplomatic Relations searcher</h4>
+
+				<table id="table-1" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Initiator country Name</th>
+							<th>Country Name</th>
+							<th>Type</th>
+							<th>Start Date</th>
+							<th>End Date/ Expiration Date</th>
+							<th>Interract</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${currentRelations ne null}" th:each="diplomacy : ${currentRelations}" th:object="${diplomacy}">
+							<td>
+								<a href="#" th:href="@{/country(countryId=*{countryOne.id})}">
+									<span th:text="|*{countryOne.name}|">countryA name</span>
+								</a>
+							</td>
+							<td>
+								<a href="#" th:href="@{/country(countryId=*{countryTwo.id})}">
+									<span th:text="|*{countryTwo.name}|">countryB name</span>
+								</a>
+							</td>
+							<td th:text="*{type.name()}">Ally</td>
+							<td th:text="*{{beginDate}}">2015 01 02</td>
+							<td th:text="*{{endDate}}">2015 05 02</td>
+							
+							<!-- onclick="return confirm('Are you sure?')" -->
+							<th:block th:switch="*{type.name()}">
+
+								<td th:case="'ALLIANCE'">
+									<a class="btn btn-default btn-info" href="#" th:href="@{/diplomaticCenter/renewAlliance(diplomacyId=*{id})}"
+										role="button"> Renew Ally </a>
+									<a class="btn btn-default btn-warning" href="#"
+										th:href="@{/diplomaticCenter/cancelAlliance(diplomacyId=*{id})}" role="button"> Revoke Ally </a>
+								</td>
+
+								<td th:case="'WAR'">
+									<a class="btn btn-default btn-info" href="#" th:href="@{/diplomaticCenter/makePeace(diplomacyId=*{id})}"
+										role="button"> Make Peace </a>
+								</td>
+
+								<td th:case="'WAR_OWP'">
+									<p th:if="${diplomacy.countryOne.id eq currentCountry.id}">Peace offer sent!</p>
+									<th:block th:if="${diplomacy.countryTwo.id eq currentCountry.id}">
+										<p>Enemy want peace!</p>
+										<a class="btn btn-default btn-info" href="#" th:href="@{/diplomaticCenter/makePeace(diplomacyId=*{id})}"
+											role="button"> Make Peace </a>
+									</th:block>
+								</td>
+
+								<td th:case="'WAR_TWP'">
+									<p th:if="${diplomacy.countryTwo.id eq currentCountry.id}">Peace offer sent!</p>
+									<th:block th:if="${diplomacy.countryOne.id eq currentCountry.id}">
+										<p>Enemy want peace!</p>
+										<a class="btn btn-default btn-info" href="#" th:href="@{/diplomaticCenter/makePeace(diplomacyId=*{id})}"
+											role="button"> Make Peace </a>
+									</th:block>
+								</td>
+							</th:block>
+						</tr>
+						<tr th:if="${currentRelations == null}">
+							<td colspan="6" style="text-align: center">
+								<strong>There is no diplomatic relation</strong>
+							</td>
+						</tr>
+						<tr th:remove="all">
+							<td>
+								<a href="#">
+									<span>countryA name</span>
+								</a>
+							</td>
+							<td>
+								<a href="#">
+									<span>countryA name</span>
+								</a>
+							</td>
+							<td>WAR</td>
+							<td>2015-01-02</td>
+							<td></td>
+							<td>
+								<a class="btn btn-default btn-info" href="#" role="button"> Make Peace</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Initiate new diplomatic relation</h3>
+					</div>
+
+					<div class="panel-body">
+						<form action="#" th:action="@{/diplomaticCenter/searchCountry}" th:object="${searchEntity}" method="post">
+							<p>Searched country name</p>
+							<input required="true" title="3 characters minimum" th:field="*{name}"></input>
+							<input type="submit" value="Search"></input>
+						</form>
+
+						<br />
+						<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Country name</th>
+							<th>Action to take</th>
+							<th>Lenght</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${searchResult ne null}" th:object="${country}" th:each="country : ${searchResult}">
+							<tr>
+								<td rowspan="2" th:text="*{name}" style="width: 15%;">CountryA</td>
+								<td style="width: 20%;">
+									<a class="btn btn-default btn-danger" href="#" th:href="@{/diplomaticCenter/declareWar(countryTwoId=*{id})}"
+										role="button"> Declare War</a>
+								</td>
+								<td style="width: 20%;">Indefinite</td>
+							</tr>
+							<tr>
+								<td style="width: 20%;">
+									<a class="btn btn-default btn-success" href="#" role="button"
+										th:href="@{/diplomaticCenter/makeAlliance(countryTwoId=*{id})}">Make Ally</a>
+								</td>
+								<td style="width: 20%;">4 week</td>
+							</tr>
+						</th:block>
+						<th:block th:if="${searchResult == null}">
+							<tr>
+								<td colspan="3" style="text-align: center">
+									<strong>There is no country with that name!</strong>
+								</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>

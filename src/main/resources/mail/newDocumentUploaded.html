@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Template for HTML email with inline image</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="| Tisztelt ${name.fullName} !|">
+      Hello, Peter Static!
+    </p>
+    <p>
+      A mai nap <span th:text="${#dates.format(createDate, 'yyyy-MMM-dd')}">28-12-2012</span> 
+      Feltöltésre került egy fájl az egyik foglalt időpontjához.
+    </p>
+    <p>
+      <em>Korház</em>
+    </p>
+  </body>
+</html>

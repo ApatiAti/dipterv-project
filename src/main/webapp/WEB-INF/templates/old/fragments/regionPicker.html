@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+<!--/*-->
+<!-- url = action url  @{} formátumú -->
+<!-- searchEntity = Region osztály  -->
+<!-- searchResult = List<Region> -->
+<!--*/-->
+	<section layout:fragment="regionPicker">
+		<form action="#" th:action="${url}" th:object="${searchEntity}" method="post">
+			<p>Region name</p>
+			<input th:field="*{name}"></input>
+			<p>Owner country</p>
+			<input th:field="*{country.name}" ></input>
+			<input type="submit" value="Search"></input>
+		</form>
+
+		<br />
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Region name</th>
+					<th>Owner country name</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${searchResult ne null}" th:object="${region}" th:each="region : ${searchResult}">
+					<tr>
+						<td th:text="*{name}" style="width: 15%;">RegionA</td>
+						<td style="width: 20%;" th:text="*{country.name}">CountryA</td>
+						<td style="width: 20%;">
+							<section layout:fragment="buttons" ></section>
+						</td>
+					</tr>
+				</th:block>
+				<th:block th:unless="${searchResult ne null}">
+					<tr>
+						<td colspan="3" style="text-align: center">
+							<strong>No result!</strong>
+						</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</section>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>

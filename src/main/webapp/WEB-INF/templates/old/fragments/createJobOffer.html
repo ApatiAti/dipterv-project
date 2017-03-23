@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<section layout:fragment="createJobOffer">
+		<form action="#" th:action="@{/jobOffers/create/__${companyId}__}" th:object="${newJobOffer}" method="post">
+			<p>Wage</p>
+			<input th:field="*{wage}"></input>
+			<p>Amount</p>
+			<input th:field="*{amount}" ></input>
+			<input type="submit" value="Create"></input>
+		</form>
+	</section>
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>
