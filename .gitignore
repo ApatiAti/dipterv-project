@@ -17,6 +17,7 @@ local.properties
 .loadpath
 target/
 test/
+src/main/resources/configs/appContext.xml
 
 # External tool builders
 .externalToolBuilders/
