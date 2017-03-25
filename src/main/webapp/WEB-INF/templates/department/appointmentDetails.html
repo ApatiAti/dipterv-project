@@ -148,7 +148,7 @@
 			<a th:unless="${isDisabled}" class="btn btn-info" th:href="@{/myAppointments}">Vissza</a>
 
 			<a th:if="${isDisabled}" class="btn btn-info"
-				th:href="@{/department/__*{consultationHour.department.id}__/consultationHour?id=__*{consultationHour.id}__}">Vissza</a>
+				th:href="@{/department/__*{consultationHour.department.id}__/consultationHour/__*{consultationHour.id}__}">Vissza</a>
 		</div>
 	</section>
 
