@@ -88,16 +88,16 @@
 								<td class="col-md-2" th:text="|*{numberOfAppointment} / *{maxNumberOfPatient}|">1/20</td>
 								<td class="col-md-2">
 									<div>
-										<!-- 							csak betegnek kell hozzá role is  -->
-										<a class="btn btn-info" href="#" th:href="@{/appointment/create(chId=__*{id}__ , depId=__*{department.id}__)}"
+										<a class="btn btn-info" href="#" sec:authorize="hasRole('CREATE_APPOINTMENT')"  
+											th:href="@{/appointment/create(chId=__*{id}__ , depId=__*{department.id}__)}"
 											th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
 
 										<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
 											th:href="@{/department/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
 											
-										<!-- 									csak orvos/admin kell hozzá role is  -->
-										<!-- 										<a class="btn btn-warning" href="#" -->
-										<!-- 											th:if="*{beginDate >= #dates.createNow()}"> Törlés (nincs kész)</a> -->
+										<!--csak orvos/admin kell hozzá role is  -->
+										<!--	<a class="btn btn-warning" href="#" -->
+										<!--		th:if="*{beginDate >= #dates.createNow()}"> Törlés (nincs kész)</a> -->
 									</div>
 								</td>
 							</tr>

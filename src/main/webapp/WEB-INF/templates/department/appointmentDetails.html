@@ -146,8 +146,16 @@
 		<div class="panel-body" th:object="${appointment}">
 			<a th:unless="${isDisabled}" class="btn btn-info" th:href="@{/myAppointments}">Vissza</a>
 
-			<a th:if="${isDisabled}" class="btn btn-info"
-				th:href="@{/department/__*{consultationHour.department.id}__/consultationHour/__*{consultationHour.id}__}">Vissza</a>
+			<!--/*-->
+				<!-- Meglévő role-khoz kapcsolódva lehet egyik oldalról a másikra navigálni -->
+			<!--*/-->
+			<th:block sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')">
+				<a th:if="${isDisabled}" class="btn btn-info"  
+					th:href="@{/department/__*{consultationHour.department.id}__/consultationHour/__*{consultationHour.id}__}">Vissza</a>
+			</th:block>
+			<th:block sec:authorize="hasRole('LIST_MY_APPOINTMENTS')">
+				<a th:if="${isDisabled}" class="btn btn-info" th:href="@{/myAppointments}">Vissza</a>
+			</th:block>
 		</div>
 	</section>
 
