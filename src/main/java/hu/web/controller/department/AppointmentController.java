@@ -72,7 +72,7 @@ public class AppointmentController extends BaseController {
 			, @RequestParam(value = "chId" , required = true) Long consultationHourId
 			, @RequestParam(value = "depId", required = false) Long departmentId, RedirectAttributes redirectAttributes){
 				
-		String errorString = "";
+		String errorString;
 		String ifErrorwhereToRedirect = ViewNameHolder.REDIRECT_TO_HOME;
 
 		try {
@@ -94,7 +94,7 @@ public class AppointmentController extends BaseController {
 			errorString = "A megadott Id-va nem létezik fogadási időpont. Id : " + consultationHourId;
 		} catch (BasicServiceException e) {
 			errorString = e.getMessage();
-		}		
+		}
 		
 		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString);
 		return ifErrorwhereToRedirect;
@@ -235,7 +235,7 @@ public class AppointmentController extends BaseController {
 		
 			status = HttpStatus.OK;
 			message = new CustomMessage(CustomMessageSeverity.SUCCESS, "Időpont foglalás törlése sikeres!");
-		} catch ( Throwable e) {
+		} catch ( Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			message = new CustomMessage(CustomMessageSeverity.ERROR, "Időpont foglalás törlése sikertelen!");
 		}
@@ -257,23 +257,19 @@ public class AppointmentController extends BaseController {
 		if (fileName != null && !fileName.trim().isEmpty()){
 			
 			if (file != null && !file.isEmpty()){
-				
 				try {
 					documentService.saveUploadedFile(appointmentId, file, fileName);
-				} catch (BasicServiceException e) {
+				} catch (IOException | BasicServiceException e) {
 					errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a fájl feltöltés közben", e);
 				}
-				
 			} else {
 				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
 			}
 		} else {
 			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File név megadása kötelező");
 		}
-		
-		
+				
 		return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
-		
 	}
 	
 	
@@ -295,8 +291,4 @@ public class AppointmentController extends BaseController {
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File letöltése közben hiba történt!", e);
 		} 
     }
-
-	
- 
-	
 }
