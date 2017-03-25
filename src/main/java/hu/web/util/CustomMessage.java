@@ -14,21 +14,14 @@ public class CustomMessage implements Serializable {
 		WARNING("warning"),
 		ERROR("danger");
 		
-		CustomMessageSeverity() {
-		}
-		
 		CustomMessageSeverity( String value) {
 			this.value=value;
 		}
 		
-		private String value;
+		private final String value;
 
 		public String getValue() {
 			return value;
-		}
-
-		public void setValue(String value) {
-			this.value = value;
 		}
 	}
 

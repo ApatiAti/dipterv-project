@@ -44,13 +44,13 @@ public class DocumentService {
 	
 	@Autowired
 	SecurityService securityService;
+	
 	@Autowired
 	MailService mailService;
 	
 	@Transactional
-	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException {
+	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException, IOException {
 		try {
-			
 			DocumentFile doc = createNewDocumentFile(file, fileName, DocumentType.LELET);
 			DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointmentId);
 			
@@ -58,15 +58,13 @@ public class DocumentService {
 			
 			return true;
 		} catch (IOException e) {
-			logger.error("Hiba történt a file mentése során" ,e );
+			logger.error("Hiba történt a file mentése során", e );
+			throw e;
 		} catch (MailException | MessagingException e) {
 			String errorMessage = "Hiba történt az email kiküldése során";
 			logger.error(errorMessage);
 			throw new BasicServiceException(errorMessage);
 		}
-		
-		return false;
-		
 	}
 
 	@Transactional
@@ -78,9 +76,7 @@ public class DocumentService {
 		emailModel.put("createDate", new Date());
 		
 		mailService.sendTemplateEnginedMail("tntiti@hotmail.com", EmailType.DOCUMENT_UPLOADED, emailModel);
-		
 	}
-
 
 	@Transactional
 	private DocumentFile createNewDocumentFile(MultipartFile file, String fileName, DocumentType type) throws IOException {
@@ -99,9 +95,6 @@ public class DocumentService {
 		Appointment app = appointmentRepository.findOne(appointmentId);
 
 		if (app != null){
-			
-			
-		
 			DocumentFileAppointment docFileApp = new DocumentFileAppointment();
 			docFileApp.setDocument(doc);
 			docFileApp.setAppointment(app);
@@ -109,11 +102,9 @@ public class DocumentService {
 			docFileApp.setCreateDate(new Date());
 			
 			return docFileAppointmentRepository.save(docFileApp);
-			
 		} else {
 			throw new BasicServiceException("Appointment nem található");
 		}
-		
 	}
 
 
@@ -127,7 +118,6 @@ public class DocumentService {
 		}
 		
 		throw new BasicServiceException("Keresett fájl nem található");
-		
 	}
 
 
@@ -141,6 +131,4 @@ public class DocumentService {
 
 		return docFileAppointmentRepository.findByAppointmentPatientId(currentUserID);
 	}
-
-
 }

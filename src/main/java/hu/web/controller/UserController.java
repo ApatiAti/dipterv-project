@@ -93,12 +93,12 @@ public class UserController {
 			return ViewNameHolder.VIEW_PERSONAL_DATA;
 		}
 
-		personalData = userService.updatePersonalDate(personalData, username);
+		PersonalData updatedPersonalData = userService.updatePersonalDate(personalData, username);
 
 		redirectAttributes.addFlashAttribute(ModelKeys.PersonalDataIsDisabled, false);
-		redirectAttributes.addFlashAttribute(ModelKeys.PersonalData, personalData);
+		redirectAttributes.addFlashAttribute(ModelKeys.PersonalData, updatedPersonalData);
 
-		return ViewNameHolder.REDIRECT_TO_PERSONAL_DATA.replace("{pdId}", personalData.getId().toString());
+		return ViewNameHolder.REDIRECT_TO_PERSONAL_DATA.replace("{pdId}", updatedPersonalData.getId().toString());
 	}
 	
 
