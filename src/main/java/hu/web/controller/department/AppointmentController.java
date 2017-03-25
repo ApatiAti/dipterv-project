@@ -47,11 +47,6 @@ import hu.web.util.ViewNameHolder;
 public class AppointmentController extends BaseController {
 
 	public static final Logger logger = Logger.getLogger(AppointmentService.class);
-
-	@Override
-	public Logger getLogger() {
-		return logger;
-	}
 	
 	@Autowired
 	AppointmentService appointmentService;
@@ -59,7 +54,18 @@ public class AppointmentController extends BaseController {
 	@Autowired
 	DocumentService documentService;
 	
+	@Autowired
+	MailService mailService;
+
+	@Override
+	public Logger getLogger() {
+		return logger;
+	}
+	
 	// TODO nem kell departmentId
+	/**
+	 * Új Appointment létrehozó felület behozása 
+	 */
 	@RequestMapping(value="/appointment/create" , method = RequestMethod.GET)
 	public String getCreateAppointmentPage(Model model
 			, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
@@ -94,10 +100,14 @@ public class AppointmentController extends BaseController {
 		return ifErrorwhereToRedirect;
 	}
 
+	/**
+	 * Új Appointment létrehozása 
+	 */
 	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
 	public String createAppointment(Map<String, Object> model, @Valid Appointment appointment
 			,BindingResult bindingResult
 			,@ModelAttribute(ModelKeys.CurrentUserName) String currentUser
+			// TODO miért requestParam ha post ?!?!!
 			,@RequestParam(value = "chId" , required = true) Long consultationHourId, RedirectAttributes redirectAttributes){
 		
 		// TODO validation
@@ -120,12 +130,10 @@ public class AppointmentController extends BaseController {
 		return ViewNameHolder.REDIRECT_TO_HOME;
 	}
 
-
-
-	@Autowired
-	MailService mailService;
 	
-//	időpont foglalás listázása	beteg	listMyAppointments	 /myAppointments
+	/**
+	 * Egy user a saját időpont foglalásainak listázása listMyAppointments->myAppointments
+	 */
 	@RequestMapping(value = "/myAppointments" , method = RequestMethod.GET)
 	public String getMyAppointmentsPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName){
 		
@@ -133,11 +141,12 @@ public class AppointmentController extends BaseController {
 		
 		model.put(ModelKeys.AppointmentList, myAppointmentList);
 	
-		
 		return "department/appointmentList";
 	}
 
-	//	időpont foglalás megtekitése	beteg, orvos/admin	viewAppointment	 /appointment?id=
+	/**
+	 * Beteg egy saját időpont foglalásának megtekitése	 (beteg, orvos/admin) viewAppointment -> appointment?id=
+	 */
 	@RequestMapping(value = "/appointment/{appointmentId}" , method = RequestMethod.GET)
 	public String getAppointmentPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @PathVariable Long appointmentId){
@@ -152,7 +161,10 @@ public class AppointmentController extends BaseController {
 		
 		return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 	}
-		
+	
+	/**
+	 * Megadott id-val rendelkező Appointment-t módosító felület
+	 */
 	@RequestMapping(value = "/appointment/modify" , method = RequestMethod.GET)
 	public String getAppointmentModifyPage(Model model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @RequestParam("appId") Long appointmentId, RedirectAttributes redirectAttributes){
@@ -189,7 +201,10 @@ public class AppointmentController extends BaseController {
 		return ViewNameHolder.REDIRECT_TO_MY_APPOINTMENTS;
 	}
 
-	// TODO AJAX-os hívássá tenni és kliens oldalon törölni a sort
+	/**
+	 * Megadott id-val rendelkező Appointment törlése Beteg által
+	 */
+	@Deprecated
 	@RequestMapping(value ="/appointment/delete", method = RequestMethod.POST)
 	public String deleteAppointment(Model model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUsername
 			, @RequestParam(value = "appId", required = true) Long appointmentId, RedirectAttributes redirectAttributes){
@@ -202,7 +217,10 @@ public class AppointmentController extends BaseController {
 		return ViewNameHolder.REDIRECT_TO_MY_APPOINTMENTS;
 	}
 	
-	
+	/**
+	 * AJAX
+	 * Megadott id-val rendelkező Appointment törlése Beteg által
+	 */
 	@RequestMapping(value ="/appointment/delete", method = RequestMethod.POST, headers = "X-Requested-With=XMLHttpRequest")
 	public @ResponseBody ResponseEntity<CustomMessage> deleteAppointmentAJAX(Model model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUsername
 			, @RequestParam(value = "appId", required = true) Long appointmentId, RedirectAttributes redirectAttributes){

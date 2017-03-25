@@ -14,11 +14,14 @@ import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
 @Controller
-public class DocumentController {
+public class DocumentController{
 
 	@Autowired
 	DocumentService documentService;
-	
+
+	/**
+	 * Beteg saját leleteit lehet listázni.
+	 */
 	@RequestMapping(value ="/myDocuments", method = RequestMethod.GET)
 	public String getMyDocumentFilesPage(Model model){
 		

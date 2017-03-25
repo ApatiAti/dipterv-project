@@ -29,10 +29,6 @@ public class HomeController {
 	/**
 	 * Default url elérése. 
 	 * Ha hibával navigálunk ide akkor 403-as hibát dobunk.
-	 * 
-	 * @param model
-	 * @param security
-	 * @return
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getDefaultPAge(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
@@ -43,8 +39,6 @@ public class HomeController {
 
 	/**
 	 * Security paraméter függvényében a model feltöltése
-	 * @param model
-	 * @param security
 	 */
 	public void handleSecurityParam(Model model, String security) {
 		if (security != null) {
