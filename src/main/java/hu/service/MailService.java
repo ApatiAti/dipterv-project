@@ -25,6 +25,8 @@ import hu.util.EmailType;
 public class MailService {
 
 	
+	private static final String UTF_8 = "UTF-8";
+
 	@Autowired
 	@Qualifier("mailSender")
 	JavaMailSenderImpl mailSender;
@@ -45,7 +47,7 @@ public class MailService {
 	
 	public void sendMimeMessageMail(String to, String subject, String msg) throws MailException, MessagingException {
 		final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
-		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
+		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, UTF_8);
 		
 		message.setFrom(new InternetAddress("sender@example.com"));
 		message.setTo(new InternetAddress(to));
@@ -68,7 +70,7 @@ public class MailService {
 	    // Prepare message using a Spring helper
 	    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
 	    final MimeMessageHelper message =
-	        new MimeMessageHelper(mimeMessage, true, "UTF-8"); // true = multipart
+	        new MimeMessageHelper(mimeMessage, true, UTF_8); // true = multipart
 	    message.setSubject(emailType.getEmailSubject());
 	    message.setFrom("thymeleaf@example.com");
 	    message.setTo(to);
@@ -96,7 +98,7 @@ public class MailService {
 	    // Prepare message using a Spring helper
 	    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
 	    final MimeMessageHelper message =
-	        new MimeMessageHelper(mimeMessage, true, "UTF-8"); // true = multipart
+	        new MimeMessageHelper(mimeMessage, true, UTF_8); // true = multipart
 	    message.setSubject(subject);
 	    message.setFrom("thymeleaf@example.com");
 	    message.setTo(to);

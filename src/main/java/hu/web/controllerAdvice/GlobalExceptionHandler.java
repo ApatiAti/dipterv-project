@@ -21,7 +21,7 @@ import hu.web.util.ViewNameHolder;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private final static Logger logger = Logger.getLogger(GlobalExceptionHandler.class); 
+	private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class); 
 	
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
