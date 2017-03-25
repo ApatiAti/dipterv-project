@@ -23,7 +23,7 @@ public class ViewNameHolder {
 	/*
 	 * Osztályokhoz tartozó
 	 */
-	public static final String VIEW_DEPARTMENTS = "department/departments";
+	public static final String VIEW_DEPARTMENTS = "department/departmentList";
 
 
 	public static final String VIEW_CONSULTATION_HOUR_DETAILS = "department/consultationHourDetails";
