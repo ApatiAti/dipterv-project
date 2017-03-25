@@ -21,8 +21,6 @@ import hu.model.hospital.Department;
 import hu.model.hospital.dto.ConsultationHourSearch;
 import hu.service.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
-import hu.web.util.CustomMessage;
-import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 import hu.web.util.validator.ConsultationHourSearchValidator;
@@ -75,6 +73,7 @@ public class DepartmentController extends BaseController {
 		
 		consultationHourSearchValidator.validate(searchEntity, bindingResult);
 		
+		// TODO ősosztály error kezelőjét berakni ide
 		if (bindingResult.hasErrors()){
 			model.put(ModelKeys.SearchEntity, searchEntity);
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
@@ -103,12 +102,8 @@ public class DepartmentController extends BaseController {
 	public String createConsultationHour(Map<String, Object> model, @PathVariable Long departmentId, @Valid ConsultationHour newConsultationHour
 			, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
-		if (bindingResult.hasErrors()){
-			String errorLog = "A megadott adatok hibásak";
-			CustomMessage errorMessage = new CustomMessage(CustomMessageSeverity.ERROR, errorLog);
-			
-			model.put(ModelKeys.DisplayMessage, errorMessage);
-		
+		boolean hasError = handleValidationErrors(bindingResult, model);
+		if (hasError){
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 		}
 		
@@ -125,7 +120,5 @@ public class DepartmentController extends BaseController {
 		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
-	
-	
 
 }

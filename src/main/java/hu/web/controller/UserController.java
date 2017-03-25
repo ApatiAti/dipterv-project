@@ -33,6 +33,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	/**
+	 * Személyes adatok felület megjelenítése a bejelentkezett felhasználó számára
+	 */
 	@RequestMapping(value = "/personalData", method = RequestMethod.GET)
 	public String getDefaultPersonalData(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String username, RedirectAttributes redirectAttributes){
 		PersonalData personalData = userService.findPersonalDataByUsername(username);
@@ -51,6 +54,9 @@ public class UserController {
 		return ViewNameHolder.VIEW_PERSONAL_DATA;
 	}
 	
+	/**
+	 * Személyes adatok megjelenítése personalDataId alapján.
+	 */
 	@RequestMapping(value = "/personalData/{personalDataId}", method = RequestMethod.GET)
 	public String getPersonalData(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String username,
 			@PathVariable Long personalDataId) {
@@ -63,7 +69,9 @@ public class UserController {
 		return ViewNameHolder.VIEW_PERSONAL_DATA;
 	}
 	
-
+	/**
+	 * Személyes adatokat módosító oldal behozása.
+	 */
 	@RequestMapping(value = "/personalData/{personalDataId}/edit", method = RequestMethod.GET)
 	public String getPersonalDataEdit(Map<String, Object> model,
 			@ModelAttribute(ModelKeys.CurrentUserName) String username, @PathVariable Long personalDataId
@@ -82,6 +90,9 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Személyes adatokat módisítása, ha a megadott adatok validok.
+	 */
 	@RequestMapping(value = "/personalData/edit", method = RequestMethod.POST)
 	public String editPersonalData(PersonalData personalData, BindingResult bindingResult
 			, @ModelAttribute(ModelKeys.CurrentUserName) String username

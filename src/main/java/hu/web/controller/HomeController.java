@@ -21,26 +21,37 @@ public class HomeController {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getHome(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
-		if (security != null) {
-			if ("forbidden".equals(security)) {
-				model.addAttribute(ModelKeys.DisplayMessage,
-						new CustomMessage(CustomMessageSeverity.ERROR, "403 Forbidden"));
-			}
-		}
+		handleSecurityParam(model, security);
 
 		return ViewNameHolder.VIEW_HOME;
 	}
 	
+	/**
+	 * Default url elérése. 
+	 * Ha hibával navigálunk ide akkor 403-as hibát dobunk.
+	 * 
+	 * @param model
+	 * @param security
+	 * @return
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getDefaultPAge(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
+		handleSecurityParam(model, security);
+
+		return ViewNameHolder.VIEW_HOME;
+	}
+
+	/**
+	 * Security paraméter függvényében a model feltöltése
+	 * @param model
+	 * @param security
+	 */
+	public void handleSecurityParam(Model model, String security) {
 		if (security != null) {
 			if ("forbidden".equals(security)) {
 				model.addAttribute(ModelKeys.DisplayMessage,
 						new CustomMessage(CustomMessageSeverity.ERROR, "403 Forbidden"));
 			}
 		}
-
-		return ViewNameHolder.VIEW_HOME;
 	}
-
 }

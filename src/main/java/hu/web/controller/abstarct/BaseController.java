@@ -1,6 +1,9 @@
 package hu.web.controller.abstarct;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.web.util.CustomMessage;
@@ -24,5 +27,17 @@ public abstract class BaseController {
 		
 		CustomMessage message = new CustomMessage(CustomMessageSeverity.ERROR, errorString);
 		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+	}
+
+	public boolean handleValidationErrors(BindingResult bindingResult, Map<String, Object> model) {
+		boolean hasErrors = bindingResult.hasErrors();
+		if (hasErrors){
+			String errorLog = "A megadott adatok hibásak";
+			CustomMessage errorMessage = new CustomMessage(CustomMessageSeverity.ERROR, errorLog);
+			
+			model.put(ModelKeys.DisplayMessage, errorMessage);
+		}
+		
+		return hasErrors;
 	}
 }
