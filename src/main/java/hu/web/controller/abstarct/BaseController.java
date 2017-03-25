@@ -12,7 +12,7 @@ import hu.web.util.ModelKeys;
 
 public abstract class BaseController {
 	
-	public abstract Logger getLogger();
+	protected abstract Logger getLogger();
 	
 	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString) {
 		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString, null);

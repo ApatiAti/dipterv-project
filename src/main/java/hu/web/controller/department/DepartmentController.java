@@ -31,12 +31,6 @@ import hu.web.util.validator.ConsultationHourSearchValidator;
 public class DepartmentController extends BaseController {
 
 	private static final Logger logger = Logger.getLogger(DepartmentController.class);
-	
-	@Override
-	public Logger getLogger() {
-		return logger;
-	}
-	
 
 	@Autowired
 	private ConsultationHourSearchValidator consultationHourSearchValidator;
@@ -44,7 +38,14 @@ public class DepartmentController extends BaseController {
 	@Autowired
 	private DepartmentService departmentService;
 
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
 	
+	/**
+	 * Department listázó felület
+	 */
 	@RequestMapping(value ="/list" , method = RequestMethod.GET)
 	public String getDeparmentsPage(Map<String, Object> model){
 		List<Department> departmentList = departmentService.getDepartments();
@@ -52,6 +53,9 @@ public class DepartmentController extends BaseController {
 		return ViewNameHolder.VIEW_DEPARTMENTS;
 	}
 	
+	/**
+	 * A paramétereknek megfelelő Department-hez tartozó ConsultationHour-ok listázó felület
+	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/list", method = RequestMethod.GET)
 	public String getConsultationHourListPage(Map<String, Object> model, @PathVariable(value="departmentId") Long departmentId){
 		Department department = departmentService.findDepartment(departmentId);
@@ -66,7 +70,10 @@ public class DepartmentController extends BaseController {
 		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 	}
-
+	
+	/**
+	 * ConsoltationHour listázó felületen a lista ConsoltationHour lista szűrése
+	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/list", method = RequestMethod.POST)
 	public String sortConsultationHourList(Map<String, Object> model, @PathVariable Long departmentId
 			, ConsultationHourSearch searchEntity, BindingResult bindingResult){
@@ -87,7 +94,10 @@ public class DepartmentController extends BaseController {
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 	}
 	
-	// /department/{id}/consultationHour/{id}
+	/**
+	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület
+	 * /department/{id}/consultationHour/{id}ű
+	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}", method = RequestMethod.GET)
 	public String getConsultationHourDetailsPage(Map<String, Object> model, @PathVariable Long departmentId, @PathVariable Long consultationHourId){
 		ConsultationHour consultationHour = departmentService.findConsultationHourWithAppointment(consultationHourId);
@@ -97,7 +107,9 @@ public class DepartmentController extends BaseController {
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 	
-	
+	/**
+	 * ConsoltationHour létrehozása 
+	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/create", method = RequestMethod.POST)
 	public String createConsultationHour(Map<String, Object> model, @PathVariable Long departmentId, @Valid ConsultationHour newConsultationHour
 			, BindingResult bindingResult, RedirectAttributes redirectAttributes){
@@ -114,7 +126,6 @@ public class DepartmentController extends BaseController {
 			String errorLog = "A megadott id-jű osztály nem létezik. Id : " + departmentId.toString();
 			
 			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorLog, e);
-			
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 		

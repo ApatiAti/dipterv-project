@@ -1,5 +1,6 @@
 package hu.web.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,17 +9,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import hu.repository.user.UserRepository;
+import hu.web.controller.abstarct.BaseController;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController{
 
+	public static final Logger logger = Logger.getLogger(HomeController.class);
+	
 	@Autowired
 	UserRepository citizenRepository;
 
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getHome(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
 		handleSecurityParam(model, security);
@@ -43,9 +52,11 @@ public class HomeController {
 	public void handleSecurityParam(Model model, String security) {
 		if (security != null) {
 			if ("forbidden".equals(security)) {
+				logger.debug("403 DisplayMessage added");
 				model.addAttribute(ModelKeys.DisplayMessage,
 						new CustomMessage(CustomMessageSeverity.ERROR, "403 Forbidden"));
 			}
 		}
 	}
+
 }

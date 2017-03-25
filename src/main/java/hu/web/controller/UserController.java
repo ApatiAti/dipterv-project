@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.model.user.PersonalData;
 import hu.service.UserService;
+import hu.web.controller.abstarct.BaseController;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
@@ -23,7 +24,7 @@ import hu.web.util.validator.PersonalDataValidator;
 
 @Controller
 @SessionAttributes({ ModelKeys.PersonalDataIsDisabled })
-public class UserController {
+public class UserController extends BaseController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
 
@@ -32,6 +33,11 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
 
 	/**
 	 * Személyes adatok felület megjelenítése a bejelentkezett felhasználó számára
