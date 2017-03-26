@@ -141,7 +141,7 @@ public class AppointmentController extends BaseController {
 		
 		model.put(ModelKeys.AppointmentList, myAppointmentList);
 	
-		return "department/appointmentList";
+		return ViewNameHolder.VIEW_MY_APPOINTMENT;
 	}
 
 	/**
