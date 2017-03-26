@@ -3,6 +3,7 @@
  delete from documentfile_appointment;
 
  delete from appointment;
+ delete from consultationhour_tpye;
  delete from consultationhour;
  delete from department;
  delete from department_to_user;
@@ -30,10 +31,18 @@ SET @departmentId2 = 10001;
 SET @consultationHourId1 = 10000;
 SET @consultationHourId2 = 10001;
 
+SET @consultationHour_type_name1 ='Szem műtét';
+SET @consultationHour_type_name2 ='Látás vizsgálat';
+SET @consultationHour_type_name3 ='Szürkehályog vizsgálat';
+                                
+SET @consultationHour_type_name4 ='Általános vizsgálat';
+SET @consultationHour_type_name5 ='Lúdtalp vizsgálat';
+SET @consultationHour_type_name6 ='Protézis műtét';
 
-insert into user (email, username, password) values('kovacsmucsi@freemail.hu', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-insert into user (email, username, password) values('kovacsmucsi@freemail.hu', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-insert into user (email, username, password) values('kovacsmucsi@freemail.hu', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+-- jelszó = admindocumentfile_appointmentdepartment_to_userdepartment_to_userdocumentfile_appointment
+insert into user (email, username, password) values('a@a.a', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into user (email, username, password) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into user (email, username, password) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('d@d.d', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user1_1', 0  ,'2015-12-13 01:02:03' , (select id from region where name='region1'));
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('c@c.c', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user3', 400, '2015-12-13 01:02:03' , (select id from region where name='region3'));
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('e@e.e', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'admin', 0 ,'2015-12-13 01:02:03' , (select id from region where name='region3'));
@@ -46,12 +55,23 @@ insert into personalData(birthDate, motherName, firstName, lastName, title, phon
 -- ==[ Korházi osztályok beállítása ]==--
 
 insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId1 ,'Szemészet', '36305248967', 'IB025', (select id from user where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
-insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId2 ,'Urológia', '36305345967', 'IB025', (select id from user where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId2 ,'Ortopédia', '36305345967', 'IB025', (select id from user where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
                                                                                                                                                                                  
 
--- ==[ Fogadó órák insertje ]==--
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId) values ( @consultationHourId1, STR_TO_DATE('2016-12-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2016-12-01 17:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1);
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId) values ( @consultationHourId2, STR_TO_DATE('2017-01-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-01-10 17:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1);
+
+-- ==[ Fogadó óra típusok ]==--
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name1, @departmentId1);
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name2, @departmentId1);
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name3, @departmentId1);
+
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name4, @departmentId2);
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name5, @departmentId2);
+insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name6, @departmentId2);
+
+
+-- ==[ Fogadó órák insertje ]==--consultationhour
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2));
 
 -- ==[ Időpont foglalások]
 insert into appointment(complaints, consultationHourId, patientId) values ('Fáj a szemem', @consultationHourId1, (select id from user where username = @patient1));
@@ -98,7 +118,7 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_CREATE_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_UPLOAD_DOCUMENT'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_DOWNLOAD_DOCUMENT'));
-insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_APPOINTMENT'));
+
 
 -- ==[adminisztrátor jogosultágainak létrehozása ]==--
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_USER'));
