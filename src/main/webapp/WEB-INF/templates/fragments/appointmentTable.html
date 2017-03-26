@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<div layout:fragment="table(consultationHourList)">
+		<table id = "table-1" class="table-striped table-hover col-md-12">
+			<thead>
+				<tr class="row">
+					<th class="col-md-2">Helyszín</th>
+					<th class="col-md-2">Rendelés típusa</th>
+					<th class="col-md-3">Kezdési időpont</th>
+					<th class="col-md-3">Vége időpont</th>
+					
+					<th:block layout:fragment="more-column-header" />
+					
+					<th class="col-md-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="row" th:each="ch : ${consultationHourList}" th:object="${ch}">
+					<td class="col-md-2" th:text="*{room}">IB520</td>
+					<td class="col-md-2" th:text="*{type.name}">Műtét</td>
+					<td class="col-md-3" th:text="*{beginDate}">2010-10-10 15:45:10</td>
+					<td class="col-md-3" th:text="*{endDate}">2010-10-10 16:00:10</td>
+					
+					<th:block layout:fragment="more-column-data" />
+					
+					<td class="col-md-1">
+						<th:block layout:fragment="more-action-button" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>

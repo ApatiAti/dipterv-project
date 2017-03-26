@@ -58,6 +58,9 @@
 								<input class="form-control" th:disabled="disabled" th:field="*{room}" value="IB123" />
 							</div>
 						</div>
+						<div class="row">
+							<section layout:replace="fragments/standardFormField :: standardFormField(fieldName = 'type.name', propertyName = 'Időpont típus')"></section>
+						</div>
 					</th:block>
 
 					<th:block th:object="${appointment}">

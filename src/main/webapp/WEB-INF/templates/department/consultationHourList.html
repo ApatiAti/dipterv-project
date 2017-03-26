@@ -69,40 +69,30 @@
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<div class="row table-responsive">
-					<table id="table-1" class="table-striped table-hover col-md-12">
-						<thead>
-							<tr class="row">
-								<th class="col-md-2">Helyszín</th>
-								<th class="col-md-3">Kezdési időpont</th>
-								<th class="col-md-3">Vége időpont</th>
-								<th class="col-md-2">Jelentkezett száma/Férő hely</th>
-								<th class="col-md-2"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="row" th:each="ch : ${consultationHourList}" th:object="${ch}">
-								<td class="col-md-2" th:text="*{room}">IB520</td>
-								<td class="col-md-3" th:text="*{beginDate}">2010-10-10 15:45:10</td>
-								<td class="col-md-3" th:text="*{endDate}">2010-10-10 16:00:10</td>
-								<td class="col-md-2" th:text="|*{numberOfAppointment} / *{maxNumberOfPatient}|">1/20</td>
-								<td class="col-md-2">
-									<div>
-										<a class="btn btn-info" href="#" sec:authorize="hasRole('CREATE_APPOINTMENT')"  
-											th:href="@{/appointment/create(chId=__*{id}__ , depId=__*{department.id}__)}"
-											th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
+				<div layout:include="fragments/appointmentTable :: table(consultationHourList = ${consultationHourList})" class="row table-responsive">
+					
+					<section layout:fragment="more-column-header" th:remove="tag">
+						<th class="col-md-1">Jelentkezett száma/Férő hely</th>
+					</section>
+					
+					<section layout:fragment="more-column-data" th:remove="tag">
+						<td class="col-md-1" th:text="|*{numberOfAppointment} / *{maxNumberOfPatient}|">1/20</td>
+					</section>
+					
+					<section layout:fragment="more-action-button" th:remove="tag">
+						<div>
+							<a class="btn btn-info" href="#" sec:authorize="hasRole('CREATE_APPOINTMENT')"  
+								th:href="@{/appointment/create(chId=__*{id}__ , depId=__*{department.id}__)}"
+								th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
 
-										<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
-											th:href="@{/department/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
-											
-										<!--csak orvos/admin kell hozzá role is  -->
-										<!--	<a class="btn btn-warning" href="#" -->
-										<!--		th:if="*{beginDate >= #dates.createNow()}"> Törlés (nincs kész)</a> -->
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+							<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
+								th:href="@{/department/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
+								
+							<!--csak orvos/admin kell hozzá role is  -->
+							<!--	<a class="btn btn-warning" href="#" -->
+							<!--		th:if="*{beginDate >= #dates.createNow()}"> Törlés (nincs kész)</a> -->
+						</div>
+					</section>
 				</div>
 			</div>
 		</div>

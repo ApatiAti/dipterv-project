@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<section layout:fragment="standardFormField(fieldName,propertyName)">
+		<div class="col-md-2">
+			<span th:text="${propertyName}"></span>
+		</div>
+		<div class="col-md-4">
+			<input class="form-control" th:disabled="disabled" 
+				th:field="*{__${fieldName}__}" value="műtét" />
+		</div>
+	</section>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>
