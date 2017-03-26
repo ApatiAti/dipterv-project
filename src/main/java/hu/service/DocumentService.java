@@ -49,7 +49,7 @@ public class DocumentService {
 	MailService mailService;
 	
 	@Transactional
-	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException, IOException {
+	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException {
 		try {
 			DocumentFile doc = createNewDocumentFile(file, fileName, DocumentType.LELET);
 			DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointmentId);
@@ -58,8 +58,9 @@ public class DocumentService {
 			
 			return true;
 		} catch (IOException e) {
-			logger.error("Hiba történt a file mentése során", e );
-			throw e;
+			String errorMessage = "Hiba történt a file mentése során";
+			logger.error(errorMessage, e);
+			throw new BasicServiceException(errorMessage);
 		} catch (MailException | MessagingException e) {
 			String errorMessage = "Hiba történt az email kiküldése során";
 			logger.error(errorMessage);

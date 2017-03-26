@@ -259,7 +259,7 @@ public class AppointmentController extends BaseController {
 			if (file != null && !file.isEmpty()){
 				try {
 					documentService.saveUploadedFile(appointmentId, file, fileName);
-				} catch (IOException | BasicServiceException e) {
+				} catch (BasicServiceException e) {
 					errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a fájl feltöltés közben", e);
 				}
 			} else {
