@@ -32,7 +32,8 @@ public class ConsultationHour implements Serializable {
 	private int maxNumberOfPatient;
 	private String room;	
 	private List<Appointment> appointments;
-	// TODO orvost rendelni a consultationHourhöz???
+	private ConsultationHourType type;
+	// TODO orvost rendelni a cosultationHourhöz???
 
 	
 //	@Formula("select count(*) from Appointment a where a.consultationHour.id = id")
@@ -109,6 +110,17 @@ public class ConsultationHour implements Serializable {
 
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
+	}
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "consultationhour_tpyeid", nullable = false)
+	public ConsultationHourType getType() {
+		return type;
+	}
+
+	public void setType(ConsultationHourType type) {
+		this.type = type;
 	}
 
 	@Formula( value = "( select count(*) FROM ConsultationHour ch INNER JOIN Appointment a where a.consultationHourId = ch.id and ch.id = id)")
