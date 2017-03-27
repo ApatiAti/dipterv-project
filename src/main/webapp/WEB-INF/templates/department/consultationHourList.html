@@ -29,27 +29,12 @@
 							<div class="col-md-1">
 								<label>Kezdete</label>
 							</div>
-							<div class="col-md-4" id="sandbox-container">
-								<div class="input-group date">
-									<input type="text" class="form-control" th:field="*{startDate}" value="2010-10-10" />
-									<span class="input-group-addon">
-										<i class="glyphicon glyphicon-th"></i>
-									</span>
-
-								</div>
-							</div>
+							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'startDate')" />
 
 							<div class="col-md-1">
 								<label>Vége</label>
 							</div>
-							<div class="col-md-4" id="sandbox-container">
-								<div class="input-group date">
-									<input type="text" class="form-control" th:field="*{endDate}" value="2010-10-11" />
-									<span class="input-group-addon">
-										<i class="glyphicon glyphicon-th"></i>
-									</span>
-								</div>
-							</div>
+							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'endDate')" />
 						</div>
 						<div class="row">
 							<ul th:if="${#fields.hasErrors('*')}">
@@ -96,21 +81,6 @@
 				</div>
 			</div>
 		</div>
-	</section>
-
-	<section layout:fragment="scripts">
-
-		<script type="text/javascript">
-			$(document).ready(function () {
-		        $('#sandbox-container .input-group.date').datepicker({
-		        	 format: "yyyy-mm-dd",
-		            todayBtn: "linked",
-		            language: "hu",
-		            autoclose: true,
-		            todayHighlight: true
-		        });
-			});
-        </script>
 	</section>
 
 	<!--/*-->

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+
+	<th:block layout:fragment="datepickerField(fieldName)">
+		<div class="col-md-4" id="sandbox-container">
+			<div class="input-group date">
+				<input type="text" class="form-control" th:field="*{__${fieldName}__}" value="2010-10-11" />
+				<span class="input-group-addon">
+					<i class="glyphicon glyphicon-th"></i>
+				</span>
+			</div>
+		</div>
+	</th:block>
+
+	<section layout:fragment="standardFormField(fieldName,propertyName,disabled)">
+		<div class="col-md-2">
+			<span th:text="${propertyName}"></span>
+		</div>
+		<div class="col-md-4">
+			<input class="form-control" th:disabled="${disabled}" 
+				th:field="*{__${fieldName}__}" value="műtét" />
+		</div>
+		<div class="col-md-4" th:if="${#fields.hasErrors('__${fieldName}__')}">
+			<span th:errors="*{__${fieldName}__}" th:errorclass="text-danger">nöm látszik</span>
+		</div>
+	</section>
+	
+	<section layout:fragment="standardFormFieldDisabled(fieldName,propertyName)">
+		<th:block layout:replace="fragments/standardForms :: standardFormField(${fieldName}, ${propertyName}, ${true})"/>
+	</section>
+	
+	<th:block layout:fragment="standardFormTextAreaRow(fieldName,propertyName,disabled)">
+		<div class = "row">
+			<div class="col-md-2">
+				<span th:text="${propertyName}"></span>
+			</div>
+			<div class="col-md-8">
+				<textarea rows="5" class="form-control" th:disabled="${disabled}" 
+					th:field="*{__${fieldName}__}" value="2012-12-12" ></textarea>
+			</div>
+		</div>
+	</th:block>
+	
+	<th:block layout:fragment="standardFormTextAreaRowDisabled(fieldName,propertyName)">
+		<th:block layout:fragment="fragments/standardForms :: standardFormTextArea(fieldName = ${fieldName}, propertyName = ${propertyName}, disabled = ${true})" />"
+	</th:block>
+	
+	
+	<section layout:fragment="standardFormRow(fieldName,propertyName,disabled)">
+		<div class="row">
+			<th:block layout:replace="fragments/standardForms :: standardFormField(${fieldName}, ${propertyName}, ${disabled})"/>
+		</div>
+	</section>
+	
+	<section layout:fragment="standardFormRowDisabled(fieldName,propertyName)">
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(${fieldName}, ${propertyName}, ${true})"/>
+	</section>
+
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>

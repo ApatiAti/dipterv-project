@@ -3,6 +3,16 @@
  */
 
 
+function createDatePicker() {
+    $('#sandbox-container .input-group.date').datepicker({
+    	 format: "yyyy-mm-dd",
+        todayBtn: "linked",
+        language: "hu",
+        autoclose: true,
+        todayHighlight: true
+    });
+}
+
 function putAlertBox(severity, errorMessage) {
 	$("#alertBox").show();
 	$("#alertBox").attr('class', "alert alert-"+ severity.toLowerCase());

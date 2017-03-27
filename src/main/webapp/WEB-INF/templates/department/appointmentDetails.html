@@ -57,21 +57,11 @@
 								<span class="form-control" th:disabled="disabled" th:text="*{room}" text="IB123" />
 							</div>
 						</div>
-						<div class="row">
-							<section layout:replace="fragments/standardFormField :: standardFormField(fieldName = 'type.name', propertyName = 'Időpont típus')"></section>
-						</div>
+						<section layout:replace="fragments/standardForms :: standardFormRowDisabled(fieldName = 'type.name', propertyName = 'Időpont típus')"></section>
 					</th:block>
 
 					<th:block th:object="${appointment}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Panasz rövid leírása</span>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" th:field="*{complaints}" th:disabled="${isDisabled}"
-									value="2012-12-12" />
-							</div>
-						</div>
+						<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'complaints',propertyName = 'Panasz rövid leírása', disabled = ${isDisabled})" />
 					</th:block>
 
 					<div class="row">

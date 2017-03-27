@@ -65,6 +65,12 @@
 		<!--  Ne mozgasd el a custom Scripteknek fentartott section-t -->
 	<!--*/-->
 	<script src="#" th:src="@{/template_files/myScripts.js}"></script>
+	
+	<script type="text/javascript">
+		<!-- Date picketer létrehozás -->
+		$(document).ready(createDatePicker());
+    </script>
+	
 	<section layout:fragment="scripts"></section>
 </body>
 </html>
