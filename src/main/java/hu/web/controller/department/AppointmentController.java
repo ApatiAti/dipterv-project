@@ -211,8 +211,7 @@ public class AppointmentController extends BaseController {
 		
 		appointmentService.deleteAppointment(appointmentId);
 		
-		CustomMessage message = new CustomMessage(CustomMessageSeverity.SUCCESS, "Időpont foglalás törlése sikeres!");
-		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+		succesLogAndDisplayMessage(redirectAttributes, "Időpont foglalás törlése sikeres!");
 		
 		return ViewNameHolder.REDIRECT_TO_MY_APPOINTMENTS;
 	}

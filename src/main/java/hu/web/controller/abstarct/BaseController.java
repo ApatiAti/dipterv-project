@@ -14,6 +14,10 @@ public abstract class BaseController {
 	
 	protected abstract Logger getLogger();
 	
+	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes) {
+		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hibás adatok lettek megadva", null);
+	}
+	
 	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString) {
 		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString, null);
 	}
@@ -29,6 +33,13 @@ public abstract class BaseController {
 		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
 	}
 
+	protected void succesLogAndDisplayMessage(RedirectAttributes redirectAttributes, String succesMessage) {
+		getLogger().info(succesMessage);
+		
+		CustomMessage message = new CustomMessage(CustomMessageSeverity.SUCCESS, succesMessage);
+		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+	}
+	
 	public boolean handleValidationErrors(BindingResult bindingResult, Map<String, Object> model) {
 		boolean hasErrors = bindingResult.hasErrors();
 		if (hasErrors){
