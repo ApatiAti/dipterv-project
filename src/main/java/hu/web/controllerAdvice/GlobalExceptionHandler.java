@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
 		
 		mav.setViewName(ViewNameHolder.VIEW_HOME);
 		
-		logger.error("Hbia történt" , e);
+		logger.error("Hiba történt" , e);
 		
 		return mav;
 	}

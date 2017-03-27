@@ -35,6 +35,7 @@ public class MailService {
 	@Qualifier("mailTemplateEngine")
 	SpringTemplateEngine templateEngine;
 	
+	@Deprecated
 	public void sendMail(String to, String subject, String msg) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		
@@ -45,6 +46,7 @@ public class MailService {
 		mailSender.send(message);
 	}
 	
+	@Deprecated
 	public void sendMimeMessageMail(String to, String subject, String msg) throws MailException, MessagingException {
 		final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, UTF_8);
@@ -87,7 +89,7 @@ public class MailService {
 	    this.mailSender.send(mimeMessage);
 	}
 
-	
+	@Deprecated
 	public void sendTemplateEngineMailTest(String to, String subject, String msg) throws MailException, MessagingException {
 		// Prepare the evaluation context
 	    final Context ctx = new Context();
