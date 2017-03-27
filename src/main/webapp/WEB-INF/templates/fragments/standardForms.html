@@ -74,6 +74,12 @@
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(${fieldName}, ${propertyName}, ${true})"/>
 	</section>
 
+	<th:block layout:fragment="dropdownFormField(fieldName, values, disabled)">
+		<select class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
+			<option value=""></option>
+			<option th:each="option : ${values}" th:value="${option}" th:text="${option}"></option>
+		</select>
+	</th:block>
 
 	<!--/*-->
 	<!-- Bootstrap core JavaScript

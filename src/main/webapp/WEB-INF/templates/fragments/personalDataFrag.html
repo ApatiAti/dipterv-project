@@ -18,17 +18,7 @@
 					<span>Name</span>
 				</div>
 				<div class="col-md-1">
-
-					<select class="form-control" id="titles" th:disabled="${personalDataIsDisabled}"
-						th:field="*{name.title}">
-						<option value=""></option>
-						<option th:each="title : ${T(hu.model.user.TitleEnum).values()}" th:value="${title}"
-							th:text="${title}"></option>
-						<!--/*-->
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<!--*/-->
-					</select>
+					<th:block layout:replace="fragments/standardForms :: dropdownFormField('name.title', ${T(hu.model.user.TitleEnum).values()} , ${personalDataIsDisabled})" />
 				</div>
 				<div class="col-md-3">
 					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
