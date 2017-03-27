@@ -22,6 +22,14 @@
 		</div>
 	</th:block>
 
+	<th:block layout:fragment="datepickerFieldWithTitle(fieldName, title)">
+		<div class="col-md-2">
+			<span th:text="${title}"></span>
+		</div>
+		<th:block layout:replace="fragments/standardForms :: datepickerField(${fieldName})"/>
+	</th:block>
+	
+
 	<section layout:fragment="standardFormField(fieldName,propertyName,disabled)">
 		<div class="col-md-2">
 			<span th:text="${propertyName}"></span>
