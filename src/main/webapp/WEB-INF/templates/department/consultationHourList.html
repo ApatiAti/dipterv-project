@@ -29,12 +29,12 @@
 							<div class="col-md-1">
 								<label>Kezdete</label>
 							</div>
-							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'startDate')" />
+							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'startDate', disabled = ${false})" />
 
 							<div class="col-md-1">
 								<label>Vége</label>
 							</div>
-							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'endDate')" />
+							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'endDate', disabled = ${false})" />
 						</div>
 						<div class="row">
 							<ul th:if="${#fields.hasErrors('*')}">
