@@ -14,7 +14,7 @@
 	<th:block layout:fragment="datepickerField(fieldName, disabled)">
 		<div class="col-md-4" >
 			<div class="input-group date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-				<input class="form-control" th:disabled="${disabled}" size="16" type="text" th:field="*{__${fieldName}__}"/>
+				<input class="form-control" th:disabled="${disabled}" size="16" type="text" th:field="*{__${fieldName}__}" style="margin-bottom: 10px"/>
 				<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 				<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
         	</div>
@@ -33,8 +33,7 @@
 			<span th:text="${propertyName}"></span>
 		</div>
 		<div class="col-md-4">
-			<input class="form-control" th:disabled="${disabled}" 
-				th:field="*{__${fieldName}__}" value="műtét" />
+			<input class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}" value="műtét" style="margin-bottom: 10px"/>
 		</div>
 		<div class="col-md-4" th:if="${#fields.hasErrors('__${fieldName}__')}">
 			<span th:errors="*{__${fieldName}__}" th:errorclass="text-danger">nöm látszik</span>
@@ -50,7 +49,7 @@
 			<div class="col-md-2">
 				<span th:text="${propertyName}"></span>
 			</div>
-			<div class="col-md-8" style="margin-botton:10px">
+			<div class="col-md-8" style="margin-bottom:10px">
 				<textarea rows="5" class="form-control" th:disabled="${disabled}" 
 					th:field="*{__${fieldName}__}" value="2012-12-12" ></textarea>
 			</div>
@@ -72,7 +71,7 @@
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(${fieldName}, ${propertyName}, ${true})"/>
 	</section>
 
-	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName,text , title, dropdownValues, disabled)">
+	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName, text, title, dropdownValues, disabled)">
 		<div class="row">
 			<div class="col-md-2">
 				<span th:text="${title}" ></span>
@@ -88,7 +87,7 @@
 	</th:block>
 
 	<th:block layout:fragment="dropdownFormFieldWithEnum(fieldName, enumValues, disabled)">
-		<select style="width : 150%" class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
+		<select style="width : 150% ; margin-bottom: 10px" class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
 			<option value=""></option>
 			<option th:each="option : ${enumValues}" th:value="${option}" th:text="${option}"></option>
 		</select>
@@ -100,7 +99,7 @@
 				<span th:text="${title}" ></span>
 			</div>
 			<div class="col-md-4">
-				<select class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
+				<select class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}" style="margin-bottom: 10px">
 					<option th:each="option : ${values}" th:value="${option}" th:text="${option}"></option>
 				</select>
 			</div>
