@@ -24,7 +24,7 @@
 			<div class="panel-body">
 				<form th:href="@{/appointment/create?chId=__${consultationHour.id}__}" th:object="${appointment}"
 					method="post">
-					<th:block layout:fragment="fragments/consultationHourFrag :: consultationHourDisabled" ></th:block>
+					<th:block layout:replace="fragments/consultationHourFrag :: consultationHourDisabled" ></th:block>
 						
 					<th:block th:object="${appointment}">
 						<div class="row">

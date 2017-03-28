@@ -42,7 +42,7 @@
 			</div>
 			<div class="panel-body">
 				<form th:action="@{/consultationHour}" th:object="${consultationHour}" method="POST">
-					<section layout:replace="fragments/consultationHourFrag :: consultationHour"></section>
+					<section layout:replace="fragments/consultationHourFrag :: consultationHour(${false})"></section>
 	
 					<div class="row">
 						<input th:unless="${isDisabled}" class="btn btn-info" type="submit" value="Mentés" />
