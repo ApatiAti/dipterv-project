@@ -102,7 +102,7 @@ public class DepartmentModificationController extends BaseController {
 	/**
 	 * ConsoltationHour létrehozása 
 	 */
-	@RequestMapping(value = "/consultationHour")
+	@RequestMapping(value = "/consultationHour", method=RequestMethod.POST)
 	public String createConsultationHour(Map<String, Object> model
 			, @ModelAttribute(ModelKeys.DEPARTMENT_ID) Long departmentId
 			, @Valid ConsultationHour consultationHour, BindingResult bindingResult
