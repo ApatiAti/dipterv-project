@@ -27,15 +27,7 @@
 					<th:block layout:replace="fragments/consultationHourFrag :: consultationHourDisabled" ></th:block>
 						
 					<th:block th:object="${appointment}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Panasz rövid leírása</span>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" th:field="*{complaints}"
-									value="2012-12-12" />
-							</div>
-						</div>
+						<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow('complaints', 'Panasz rövid leírása', ${false})" />						
 					</th:block>
 
 					<div class="row">
