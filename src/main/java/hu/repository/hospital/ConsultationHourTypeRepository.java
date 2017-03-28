@@ -10,5 +10,5 @@ import hu.model.hospital.ConsultationHourType;
 @Repository
 public interface ConsultationHourTypeRepository extends JpaRepository<ConsultationHourType, Long> {
 
-	List<ConsultationHourTypeRepository> findByDepartmentId(Long departmentId);
+	List<ConsultationHourType> findByDepartmentId(Long departmentId);
 }

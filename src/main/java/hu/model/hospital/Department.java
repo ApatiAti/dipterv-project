@@ -14,24 +14,27 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import hu.model.user.User;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "Department")
 public class Department implements Serializable {
 
 	private Long id;
 	private String name;
-	private Long phoneNumber;
+	private String phoneNumber;
 	private String place;
 	private User departmentHead;
 	private List<User> employee;
 	private String description;
-	
-	
+
+	@NotNull
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
@@ -43,6 +46,8 @@ public class Department implements Serializable {
 		this.id = id;
 	}
 
+	@Length(min =4)
+	@NotNull
 	@Column(nullable = false)
 	public String getName() {
 		return name;
@@ -52,16 +57,20 @@ public class Department implements Serializable {
 		this.name = name;
 	}
 
-	@Column(nullable = true , length = 12)
-	public Long getPhoneNumber() {
+	
+	@Length(min = 11, max = 12)
+	@NotBlank
+	@Column(nullable = true, length = 12)
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Column
+	@NotBlank
+	@Column(nullable = false)
 	public String getPlace() {
 		return place;
 	}
@@ -81,9 +90,7 @@ public class Department implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable( name = "department_to_user",
-			joinColumns = @JoinColumn( name = "idDepartment"),
-			inverseJoinColumns = @JoinColumn(name = "iduser"))
+	@JoinTable(name = "department_to_user", joinColumns = @JoinColumn(name = "idDepartment"), inverseJoinColumns = @JoinColumn(name = "iduser"))
 	public List<User> getEmployee() {
 		return employee;
 	}
@@ -92,6 +99,7 @@ public class Department implements Serializable {
 		this.employee = employee;
 	}
 
+	@NotBlank
 	@Length(max = 500)
 	@Column(length = 500)
 	public String getDescription() {
@@ -100,8 +108,6 @@ public class Department implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}	
+	}
 
-	
-	
 }

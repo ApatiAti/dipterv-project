@@ -15,12 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.validator.constraints.NotBlank;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "ConsultationHour")
 public class ConsultationHour implements Serializable {
@@ -82,7 +83,6 @@ public class ConsultationHour implements Serializable {
 	}
 
 	@Min(1)
-	@Max(15)
 	@NotNull
 	@Column(nullable = false)
 	public int getMaxNumberOfPatient() {
@@ -93,7 +93,7 @@ public class ConsultationHour implements Serializable {
 		this.maxNumberOfPatient = maxNumberOfPatient;
 	}
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	public String getRoom() {
 		return room;

@@ -23,10 +23,18 @@ public class ModelKeys {
 	public static final String PersonalData = "personalData";
 	public static final String PersonalDataIsDisabled = "personalDataIsDisabled";
 
-	// osztályok
+	/*
+	 * osztályok
+	 */
 	public static final String DepartmentList = "departmentList";
-	public static final String Department = "department";
+	public static final String DEPARTMENT = "department";
 
+	//	Department és consultationHour módosító oldal
+	public static final String DEPARTMENT_ID = "departmentId";
+	public static final String CONSULTATIONHOUR_CREATE = "consultationHourCreate";
+	public static final String CONSULTATIONHOUR_TYPES = "consultationTypes";
+	
+	
 	public static final String ConsultationHour = "consultationHour";
 	public static final String ConsultationHourList = "consultationHourList";
 
@@ -36,6 +44,9 @@ public class ModelKeys {
 	public static final String IsDisabled = "isDisabled";
 
 	public static final String DocumentAppFileList = "documentAppFileList";
+	
+	// 
+	
 	
     
 }

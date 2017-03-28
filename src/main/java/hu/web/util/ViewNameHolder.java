@@ -24,10 +24,15 @@ public class ViewNameHolder {
 	 * Osztályokhoz tartozó
 	 */
 	public static final String VIEW_DEPARTMENTS = "department/departmentList";
-
-
+	
+	// Department modification
+	public static final String VIEW_DEPARTMENT_MODIFICATION = "department/departmentModification";
+	public static final String REDIRECT_TO_DEPARTMENT_MODIFICATION = "redirect:/department/{depId}";
+	
 	public static final String VIEW_CONSULTATION_HOUR_DETAILS = "department/consultationHourDetails";
 	public static final String VIEW_CONSULTATION_HOUR_LIST = "department/consultationHourList";
+	
+	
 
 	public static final String VIEW_APPOINTMENT = "department/appointment";
 	public static final String VIEW_APPOINTMENT_MODIFY = "department/appointmentDetails";
@@ -38,7 +43,6 @@ public class ViewNameHolder {
 	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/department/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_MY_APPOINTMENTS = "redirect:/myAppointments";
 	public static final String REDIRECT_TO_APPOINTMENT = "redirect:/appointment/{appId}";
-	
 	
 	
 	

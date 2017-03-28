@@ -9,12 +9,15 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hu.exception.BasicServiceException;
 import hu.exception.DepartmentNotFoundException;
 import hu.model.hospital.Appointment;
 import hu.model.hospital.ConsultationHour;
+import hu.model.hospital.ConsultationHourType;
 import hu.model.hospital.Department;
 import hu.model.hospital.dto.ConsultationHourSearch;
 import hu.repository.hospital.ConsultationHourRepository;
+import hu.repository.hospital.ConsultationHourTypeRepository;
 import hu.repository.hospital.DepartmentRepository;
 
 @Service
@@ -26,6 +29,9 @@ public class DepartmentService {
 	@Autowired
 	private ConsultationHourRepository consultationHourRepository;
 	
+	@Autowired
+	private ConsultationHourTypeRepository consultationHourTypeRepository;
+	
 	public List<Department> getDepartments(){
 		return departmentRepository.findAll();
 	}
@@ -35,15 +41,24 @@ public class DepartmentService {
 		return consultationHourList;
 	}
 
-	public void createConsultationHour(ConsultationHour consultationHour, Long departmentId) throws DepartmentNotFoundException {
-		Department department = departmentRepository.findOne(departmentId);
-		
-		if (department != null){
-			consultationHour.setDepartment(department);
-			consultationHourRepository.save(consultationHour);
+	public void createConsultationHour(ConsultationHour consultationHour, Long departmentId) throws DepartmentNotFoundException, BasicServiceException {
+		if (departmentId != null){
+			Department department = departmentRepository.findOne(departmentId);
 			
+			if (department != null){
+				ConsultationHourType type = consultationHour.getType();
+				if (type != null) {
+					type = consultationHourTypeRepository.findOne(type.getId());
+					consultationHour.setDepartment(department);
+					consultationHourRepository.save(consultationHour);
+				} else {
+					throw new BasicServiceException("Nem létezik a megadott rendelési idő típus");
+				}
+			} else {
+				throw new DepartmentNotFoundException(departmentId);
+			}
 		} else {
-			throw new DepartmentNotFoundException();
+			throw new BasicServiceException("Nincs megadva megfelelő adat");			
 		}
 	}
 
@@ -83,5 +98,22 @@ public class DepartmentService {
 
 	public Department findDepartment(Long departmentId) {
 		return departmentRepository.findOne(departmentId);
+	}
+
+	@Transactional
+	public Department modifyDepartment(Department department) {
+		
+		if (department != null && department.getId() != null){
+			Department dbDepartment = departmentRepository.findOne(department.getId());
+			
+			dbDepartment.setDescription(department.getDescription());
+			dbDepartment.setName(department.getName());
+			dbDepartment.setPhoneNumber(department.getPhoneNumber());
+			dbDepartment.setPlace(department.getPlace());
+			
+			return departmentRepository.save(dbDepartment);
+		}
+		
+		return null;
 	}
 }
