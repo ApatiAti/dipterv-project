@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHour;
 import hu.model.hospital.Department;
 import hu.model.hospital.dto.ConsultationHourSearch;
+import hu.service.ConsultationHourService;
 import hu.service.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
@@ -33,6 +35,9 @@ public class DepartmentController extends BaseController {
 
 	@Autowired
 	private DepartmentService departmentService;
+	
+	@Autowired 
+	private ConsultationHourService consultationHourService;
 
 	@Override
 	protected Logger getLogger() {
@@ -93,13 +98,16 @@ public class DepartmentController extends BaseController {
 	/**
 	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület
 	 * /department/{id}/consultationHour/{id}ű
+	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}", method = RequestMethod.GET)
-	public String getConsultationHourDetailsPage(Map<String, Object> model, @PathVariable Long departmentId, @PathVariable Long consultationHourId){
+	public String getConsultationHourDetailsPage(Map<String, Object> model, @PathVariable Long departmentId, @PathVariable Long consultationHourId) throws BasicServiceException{
 		ConsultationHour consultationHour = departmentService.findConsultationHourWithAppointment(consultationHourId);
 		
+		addConsultationTypesToModel(model, departmentId, consultationHourService);
 		model.put(ModelKeys.ConsultationHour, consultationHour);
 
+		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 }

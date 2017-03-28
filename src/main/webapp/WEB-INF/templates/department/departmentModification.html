@@ -42,33 +42,7 @@
 			</div>
 			<div class="panel-body">
 				<form th:action="@{/consultationHour}" th:object="${consultationHour}" method="POST">
-					<div class="row">
-						<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle(fieldName = 'beginDate', title='Kezdet')" />
-						<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle(fieldName = 'endDate', title='Vége')" />					
-					</div>
-					
-					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'room', propertyName = 'Rendelés helye', disabled = ${false} )" />
-					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'maxNumberOfPatient', propertyName = 'Időpont limit', disabled = ${false} )" />
-<!-- 						ide legördülő mező kell  -->
-					<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id',text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${false})" />
-	
-<!-- 	fieldName = 'type',text='name', enumValues = ${consultationTypes}, disabled = ${false} -->
-<!-- 	<div class="row"> -->
-<!-- 			<div class="col-md-2"> -->
-<!-- 				<span >Rendelés típus</span> -->
-<!-- 			</div> -->
-		
-<!-- 			<div class="col-md-4"> -->
-<!-- 				<select class="form-control" th:disabled="${false}" th:field="*{type.id}"> -->
-<!-- 					<th:block th:each="option : ${consultationTypes}" th:object="${option}"> -->
-<!-- 						<option th:value="${option}" th:text="*{name}"></option> -->
-<!-- 					</th:block> -->
-<!-- 						<option th:each="option : ${consultationTypes}" th:value="${option.id}" th:text="${option.name}">Audi</option> -->
-<!-- 				</select> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-	
-	
+					<section layout:replace="fragments/consultationHourFrag :: consultationHour"></section>
 	
 					<div class="row">
 						<input th:unless="${isDisabled}" class="btn btn-info" type="submit" value="Mentés" />

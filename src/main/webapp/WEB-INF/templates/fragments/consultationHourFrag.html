@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="mainTemplate">
+<head>
+<meta charset="UTF-8" />
+<!--/*-->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+<link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
+<!--*/-->
+</head>
+<body>
+	<div class="page-header" layout:fragment="page_Header">
+		<h3>Page Header</h3>
+	</div>
+
+	<th:block layout:fragment="consultationHour(disabled)" th:object="${consultationHour}">
+		<div class="row">
+			<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('beginDate', 'Kezdet', ${disabled})" />
+			<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('endDate', 'Vége', ${disabled})" />					
+		</div>
+		
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'room', propertyName = 'Rendelés helye', disabled = ${disabled} )" />
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'maxNumberOfPatient', propertyName = 'Időpont limit', disabled = ${disabled} )" />
+		<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id',text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled})" />
+	</th:block>
+
+	<th:block layout:fragment="consultationHourDisabled" th:object="${consultationHour}">
+		<th:block layout:replace="fragments/consultationHourFrag :: consultationHour(${true})" ></th:block>
+	</th:block>
+	
+
+	<!--/*-->
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="#" th:src="@{/template_files/jquery.min.js}"></script>
+	<script src="#" th:src="@{/template_files/bootstrap.min.js}"></script>
+	<!--*/-->
+</body>
+</html>

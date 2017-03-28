@@ -1,11 +1,15 @@
 package hu.web.controller.abstarct;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hu.exception.BasicServiceException;
+import hu.model.hospital.ConsultationHourType;
+import hu.service.ConsultationHourService;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
@@ -51,4 +55,11 @@ public abstract class BaseController {
 		
 		return hasErrors;
 	}
+
+	public void addConsultationTypesToModel(Map<String, Object> model, Long departmentId, ConsultationHourService consultationHourService) throws BasicServiceException {
+		List<ConsultationHourType> consultationTypes = consultationHourService.findConsultationHourTypeByDepartmentId(departmentId);
+		
+		model.put(ModelKeys.CONSULTATIONHOUR_TYPES, consultationTypes);
+	}
+
 }

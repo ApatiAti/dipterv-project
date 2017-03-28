@@ -1,6 +1,5 @@
 package hu.web.controller.department;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -50,16 +49,16 @@ public class DepartmentModificationController extends BaseController {
 		
 		try{
 			Department department = departmentService.findDepartment(departmentId);
-			List<ConsultationHourType> consultationTypes = consultationHourService.findConsultationHourTypeByDepartmentId(departmentId);
-		
+			
+			addConsultationTypesToModel(model, departmentId, consultationHourService);
+			
 			ConsultationHour consultationHour = new ConsultationHour();
 			consultationHour.setType(new ConsultationHourType());
 			
+			model.put(ModelKeys.ConsultationHour, consultationHour);
 			model.put(ModelKeys.DEPARTMENT, department);
 			model.put(ModelKeys.DEPARTMENT_ID, departmentId);
-			model.put(ModelKeys.ConsultationHour, consultationHour);
-			model.put(ModelKeys.CONSULTATIONHOUR_TYPES, consultationTypes);
-		
+
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		} catch (BasicServiceException e){
 			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage());

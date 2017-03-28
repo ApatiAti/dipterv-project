@@ -24,45 +24,8 @@
 			<div class="panel-body">
 				<form th:href="@{/appointment/create?chId=__${consultationHour.id}__}" th:object="${appointment}"
 					method="post">
-					<th:block th:object="${consultationHour.department}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Osztály név</span>
-							</div>
-							<div class="col-md-4">
-								<input class="form-control" th:disabled="disabled" th:field="*{name}" value="Szülészet" />
-							</div>
-						</div>
-					</th:block>
-					<th:block th:object="${consultationHour}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Fogadás kezdete</span>
-							</div>
-							<div class="col-md-4">
-								<input class="form-control" th:disabled="disabled" th:field="*{beginDate}"
-									value="2012-12-12" />
-							</div>
-							<div class="col-md-2">
-								<span>Fogadás vége</span>
-							</div>
-							<div class="col-md-4">
-								<input class="form-control" th:disabled="disabled" th:field="*{endDate}" value="2012-12-13" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<span>Fogadás helye</span>
-							</div>
-							<div class="col-md-4">
-								<input class="form-control" th:disabled="disabled" th:field="*{room}" value="IB123" />
-							</div>
-						</div>
-						<div class="row">
-							<section layout:replace="fragments/standardForms:: standardFormFieldDisabled(fieldName = 'type.name', propertyName = 'Időpont típus')"></section>
-						</div>
-					</th:block>
-
+					<th:block layout:fragment="fragments/consultationHourFrag :: consultationHourDisabled" ></th:block>
+						
 					<th:block th:object="${appointment}">
 						<div class="row">
 							<div class="col-md-2">
