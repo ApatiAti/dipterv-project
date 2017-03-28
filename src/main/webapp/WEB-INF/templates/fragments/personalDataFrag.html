@@ -18,7 +18,7 @@
 					<span>Name</span>
 				</div>
 				<div class="col-md-1">
-					<th:block layout:replace="fragments/standardForms :: dropdownFormField('name.title', ${T(hu.model.user.TitleEnum).values()} , ${personalDataIsDisabled})" />
+					<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithEnum(fieldName = 'name.title', enumValues = ${T(hu.model.user.TitleEnum).values()}, disabled = ${personalDataIsDisabled})" />
 				</div>
 				<div class="col-md-3">
 					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"

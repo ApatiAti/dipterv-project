@@ -7,7 +7,7 @@
 <title>WebKorház</title>
 <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.standalone.min.css"/>
+<link rel="stylesheet" type="text/css" media="all"  href="../../css/gtvg.css" th:href="@{/template_files/css/bootstrap-datetimepicker.min.css}" />
 <link href="http://getbootstrap.com/examples/theme/theme.css" rel="stylesheet" />
 </head>
 <body>
@@ -59,17 +59,26 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="#" th:src="@{/template_files/jquery-3.1.1.min.js}"></script>
 	<script src="#" th:src="@{/template_files/bootstrap-3.3.7.min.js}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.hu.min.js"></script>
+<!-- 	<script src="#" th:src="@{/template_files/jquery.simple-dtpicker.js}"></script> -->
+<script src="#" th:src="@{/template_files/bootstrap-datetimepicker.min.js}"></script>
 	<!--/*-->
 		<!--  Ne mozgasd el a custom Scripteknek fentartott section-t -->
 	<!--*/-->
 	<script src="#" th:src="@{/template_files/myScripts.js}"></script>
 	
 	<script type="text/javascript">
-		<!-- Date picketer létrehozás -->
-		$(document).ready(createDatePicker());
-    </script>
+//   		Date picketer létrehozás
+		  $('.form_datetime').datetimepicker({
+		    	format: 'yyyy-mm-dd hh:ii',
+		        language:  'hu',
+		        weekStart: 1,
+		        todayBtn:  1,
+				autoclose: 1,
+				todayHighlight: 1,
+				startView: 2,
+				forceParse: 0,
+		    });
+     </script>
 	
 	<section layout:fragment="scripts"></section>
 </body>
