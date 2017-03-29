@@ -26,16 +26,12 @@
 					<form id="constultationHourSearch" th:object="${searchEntity}" method="post" 
 							action="#" th:action="@{/department/__${department.id}__/consultationHour/list}">
 						<div class="row">
-							<div class="col-md-1">
-								<label>Kezdete</label>
-							</div>
-							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'startDate', disabled = ${false})" />
-
-							<div class="col-md-1">
-								<label>Vége</label>
-							</div>
-							<th:block layout:replace="fragments/standardForms :: datepickerField(fieldName = 'endDate', disabled = ${false})" />
+							<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('startDate', 'Kezdete', ${false})" />
+							<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('endDate', 'Vége', ${false})" />
 						</div>
+						
+						<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle('chTypeId', 'name', 'Rendelés típusa', ${consultationTypes}, ${false}, ${true})" />
+						
 						<div class="row">
 							<ul th:if="${#fields.hasErrors('*')}">
 								<li th:each="err : ${#fields.errors('*')}" th:text="${err}" th:errorclass="text-danger">Input
@@ -44,7 +40,6 @@
 						</div>
 						<div class="row">
 							<div class="col-md-2">
-
 								<input class="btn btn-info" type="submit" value="Keresés" />
 							</div>
 						</div>

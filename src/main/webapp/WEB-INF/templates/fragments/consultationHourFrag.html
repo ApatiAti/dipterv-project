@@ -24,7 +24,7 @@
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'maxNumberOfPatient', propertyName = 'Időpont limit', disabled = ${disabled} )" />
 		
 		<th:block th:unless="${disabled}">
-			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id',text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled})" />
+			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id',text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled = ${false})" />
 		</th:block>
 		<th:block th:if="${disabled}">
 			<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'type.name', propertyName= 'Rendelés típus', disabled = ${disabled})" />

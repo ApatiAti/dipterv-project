@@ -71,13 +71,14 @@
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(${fieldName}, ${propertyName}, ${true})"/>
 	</section>
 
-	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName, text, title, dropdownValues, disabled)">
+	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName, text, title, dropdownValues, disabled, emptyEnabled)">
 		<div class="row">
 			<div class="col-md-2">
 				<span th:text="${title}" ></span>
 			</div>
 			<div class="col-md-4">
 				<select class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
+					<option th:if="${emptyEnabled}" value=""></option>
 					<th:block th:each="option : ${dropdownValues}" th:object="${option}">
 						<option th:value="${option.id}" th:text="*{__${text}__}"></option>
 					</th:block>

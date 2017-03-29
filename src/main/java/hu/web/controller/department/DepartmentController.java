@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHour;
@@ -51,23 +52,27 @@ public class DepartmentController extends BaseController {
 	public String getDeparmentsPage(Map<String, Object> model){
 		List<Department> departmentList = departmentService.getDepartments();
 		model.put(ModelKeys.DepartmentList, departmentList);
+		
 		return ViewNameHolder.VIEW_DEPARTMENTS;
 	}
 	
 	/**
 	 * A paramétereknek megfelelő Department-hez tartozó ConsultationHour-ok listázó felület
+	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/list", method = RequestMethod.GET)
-	public String getConsultationHourListPage(Map<String, Object> model, @PathVariable(value="departmentId") Long departmentId){
+	public String getConsultationHourListPage(Map<String, Object> model, @PathVariable(value="departmentId") Long departmentId) throws BasicServiceException{
 		Department department = departmentService.findDepartment(departmentId);
 		
-		
 		List<ConsultationHour> consultationHourList = departmentService.getConsultationHour(departmentId);
+		
 		ConsultationHourSearch searchEntity = new ConsultationHourSearch();
 		
 		model.putIfAbsent(ModelKeys.ConsultationHourList, consultationHourList);
 		model.putIfAbsent(ModelKeys.SearchEntity, searchEntity);
 		model.put(ModelKeys.DEPARTMENT, department);
+		
+		addConsultationTypesToModel(model, departmentId, consultationHourService);
 		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 	}
@@ -77,11 +82,10 @@ public class DepartmentController extends BaseController {
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/list", method = RequestMethod.POST)
 	public String sortConsultationHourList(Map<String, Object> model, @PathVariable Long departmentId
-			, ConsultationHourSearch searchEntity, BindingResult bindingResult){
+			, ConsultationHourSearch searchEntity, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 		
 		consultationHourSearchValidator.validate(searchEntity, bindingResult);
-		
-		// TODO ősosztály error kezelőjét berakni ide
+		 
 		if (bindingResult.hasErrors()){
 			model.put(ModelKeys.SearchEntity, searchEntity);
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
@@ -89,10 +93,10 @@ public class DepartmentController extends BaseController {
 		
 		List<ConsultationHour> consultationHourList = departmentService.sortConsultationHour(searchEntity, departmentId);
 		
-		model.put(ModelKeys.ConsultationHourList, consultationHourList);
-		model.put(ModelKeys.SearchEntity, searchEntity);
+		redirectAttributes.addFlashAttribute(ModelKeys.ConsultationHourList, consultationHourList);
+		redirectAttributes.addFlashAttribute(ModelKeys.SearchEntity, searchEntity);
 		
-		return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
+		return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_LIST.replace("{depId}", departmentId.toString());
 	}
 	
 	/**

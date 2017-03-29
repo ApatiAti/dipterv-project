@@ -1,6 +1,6 @@
 package hu.service;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -72,28 +72,13 @@ public class DepartmentService {
 		return consultationHour;
 	}
 
-	// TODO legújabb spring-jpadat tud Example alapján keresni
-	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
-		Date endDate = searchEntity.getEndDate();
-		Date startDate = searchEntity.getStartDate();
 
-		List<ConsultationHour> consultationHourList = null;
-		
-		if (startDate == null){
-			if (endDate == null){
-				consultationHourList = consultationHourRepository.findByDepartmentId(departmentId);
-			} else {
-				// TODO kitalálni hibajelzést
-			}
-		} else {
-			if (endDate == null){
-				consultationHourList = consultationHourRepository.findByBeginDateAfterAndDepartmentId(startDate, departmentId);
-			} else {
-				consultationHourList = consultationHourRepository.findByBeginDateBetween(startDate, endDate);				
-			}
+	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
+		if (searchEntity != null){
+			return consultationHourRepository.findByDepartmentId(departmentId, searchEntity.getStartDate(), searchEntity.getEndDate(), searchEntity.getChTypeId());
 		}
-			
-		return consultationHourList;
+		
+		return new ArrayList<ConsultationHour>();
 	}
 
 	public Department findDepartment(Long departmentId) {
