@@ -40,7 +40,7 @@ public class ViewNameHolder {
 	public static final String VIEW_MY_DOCUMENTS = "department/myDocumentfiles";
 	public static final String VIEW_MY_APPOINTMENT = "department/myAppointmentList";
 	
-	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/department/{depId}/consultationHour/list";
+	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_MY_APPOINTMENTS = "redirect:/myAppointments";
 	public static final String REDIRECT_TO_APPOINTMENT = "redirect:/appointment/{appId}";
 	

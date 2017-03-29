@@ -24,7 +24,7 @@
 			<div class="panel-body form-group">
 				<div class="row">
 					<form id="constultationHourSearch" th:object="${searchEntity}" method="post" 
-							action="#" th:action="@{/department/__${department.id}__/consultationHour/list}">
+							action="#" th:action="@{/__${department.id}__/consultationHour/list}">
 						<div class="row">
 							<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('startDate', 'Kezdete', ${false})" />
 							<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('endDate', 'Vége', ${false})" />
@@ -66,7 +66,7 @@
 								th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
 
 							<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
-								th:href="@{/department/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
+								th:href="@{/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
 								
 							<!--csak orvos/admin kell hozzá role is  -->
 							<!--	<a class="btn btn-warning" href="#" -->

@@ -114,7 +114,7 @@ public class DepartmentModificationController extends BaseController {
 		}
 		
 		try {
-			departmentService.createConsultationHour(consultationHour, departmentId);
+			consultationHourService.createConsultationHour(consultationHour, departmentId);
 			succesLogAndDisplayMessage(redirectAttributes, "Sikeres rendelési idő foglalás");
 			
 		} catch (BasicServiceException | DepartmentNotFoundException e) {
