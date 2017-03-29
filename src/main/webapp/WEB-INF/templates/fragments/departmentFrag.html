@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="mainTemplate">
+	layout:decorator="mainTemplate" xmlns:sec="http://www.thymeleaf.org" >
 <head>
 <meta charset="UTF-8" />
 <!--/*-->
@@ -46,7 +46,8 @@
 					</div>
 					<div class="row">
 						<a class="btn btn-info" href="#" th:href="@{/__*{id}__/consultationHour/list}">Fogadó órák megtekintése</a>
-						<a class="btn btn-warning" href="#" th:href="@{/department/__*{id}__}">Osztály adatainak módosítása</a>
+						<a sec:authorize="${hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')}"
+							class="btn btn-warning" href="#" th:href="@{/department/__*{id}__}">Osztály adatainak módosítása</a>
 					</div>
 				</div>
 			</div>

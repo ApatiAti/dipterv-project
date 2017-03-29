@@ -69,7 +69,7 @@ insert into consultationhour_type(name, departmentId) values( @consultationHour_
 insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name6, @departmentId2);
 
 
--- ==[ Fogadó órák insertje ]==--consultationhour
+-- ==[ Fogadó órák insertje ]==--
 insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1));
 insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2));
 
@@ -78,18 +78,24 @@ insert into appointment(complaints, consultationHourId, patientId) values ('Fáj
 
 -- ==[ jogosultságok és szerepkörök létrehozása]== --
 insert into role (code, description) values ('ROLE_USER', 'Egyszerű bejelentkezett felhasználói jog');
+insert into role (code, description) values ('ROLE_MODIFY_PERSONAL_DATA',  'Személyes adatok módosításas');
+
 insert into role (code, description) values ('ROLE_VIEW_CONSULTATION_HOUR', 'Rendelési idő megtekintése');
 insert into role (code, description) values ('ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS', 'Rendelési időhöz foglalt időpontok megtekintése');
 insert into role (code, description) values ('ROLE_CREATE_CONSULTATION_HOUR', 'Rendelési idő készítése');
+insert into role (code, description) values ('ROLE_MODIFY_CONSULTATION_HOUR', 'Rendelési idő szerkesztése');
+
 insert into role (code, description) values ('ROLE_LIST_MY_APPOINTMENTS', 'Foglalt időpontjaim listázása');
 insert into role (code, description) values ('ROLE_VIEW_APPOINTMENT', 'Foglalási időpont megtekintése');
 insert into role (code, description) values ('ROLE_CREATE_APPOINTMENT', 'Foglalási időpont készítése');
 insert into role (code, description) values ('ROLE_MODIFY_APPOINTMENT', 'Foglalási időpont módosítása');
 insert into role (code, description) values ('ROLE_CANCEL_APPOINTMENT', 'Foglalási időpont visszamondása');
+
 insert into role (code, description) values ('ROLE_VIEW_MY_DOCUMENTS',  'Saját leletek megtekintése');
 insert into role (code, description) values ('ROLE_UPLOAD_DOCUMENT', 'Leletek feltöltése');
 insert into role (code, description) values ('ROLE_DOWNLOAD_DOCUMENT',  'Leletek letöltése');
-insert into role (code, description) values ('ROLE_MODIFY_PERSONAL_DATA',  'Személyes adatok módosításas');
+
+insert into role (code, description) values ('ROLE_MODIFY_DEPARTMENT',  'Osztály adatainak módosítása');
 
      
 -- ==[ Jogosultság csoportok látrehozása]== --
@@ -116,8 +122,10 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_CREATE_CONSULTATION_HOUR'));
+insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_MODIFY_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_UPLOAD_DOCUMENT'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_DOWNLOAD_DOCUMENT'));
+insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_MODIFY_DEPARTMENT'));
 
 
 -- ==[adminisztrátor jogosultágainak létrehozása ]==--
@@ -125,8 +133,9 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_CREATE_CONSULTATION_HOUR'));
+insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_PERSONAL_DATA'));
-
+insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_DEPARTMENT'));
 
 -- ==[ szerepkör beállítása 'Teszt user1' citizenhez ]==--
 insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from user where username = @patient1), (select id from rolegroup where code = 'COMMON_USER'));

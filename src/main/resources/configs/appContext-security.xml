@@ -50,11 +50,16 @@
 				        delete-cookies="JSESSIONID"
 				        invalidate-session="true" />
  
+ 		<sec:intercept-url pattern="/department/[departmentId]" access="hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')" />
+ 		<sec:intercept-url pattern="/department" access="hasRole('MODIFY_DEPARTMENT')" method="POST" />
+ 		<sec:intercept-url pattern="/consultationHour" access="hasRole('CREATE_CONSULTATION_HOUR')" method="POST" />
+ 		
+ 		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
  
-		<sec:intercept-url pattern="/department/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
-		<sec:intercept-url pattern="/department/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" />
+		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
+		<sec:intercept-url pattern="/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" />
 		
-		<sec:intercept-url pattern="/department/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" />
+		<sec:intercept-url pattern="/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" />
 		<sec:intercept-url pattern="/myAppointments**" access="hasRole('LIST_MY_APPOINTMENTS')" />
 		<sec:intercept-url pattern="/appointment/**" access="hasRole('VIEW_APPOINTMENT')" />
 		<sec:intercept-url pattern="/appointment**" access="hasRole('CREATE_APPOINTMENT')" />

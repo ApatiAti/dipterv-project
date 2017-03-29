@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="mainTemplate">
+	layout:decorator="mainTemplate" xmlns:sec="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
 <!--/*-->
@@ -17,20 +17,27 @@
 	<section layout:fragment="page-content">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Foglalási adatok</h3>
+				<h3 class="panel-title">Osztály adatok</h3>
 			</div>
 			<div class="panel-body">
-				<form th:action="@{/department}" th:object="${department}" method="POST">
+				<form th:action="@{/department}" th:object="${department}" method="POST" sec:authorize="hasRole('MODIFY_DEPARTMENT')">
 					<input hidden="true" th:field="*{id}" />
 					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'name', propertyName = 'Osztály neve', disabled = ${false})" />
 					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'phoneNumber', propertyName = 'Telefon szám', disabled = ${false})" />
 					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'place', propertyName = 'Elérhetőség', disabled = ${false})" />
 					<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'description', propertyName = 'Leírása', disabled = ${false})" />
-					
-					<div class="row">
-						<input class="btn btn-info" type="submit" value="Mentés"/>
+							 
+					<div class="row" >
+							<input class="btn btn-info" type="submit" value="Mentés"/>
 					</div>
 				</form>
+				
+				<div th:object="${department}" sec:authorize="!hasRole('MODIFY_DEPARTMENT')">
+					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'name', propertyName = 'Osztály neve', disabled = ${true})" />
+					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'phoneNumber', propertyName = 'Telefon szám', disabled = ${true})" />
+					<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'place', propertyName = 'Elérhetőség', disabled = ${true})" />
+					<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'description', propertyName = 'Leírása', disabled = ${true})" />
+				</div>
 			</div>
 			
 			
@@ -44,7 +51,7 @@
 				<form th:action="@{/consultationHour}" th:object="${consultationHour}" method="POST">
 					<section layout:replace="fragments/consultationHourFrag :: consultationHour(${false})"></section>
 	
-					<div class="row">
+					<div class="row" sec:authorize="hasRole('CREATE_CONSULTATION_HOUR')">
 						<input th:unless="${isDisabled}" class="btn btn-info" type="submit" value="Mentés" />
 					</div>
 				</form>
