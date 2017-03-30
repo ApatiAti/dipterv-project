@@ -6,12 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,15 +59,11 @@ public class DocumentService {
 			String errorMessage = "Hiba történt a file mentése során";
 			logger.error(errorMessage, e);
 			throw new BasicServiceException(errorMessage);
-		} catch (MailException | MessagingException e) {
-			String errorMessage = "Hiba történt az email kiküldése során";
-			logger.error(errorMessage);
-			throw new BasicServiceException(errorMessage);
-		}
+		} 
 	}
 
 	@Transactional
-	private void sendNotificationEmailToPatient(DocumentFileAppointment docFileApp) throws MailException, MessagingException {
+	private void sendNotificationEmailToPatient(DocumentFileAppointment docFileApp) throws BasicServiceException {
 		Map<String, Object> emailModel = new HashMap<>();
 		User patient = docFileApp.getAppointment().getPatient();
 		
