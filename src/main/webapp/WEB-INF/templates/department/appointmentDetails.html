@@ -22,7 +22,7 @@
 				<h3 class="panel-title">Foglalási adatok</h3>
 			</div>
 			<div class="panel-body">
-				<form th:href="@{/appointment/modify}" th:object="${appointment}" method="post">
+				<form th:action="@{/appointment/modify}" th:object="${appointment}" method="post">
 					<input hidden="true" th:field="*{id}" />
 					<th:block th:object="${consultationHour.department}">
 						<div class="row">
