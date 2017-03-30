@@ -114,14 +114,14 @@ public class DepartmentModificationController extends BaseController {
 		}
 		
 		try {
-			consultationHourService.createConsultationHour(consultationHour, departmentId);
+			ConsultationHour newConsultationHour = consultationHourService.createConsultationHour(consultationHour, departmentId);
 			succesLogAndDisplayMessage(redirectAttributes, "Sikeres rendelési idő foglalás");
+
+			return ViewNameHolder.redirectToConsultationHourDetails(newConsultationHour);
 			
 		} catch (BasicServiceException | DepartmentNotFoundException e) {
 			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
-		
-		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 }

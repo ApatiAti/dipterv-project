@@ -62,7 +62,7 @@
 		<sec:intercept-url pattern="/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" />
 		<sec:intercept-url pattern="/myAppointments**" access="hasRole('LIST_MY_APPOINTMENTS')" />
 		<sec:intercept-url pattern="/appointment/**" access="hasRole('VIEW_APPOINTMENT')" />
-		<sec:intercept-url pattern="/appointment**" access="hasRole('CREATE_APPOINTMENT')" />
+		<sec:intercept-url pattern="/{consultationHourId}/appointment/create**" access="hasRole('CREATE_APPOINTMENT')" />
 		<sec:intercept-url pattern="/appointment/modify/**" access="hasRole('MODIFY_APPOINTMENT')" />
 		<sec:intercept-url pattern="/appointment/delete**" access="hasRole('CANCEL_APPOINTMENT')" />
 		

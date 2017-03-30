@@ -21,8 +21,27 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Consultation Hour</h3>
 			</div>
+<!-- 			isConsultationHourModification -->
+			
 			<div class="panel-body form-group" th:object="${consultationHour}">
-				<th:block layout:replace="fragments/consultationHourFrag :: consultationHourDisabled"></th:block>
+				<th:block th:switch="${isConsultationHourModification}" >
+					<th:block th:case="false" >
+						<th:block layout:replace="fragments/consultationHourFrag :: consultationHourDisabled"></th:block>
+						<div class="row" sec:authorize="hasRole('MODIFY_CONSULTATION_HOUR')">
+							<a th:href="@{/__*{department.id}__/consultationHour/__*{id}__/edit}" class="btn btn-info">Módosítás</a>
+						</div>	
+					</th:block>
+					<th:block th:case="true" >
+						<form th:action="@{/consultationHour/__*{id}__/edit}" method="POST">
+							<input th:field="*{id}" hidden="hidden" ></input>
+							<th:block layout:replace="fragments/consultationHourFrag :: consultationHour(${false})"></th:block>
+							<div class="row" sec:authorize="hasRole('MODIFY_CONSULTATION_HOUR')">
+								<input class="btn btn-info" type="submit" value="Módosítások mentése"></input>
+							</div>	
+						</form>
+					</th:block>
+				</th:block>
+				
 			</div>
 		</div>
 		
@@ -58,7 +77,7 @@
 		
 		
 		<div class="panel-body">
-			<a class="btn btn-info" th:href="@{/__${department.id}__/consultationHour/list}" >Vissza</a>
+			<a class="btn btn-info" th:href="@{/__${consultationHour.department.id}__/consultationHour/list}" >Vissza</a>
 		</div>
 		
 	</section>

@@ -3,6 +3,8 @@ package hu.web.controller.department;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,14 +93,62 @@ public class ConsultationHourController extends BaseController {
 	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}", method = RequestMethod.GET)
-	public String getConsultationHourDetailsPage(Map<String, Object> model, @PathVariable Long departmentId, @PathVariable Long consultationHourId) throws BasicServiceException{
+	public String getConsultationHourDetailsPage(Map<String, Object> model
+			, @PathVariable Long departmentId
+			, @PathVariable Long consultationHourId) throws BasicServiceException{
+		
+		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, false);
+
+		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
+	}
+
+	/**
+	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület megnyitása módosításra
+	 * /department/{id}/consultationHour/{id}/edit
+	 * @throws BasicServiceException 
+	 */
+	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}/edit", method=RequestMethod.GET)
+	public String modifyConsultationHour(Map<String, Object> model
+			, @PathVariable Long departmentId
+			, @PathVariable Long consultationHourId) throws BasicServiceException{
+		
+		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, true);
+		
+		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS; 
+	}
+	
+	/**
+	 * ConsoltationHour módosítása 
+	 */
+	@RequestMapping(value = "/consultationHour/{consultationHourId}/edit", method=RequestMethod.POST)
+	public String modifyConsultationHour(Map<String, Object> model
+			, @Valid ConsultationHour consultationHour, BindingResult bindingResult
+			, RedirectAttributes redirectAttributes){
+
+		boolean hasError = handleValidationErrors(bindingResult, model);
+		if (hasError){
+			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
+			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
+		}
+		
+		try {
+			ConsultationHour modifiedConsultationHour = consultationHourService.modifyConsultationHour(consultationHour);
+			succesLogAndDisplayMessage(redirectAttributes, "Sikeres rendelési idő módosítás!");
+			return ViewNameHolder.redirectToConsultationHourDetails(modifiedConsultationHour);
+
+		} catch (BasicServiceException e) {
+			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			return ViewNameHolder.REDIRECT_TO_HOME;
+		}
+	}	
+
+	private void createModelForConsultationHourDetailsPage(Map<String, Object> model, Long departmentId,
+			Long consultationHourId) throws BasicServiceException {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHourWithAppointment(consultationHourId);
 		
 		addConsultationTypesToModel(model, departmentId, consultationHourService);
 		model.put(ModelKeys.ConsultationHour, consultationHour);
-
-		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
-	
-	
 }

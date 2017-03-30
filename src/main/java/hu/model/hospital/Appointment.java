@@ -35,7 +35,6 @@ public class Appointment implements Serializable {
 		this.id = id;
 	}
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn( name = "consultationHourId")
 	public ConsultationHour getConsultationHour() {
@@ -46,7 +45,7 @@ public class Appointment implements Serializable {
 		this.consultationHour = consultationHour;
 	}
 
-	@NotNull
+
 	@ManyToOne
 	@JoinColumn(name = "patientId")
 	public User getPatient() {

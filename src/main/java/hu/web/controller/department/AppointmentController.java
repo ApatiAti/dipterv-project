@@ -103,12 +103,12 @@ public class AppointmentController extends BaseController {
 	/**
 	 * Új Appointment létrehozása 
 	 */
-	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/{consultationHourId}/appointment/create", method = RequestMethod.POST)
 	public String createAppointment(Map<String, Object> model, @Valid Appointment appointment
 			,BindingResult bindingResult
+			,@PathVariable(value = "consultationHourId") Long consultationHourId
 			,@ModelAttribute(ModelKeys.CurrentUserName) String currentUser
-			// TODO miért requestParam ha post ?!?!!
-			,@RequestParam(value = "chId" , required = true) Long consultationHourId, RedirectAttributes redirectAttributes){
+			, RedirectAttributes redirectAttributes){
 		
 		// TODO validation
 		if (handleValidationErrors(bindingResult, model)){

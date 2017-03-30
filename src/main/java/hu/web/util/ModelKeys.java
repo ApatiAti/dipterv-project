@@ -44,6 +44,8 @@ public class ModelKeys {
 	public static final String IsDisabled = "isDisabled";
 
 	public static final String DocumentAppFileList = "documentAppFileList";
+
+	public static final String IS_CONSULTATIONHOUR_MOFICATION = "isConsultationHourModification";
 	
 	// 
 	

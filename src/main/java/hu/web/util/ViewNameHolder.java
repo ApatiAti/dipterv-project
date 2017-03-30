@@ -1,5 +1,7 @@
 package hu.web.util;
 
+import hu.model.hospital.ConsultationHour;
+
 public class ViewNameHolder {
 
 	/*
@@ -31,7 +33,7 @@ public class ViewNameHolder {
 	
 	public static final String VIEW_CONSULTATION_HOUR_DETAILS = "department/consultationHourDetails";
 	public static final String VIEW_CONSULTATION_HOUR_LIST = "department/consultationHourList";
-	
+	public static final String VIEW_CONSULTATION_HOUR_MODIFICATION = "department/consultationHourModification";
 	
 
 	public static final String VIEW_APPOINTMENT = "department/appointment";
@@ -43,6 +45,13 @@ public class ViewNameHolder {
 	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_MY_APPOINTMENTS = "redirect:/myAppointments";
 	public static final String REDIRECT_TO_APPOINTMENT = "redirect:/appointment/{appId}";
+	public static final String REDIRECT_TO_CONSULTATION_HOUR_DETAILS = "redirect:/{depId}/consultationHour/{chId}";
+	
+	
+	
+	public static String redirectToConsultationHourDetails(ConsultationHour consultationHour) {
+		return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_DETAILS.replace("{depId}", consultationHour.getDepartment().getId().toString()).replace("{chId}", consultationHour.getId().toString());
+	}
 	
 	
 	
