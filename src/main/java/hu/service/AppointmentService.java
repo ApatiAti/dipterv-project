@@ -1,6 +1,5 @@
 package hu.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,12 +33,15 @@ public class AppointmentService {
 
 	@Autowired
 	DocumentService documentService;
+
+	@Autowired
+	private ConsultationHourService consultationHourService;
 	
 	@Transactional
 	public Appointment buildNewAppointment(Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException {
 		ConsultationHour consultationHour = consultationHourRepository.findOne(consultationHourId);
 		
-		validateConsultationHour(consultationHour);
+		consultationHourService.validateConsultationHour(consultationHour);
 		
 		User currentUser = userRepository.findByUsername(currentUserName);
 		
@@ -59,33 +61,19 @@ public class AppointmentService {
 			}
 		}
 		
-		
 		Appointment buildAppointment = new Appointment();
 		buildAppointment.setConsultationHour(consultationHour);
 		
 		return buildAppointment;
 	}
 
-	// TODO consultationHourService-be átrakni
-	public void validateConsultationHour(ConsultationHour consultationHour)
-			throws ConsultationHourNotFound, BasicServiceException {
-		if (consultationHour == null){
-			throw new ConsultationHourNotFound();
-		}
-		if (consultationHour.getBeginDate().before(new Date())){
-			throw new BasicServiceException("Nen lehet időpontot foglalni a kezdés után!");
-		}
-		if (consultationHour.getNumberOfAppointment() >= consultationHour.getMaxNumberOfPatient()){
-			throw new BasicServiceException("Időpont betelt!");
-		}
-	}
 
 	@Transactional
 	public void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
 		
 		ConsultationHour consultationHour = consultationHourRepository.findOne(consultationHourId);
 		
-		validateConsultationHour(consultationHour);
+		consultationHourService.validateConsultationHour(consultationHour);
 		
 		User currentUser = userRepository.findByUsername(currentUserName);
 		
@@ -93,12 +81,10 @@ public class AppointmentService {
 			throw new UserNotFoundException();
 		}
 		
-		
 		appointment.setConsultationHour(consultationHour);
 		appointment.setPatient(currentUser);
 		
 		appointmentRepository.save(appointment);
-		
 	}
 
 	public List<Appointment> getAppintmentByUsername(String currentUserName) {
