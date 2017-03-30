@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="| Tisztelt ${name.fullName} !|">
+      Hello, Peter Static!
+    </p>
+    <p>
+      A <span th:text="${#dates.format(beginDate, 'yyyy-MMM-dd HH:mm:ss')}">28-12-2012</span> kezdődő és
+      <span th:text="${#dates.format(endDate, 'yyyy-MMM-dd HH:mm:ss')}">28-12-2012</span>-kor végződő 
+       foglalt időpontja megváltozott.  
+    </p>
+    <p>
+      <em>Korház</em>
+    </p>
+  </body>
+</html>
