@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,16 @@ public class DepartmentService {
 	public Department findDepartment(Long departmentId) {
 		return departmentRepository.findOne(departmentId);
 	}
+	
+	@Transactional
+	public Department findDepartmentWithDoctors(long departmentId) {
+		Department department = findDepartment(departmentId);
+		if (department != null){
+			Hibernate.initialize(department.getEmployee());
+		}
+		
+		return department;
+	}
 
 	@Transactional
 	public Department modifyDepartment(Department department) {
@@ -40,4 +51,5 @@ public class DepartmentService {
 		
 		return null;
 	}
+
 }
