@@ -1,4 +1,5 @@
 
+
  delete from documentfile;
  delete from documentfile_appointment;
 
@@ -49,7 +50,7 @@ insert into user (email, username, password, position) values('d@d.d', @doctor2,
 insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Kiss Piroska', 'Teszt', 'User1', null, '06301234567', '123456789', (select id from user where username = @patient1));
 insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Valami Ember', 'Teszt', 'User2', null, '06301234567', '123466789', (select id from user where username = @patient2));
 insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Teszt Admina', 'Admin', 'Béla', 'DR', '06301234123', '345556789', (select id from user where username = @doctor1));
-insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Doktor Róbertina', 'Doctor', 'József', 'DR', '06301234123', '345556789', (select id from user where username = @doctor2));
+insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Doktor Róbertina', 'Doctor', 'József', 'DR', '06301234123', '345555289', (select id from user where username = @doctor2));
 
 
 -- ==[ Korházi osztályok beállítása ]==--
@@ -57,8 +58,8 @@ insert into personalData(birthDate, motherName, firstName, lastName, title, phon
 insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId1 ,'Szemészet', '36305248967', 'IB025', (select id from user where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId2 ,'Ortopédia', '36305345967', 'IB025', (select id from user where username = @doctor2), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
                          
-insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor1);
-insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor2);
+insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor1));
+insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor2));
 
 
 -- ==[ Fogadó óra típusok ]==--

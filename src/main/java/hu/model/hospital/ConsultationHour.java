@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -68,6 +70,7 @@ public class ConsultationHour implements Serializable {
 
 	@Future
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	public Date getBeginDate() {
 		return beginDate;
@@ -79,6 +82,7 @@ public class ConsultationHour implements Serializable {
 
 	@Future
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	public Date getEndDate() {
 		return endDate;
