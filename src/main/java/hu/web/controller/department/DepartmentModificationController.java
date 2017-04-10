@@ -1,5 +1,7 @@
 package hu.web.controller.department;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -20,6 +22,7 @@ import hu.exception.DepartmentNotFoundException;
 import hu.model.hospital.ConsultationHour;
 import hu.model.hospital.ConsultationHourType;
 import hu.model.hospital.Department;
+import hu.model.user.User;
 import hu.service.ConsultationHourService;
 import hu.service.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
@@ -27,7 +30,7 @@ import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
 @Controller
-@SessionAttributes({ModelKeys.DEPARTMENT_ID, ModelKeys.DEPARTMENT})
+@SessionAttributes({ModelKeys.DEPARTMENT_ID, ModelKeys.DEPARTMENT, ModelKeys.DOCTORS_LIST, ModelKeys.CONSULTATIONHOUR_TYPES})
 public class DepartmentModificationController extends BaseController {
 
 	private static final Logger logger = Logger.getLogger(DepartmentModificationController.class);
@@ -48,14 +51,17 @@ public class DepartmentModificationController extends BaseController {
 			, @PathVariable long departmentId, RedirectAttributes redirectAttributes){
 		
 		try{
-			Department department = departmentService.findDepartment(departmentId);
+			Department department = departmentService.findDepartmentWithDoctors(departmentId);
 			
 			addConsultationTypesToModel(model, departmentId, consultationHourService);
 			
 			ConsultationHour consultationHour = new ConsultationHour();
 			consultationHour.setType(new ConsultationHourType());
 			
+			List<User> employeeList = department != null ? department.getEmployee() : new ArrayList<>();
+			
 			model.put(ModelKeys.ConsultationHour, consultationHour);
+			model.put(ModelKeys.DOCTORS_LIST, employeeList);
 			model.put(ModelKeys.DEPARTMENT, department);
 			model.put(ModelKeys.DEPARTMENT_ID, departmentId);
 
@@ -108,9 +114,14 @@ public class DepartmentModificationController extends BaseController {
 			, RedirectAttributes redirectAttributes){
 
 		boolean hasError = handleValidationErrors(bindingResult, model);
-		if (hasError){
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
-			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
+		boolean intervalError = consultationHour.getBeginDate().after(consultationHour.getEndDate());
+		if (hasError || intervalError){
+			if (intervalError){
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hibás adatok lettek megadva. Kezdő és vége dátum rosszul lett megadva");
+			} else {
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
+			}
+			return ViewNameHolder.REDIRECT_TO_DEPARTMENT_MODIFICATION.replace("{depId}", departmentId.toString());
 		}
 		
 		try {
