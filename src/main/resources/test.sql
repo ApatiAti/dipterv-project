@@ -41,10 +41,10 @@ SET @consultationHour_type_name5 ='Lúdtalp vizsgálat';
 SET @consultationHour_type_name6 ='Protézis műtét';
 
 -- jelszó = admindocumentfile_appointmentdepartment_to_userdepartment_to_userdocumentfile_appointment
-insert into user (email, username, password, position) values('a@a.a', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre', 'PATIENT');
-insert into user (email, username, password, position) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre', 'PATIENT');
-insert into user (email, username, password, position) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre', 'DOCTOR');
-insert into user (email, username, password, position) values('d@d.d', @doctor2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre', 'DOCTOR');
+insert into user (email, username, password) values('a@a.a', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into user (email, username, password) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into user (email, username, password) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into user (email, username, password) values('d@d.d', @doctor2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('d@d.d', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user1_1', 0  ,'2015-12-13 01:02:03' , (select id from region where name='region1'));
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('c@c.c', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user3', 400, '2015-12-13 01:02:03' , (select id from region where name='region3'));
 -- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('e@e.e', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'admin', 0 ,'2015-12-13 01:02:03' , (select id from region where name='region3'));

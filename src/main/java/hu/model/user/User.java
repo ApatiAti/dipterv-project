@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +23,6 @@ public class User implements Serializable {
 	private String username;
 	private String email;
 	private PersonalData personalData;
-	private Position position; 
 	
 	public User() {
 	}
@@ -101,15 +98,4 @@ public class User implements Serializable {
 	public void setPersonalData(PersonalData personalData) {
 		this.personalData = personalData;
 	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	public Position getPosition() {
-		return position;
-	}
-
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
 }
