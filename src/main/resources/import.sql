@@ -158,6 +158,7 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 
 -- ==[Orvos jogosultágainak létrehozása ]==--
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_USER'));
+insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_APPOINTMENT'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'DOCTOR'), (select id from role where code = 'ROLE_CREATE_CONSULTATION_HOUR'));
