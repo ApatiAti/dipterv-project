@@ -257,6 +257,7 @@ public class AppointmentController extends BaseController {
 			@PathVariable("appointmentId") Long appointmentId,	
 			@RequestParam("name") String fileName,
 			@RequestParam("file") MultipartFile file,	
+			@RequestParam("documentType") DocumentTypeEnum documentTypeEnum,
 			RedirectAttributes redirectAttributes) {
 		
 		/* 
@@ -279,7 +280,7 @@ public class AppointmentController extends BaseController {
 			
 			if (file != null && !file.isEmpty()){
 				try {
-					documentService.saveUploadedFile(appointmentId, file, fileName);
+					documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
 				} catch (BasicServiceException e) {
 					errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a fájl feltöltés közben", e);
 				}

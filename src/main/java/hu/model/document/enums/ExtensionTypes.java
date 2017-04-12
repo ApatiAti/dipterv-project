@@ -1,11 +1,13 @@
 package hu.model.document.enums;
 
+import org.springframework.util.StringUtils;
+
 public enum ExtensionTypes {
-	PDF("pdf"),
-	WORD_DOC("doc", "docx"),
-	PICTURE("bmp", "jpg", "png"),
-	VIDEO("mpeg", "mp4"),
-	ES3("es3");
+	PDF(".pdf"),
+	WORD_DOC(".doc", ".docx"),
+	PICTURE(".bmp", ".jpg", ".png"),
+	VIDEO(".mpeg", ".mp4"),
+	ES3(".es3");
 	
 	private final Object[] extensions;
 
@@ -13,16 +15,18 @@ public enum ExtensionTypes {
 		this.extensions = extensions;
 	}
 
-	public static ExtensionTypes fromExtensionValue(String extensionValue){
-		for (ExtensionTypes extensionTypes : ExtensionTypes.values()) {
-			for (Object extension : extensionTypes.extensions) {
-				if(((String)extension).equals(extensionValue)){
-					return extensionTypes;
+	public static ExtensionTypes fromFileName(String fileName){
+		if (!StringUtils.isEmpty(fileName) && fileName.matches("(.)*\\.[\\w]{3,4}$")){
+			for (ExtensionTypes extensionTypes : ExtensionTypes.values()) {
+				for (Object extension : extensionTypes.extensions) {
+					if(fileName.endsWith(((String)extension))){
+						return extensionTypes;
+					}
 				}
 			}
 		}
 		
-		throw new RuntimeException("Not implemented.");
+		return null;
 	}
 	
 	public Object[] getExtensions() {

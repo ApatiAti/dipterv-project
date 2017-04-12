@@ -20,6 +20,7 @@ import hu.model.document.DocumentFileAppointment;
 import hu.model.document.DocumentFileContent;
 import hu.model.document.DocumentType;
 import hu.model.document.enums.DocumentTypeEnum;
+import hu.model.document.enums.ExtensionTypes;
 import hu.model.hospital.Appointment;
 import hu.model.user.User;
 import hu.repository.document.DocumentFileAppointmentRepository;
@@ -58,19 +59,42 @@ public class DocumentService {
 	
 	
 	@Transactional
-	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException {
+	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName, DocumentTypeEnum documentTypeId) throws BasicServiceException {
 		try {
-			DocumentFile doc = createNewDocumentFile(file, fileName, DocumentTypeEnum.LELET);
-			DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointmentId);
+			Appointment appointment = appointmentRepository.findOne(appointmentId);
 			
-			sendNotificationEmailToPatient(docFileApp);
-			
-			return true;
+			if (appointment != null){	
+				DocumentType documentType = getDocumentType(appointment , fileName, documentTypeId);
+				
+				if (documentType != null){
+					DocumentFile doc = createNewDocumentFile(file, fileName, documentType);
+					DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointment);
+					
+					sendNotificationEmailToPatient(docFileApp);
+					
+					return true;
+				} else {
+					throw new BasicServiceException("Nincs ilyen document típus!");
+				}
+			} else {
+				throw new BasicServiceException("Appointment nem található");
+			}
 		} catch (IOException e) {
 			String errorMessage = "Hiba történt a file mentése során";
 			logger.error(errorMessage, e);
 			throw new BasicServiceException(errorMessage);
+		}
+	}
+	
+	@Transactional
+	private DocumentType getDocumentType(Appointment appointment, String fileName, DocumentTypeEnum documentTypeEnum) throws BasicServiceException {
+		ExtensionTypes extensionType = ExtensionTypes.fromFileName(fileName);
+		
+		if (extensionType == null){
+			throw new BasicServiceException("Ez a kiterjesztési forma nem támogatott");
 		} 
+		
+		return documentTypeRepository.getDocumentumTypeForUplodedFile(appointment.getConsultationHour().getType().getId(), documentTypeEnum, extensionType);
 	}
 
 	@Transactional
@@ -85,14 +109,12 @@ public class DocumentService {
 	}
 
 	@Transactional
-	private DocumentFile createNewDocumentFile(MultipartFile file, String fileName, DocumentTypeEnum type) throws IOException {
+	private DocumentFile createNewDocumentFile(MultipartFile file, String fileName, DocumentType documentType) throws IOException {
 		DocumentFileContent content = new DocumentFileContent();
 		byte[] contentBytes = file.getBytes();
 		content.setContent(contentBytes);
 		// Kérds hogy ez így megy-e
 		content = documentFileContentRepository.save(content);
-
-		DocumentType documentType = documentTypeRepository.findByTypeName(type.name());
 		
 		DocumentFile doc = new DocumentFile();
 		doc.setFileName(fileName);
@@ -105,20 +127,14 @@ public class DocumentService {
 	}
 
 	@Transactional
-	private DocumentFileAppointment createNewDocumentFileAppointment(DocumentFile doc, Long appointmentId) throws BasicServiceException {
-		Appointment app = appointmentRepository.findOne(appointmentId);
-
-		if (app != null){
-			DocumentFileAppointment docFileApp = new DocumentFileAppointment();
-			docFileApp.setDocument(doc);
-			docFileApp.setAppointment(app);
-			docFileApp.setCreateUser(securityService.getCurrentUser());
-			docFileApp.setCreateDate(new Date());
-			
-			return docFileAppointmentRepository.save(docFileApp);
-		} else {
-			throw new BasicServiceException("Appointment nem található");
-		}
+	private DocumentFileAppointment createNewDocumentFileAppointment(DocumentFile doc, Appointment appointment) throws BasicServiceException {
+		DocumentFileAppointment docFileApp = new DocumentFileAppointment();
+		docFileApp.setDocument(doc);
+		docFileApp.setAppointment(appointment);
+		docFileApp.setCreateUser(securityService.getCurrentUser());
+		docFileApp.setCreateDate(new Date());
+		
+		return docFileAppointmentRepository.save(docFileApp);
 	}
 
 
