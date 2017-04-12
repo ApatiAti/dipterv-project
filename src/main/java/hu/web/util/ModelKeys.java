@@ -48,6 +48,8 @@ public class ModelKeys {
 	public static final String IS_CONSULTATIONHOUR_MOFICATION = "isConsultationHourModification";
 
 	public static final String DOCTORS_LIST = "doctorList";
+
+	public static final String DOCUMENT_TYPE_LIST = "documentTypeList";
 	
 	// 
 	

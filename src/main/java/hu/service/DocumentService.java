@@ -145,4 +145,8 @@ public class DocumentService {
 
 		return docFileAppointmentRepository.findByAppointmentPatientId(currentUserID);
 	}
+
+	public List<DocumentTypeEnum> getDocumentTypeEnumByConsultationHourType(Long consultationHourTypeId) {
+		return documentTypeRepository.findTypeNameByConsultationHourTypeIdAndSysDate(consultationHourTypeId);
+	}
 }

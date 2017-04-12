@@ -70,9 +70,10 @@
 				</form>
 			</div>
 		</div>
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Lelet feltöltés</h3>
+				<h3 class="panel-title">Feltöltött leletek</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -104,33 +105,16 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+		</div>
 
-				<div class="row">
-					<form method="POST" th:action="@{/appointment/__${appointment.id}__/uploadFile}"
-						enctype="multipart/form-data">
-
-						<div class="row">
-							<div class="col-md-2">
-								<span>Lelet feltöltése:</span>
-							</div>
-							<div class="col-md-4">
-								<input type="file" name="file" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<span>Name: </span>
-							</div>
-							<div class="col-md-4">
-								<input class="form-control" type="text" name="name" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<input class="btn btn-info" type="submit" value="Upload" />
-							</div>
-						</div>
-					</form>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Lelet feltöltés</h3>
+			</div>
+			<div class="panel-body form-group">
+				<div class="row" th:each="documentType: ${documentTypeList}" th:object="${documentType}">
+					<th:block layout:replace="fragments/standardForms :: fileUploadForm(${documentType})" />
 				</div>
 			</div>
 		</div>

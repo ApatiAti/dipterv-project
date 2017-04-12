@@ -32,7 +32,9 @@ import hu.exception.UserNotFoundException;
 import hu.exception.security.AuthorizationException;
 import hu.model.document.DocumentFile;
 import hu.model.document.DocumentFileAppointment;
+import hu.model.document.enums.DocumentTypeEnum;
 import hu.model.hospital.Appointment;
+import hu.model.hospital.ConsultationHour;
 import hu.service.AppointmentService;
 import hu.service.DocumentService;
 import hu.service.MailService;
@@ -151,13 +153,17 @@ public class AppointmentController extends BaseController {
 	public String getAppointmentPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @PathVariable Long appointmentId){
 		
-		Appointment appointment = appointmentService.findAppointmentById(appointmentId);		
+		Appointment appointment = appointmentService.findAppointmentById(appointmentId);	
+		ConsultationHour consultationHour = appointment.getConsultationHour();
 		List<DocumentFileAppointment> documentAppFileList = documentService.findDocFileAppByAppointmentId(appointmentId);
+		List<DocumentTypeEnum> documentTypeEnumList = documentService.getDocumentTypeEnumByConsultationHourType(consultationHour.getType().getId()); 
+		
 		
 		model.put(ModelKeys.IsDisabled, true);
 		model.put(ModelKeys.Appointment, appointment);
-		model.put(ModelKeys.ConsultationHour, appointment.getConsultationHour());
+		model.put(ModelKeys.ConsultationHour, consultationHour);
 		model.put(ModelKeys.DocumentAppFileList, documentAppFileList);
+		model.put(ModelKeys.DOCUMENT_TYPE_LIST, documentTypeEnumList);
 		
 		return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 	}
@@ -250,9 +256,25 @@ public class AppointmentController extends BaseController {
 	public String uploadFile(Model model,
 			@PathVariable("appointmentId") Long appointmentId,	
 			@RequestParam("name") String fileName,
-			@RequestParam("file") MultipartFile file,
+			@RequestParam("file") MultipartFile file,	
 			RedirectAttributes redirectAttributes) {
-
+		
+		/* 
+		 * TODO paraméterek validálása külön metódusban
+		 * 	Nem üres		
+		 * 	Van kiterjesztése
+		 * 	Nem hosszabb 255-nél 
+		 */
+		
+		
+		/* 
+		 * TODO kiterjesztés szerint validálni hogy szabad-e ehhez a típushoz ilyet feltölteni
+		 * 	ch_tpye-hoz validálás
+		 */
+		
+		/*
+		 * TODO fájl validálása fájl típus szerint
+		 */
 		if (fileName != null && !fileName.trim().isEmpty()){
 			
 			if (file != null && !file.isEmpty()){
