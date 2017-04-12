@@ -13,6 +13,9 @@
 		<class>hu.model.hospital.Department</class>
 		<class>hu.model.hospital.ConsultationHourType</class>
 		<class>hu.model.hospital.ConsultationHour</class>
+		<class>hu.model.document.DocumentFileContent</class>
+		<class>hu.model.document.DocumentType</class>
+		<class>hu.model.document.DocumenttypeConsultationhourtype</class>
 		
 
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
