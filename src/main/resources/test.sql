@@ -1,13 +1,17 @@
 
+ delete from documenttype_to_consultationhourtype;
+ delete from documentfileContent;
  delete from documentfile;
  delete from documentfile_appointment;
+ delete from documenttype;
 
  delete from appointment;
- delete from consultationhour_tpye;
  delete from consultationhour;
- delete from department;
  delete from department_to_user;
  
+ delete from consultationhour_type;
+ delete from department;
+
  delete from user_to_rolegroup;
  delete from personalData;
  delete from user;
@@ -15,7 +19,6 @@
  delete from role_to_rolegroup;
  delete from rolegroup;
  delete from role;
-  
 
 
 -- == [Tábla módosítások]== --
@@ -45,9 +48,6 @@ insert into user (email, username, password) values('a@a.a', @patient1, '$2a$10$
 insert into user (email, username, password) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 insert into user (email, username, password) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 insert into user (email, username, password) values('d@d.d', @doctor2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
--- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('d@d.d', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user1_1', 0  ,'2015-12-13 01:02:03' , (select id from region where name='region1'));
--- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('c@c.c', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'Teszt user3', 400, '2015-12-13 01:02:03' , (select id from region where name='region3'));
--- insert into citizen (email, password, experiencePoints, fatigue, username, money, lastRelaxTime, currentRegion_id) values('e@e.e', '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre',1,100, 'admin', 0 ,'2015-12-13 01:02:03' , (select id from region where name='region3'));
      
 insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Kiss Piroska', 'Teszt', 'User1', null, '06301234567', '123456789', (select id from user where username = @patient1));
 insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Valami Ember', 'Teszt', 'User2', null, '06301234567', '123466789', (select id from user where username = @patient2));
@@ -74,9 +74,43 @@ insert into consultationhour_type(name, departmentId) values( @consultationHour_
 insert into consultationhour_type(name, departmentId) values( @consultationHour_type_name6, @departmentId2);
 
 
+-- ==[ Feltölthető dokumentum típusok megadása ]==--
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICUTRE' , 400000, 1000, 'LELET');
+
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICUTRE' , 400000, 1000, 'ZAROJELENTES');
+
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 600000, 1000, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 400000, 1000, 'RONTGEN_KEP');
+
+insert into documentType(extensionType, maxSize, minSize, typeName) values('VIDEO' , 500000, 1000, 'ULTRAHANG_VIDEO');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 400000, 1000, 'ULTRAHANG_VIDEO');
+
+
+
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name1 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name1 and d_type.typeName = 'ZAROJELENTES';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name2 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name2 and d_type.typeName = 'ZAROJELENTES';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name3 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name3 and d_type.typeName = 'ZAROJELENTES';
+                                                                                                                                                                                           
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name4 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name4 and d_type.typeName = 'ZAROJELENTES';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name5 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name5 and d_type.typeName = 'RONTGEN_KEP';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name6 and d_type.typeName = 'LELET';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name6 and d_type.typeName = 'ULTRAHANG_VIDEO';
+insert into documenttype_to_consultationhourtype(consultationHourTypeId, documentTypeId, validFrom, validTo) select ch_type.id, d_type.id, STR_TO_DATE('2016-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), null from documentType d_type, consultationhour_type ch_type where ch_type.name = @consultationHour_type_name6 and d_type.typeName = 'RONTGEN_KEP';
+
+
 -- ==[ Fogadó órák insertje ]==--
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1));
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from user where username = @doctor1));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2), (select id from user where username = @doctor2));
 
 -- ==[ Időpont foglalások]
 insert into appointment(complaints, consultationHourId, patientId) values ('Fáj a szemem', @consultationHourId1, (select id from user where username = @patient1));

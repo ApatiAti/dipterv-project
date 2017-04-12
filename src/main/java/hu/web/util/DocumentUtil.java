@@ -40,9 +40,10 @@ public class DocumentUtil {
 		/* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
 	//	response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getFileName()));
 		 
-		response.setContentLength(file.getContent().length);
+		byte[] content = file.getContentFile().getContent();
+		response.setContentLength(content.length);
     
-		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(file.getContent()));
+		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(content));
     
 		//Copy bytes from source to destination(outputstream in this example), closes both streams.
 		FileCopyUtils.copy(inputStream, response.getOutputStream());

@@ -17,11 +17,15 @@ import hu.exception.BasicServiceException;
 import hu.exception.security.AuthorizationException;
 import hu.model.document.DocumentFile;
 import hu.model.document.DocumentFileAppointment;
+import hu.model.document.DocumentFileContent;
 import hu.model.document.DocumentType;
+import hu.model.document.enums.DocumentTypeEnum;
 import hu.model.hospital.Appointment;
 import hu.model.user.User;
 import hu.repository.document.DocumentFileAppointmentRepository;
+import hu.repository.document.DocumentFileContentRepository;
 import hu.repository.document.DocumentFileRepository;
+import hu.repository.document.DocumentTypeRepository;
 import hu.repository.hospital.AppointmentRepository;
 import hu.service.security.SecurityService;
 import hu.util.EmailType;
@@ -39,6 +43,12 @@ public class DocumentService {
 	
 	@Autowired
 	DocumentFileAppointmentRepository docFileAppointmentRepository;
+
+	@Autowired
+	DocumentTypeRepository documentTypeRepository;
+	
+	@Autowired
+	DocumentFileContentRepository documentFileContentRepository;
 	
 	@Autowired
 	SecurityService securityService;
@@ -46,10 +56,11 @@ public class DocumentService {
 	@Autowired
 	MailService mailService;
 	
+	
 	@Transactional
 	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName) throws BasicServiceException {
 		try {
-			DocumentFile doc = createNewDocumentFile(file, fileName, DocumentType.LELET);
+			DocumentFile doc = createNewDocumentFile(file, fileName, DocumentTypeEnum.LELET);
 			DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointmentId);
 			
 			sendNotificationEmailToPatient(docFileApp);
@@ -74,13 +85,21 @@ public class DocumentService {
 	}
 
 	@Transactional
-	private DocumentFile createNewDocumentFile(MultipartFile file, String fileName, DocumentType type) throws IOException {
+	private DocumentFile createNewDocumentFile(MultipartFile file, String fileName, DocumentTypeEnum type) throws IOException {
+		DocumentFileContent content = new DocumentFileContent();
+		byte[] contentBytes = file.getBytes();
+		content.setContent(contentBytes);
+		// Kérds hogy ez így megy-e
+		content = documentFileContentRepository.save(content);
+
+		DocumentType documentType = documentTypeRepository.findByTypeName(type.name());
+		
 		DocumentFile doc = new DocumentFile();
-		doc.setContentType(file.getContentType());
-		doc.setContent(file.getBytes());
-		doc.setDocumentType(type);
 		doc.setFileName(fileName);
+		doc.setDocumentType(documentType);
 		doc.setCreateDate(new Date());
+		doc.setContentFile(content);
+		doc.setContentType(file.getContentType());
 		
 		return documentFileRepository.save(doc);
 	}
