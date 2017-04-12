@@ -77,11 +77,11 @@ insert into consultationhour_type(name, departmentId) values( @consultationHour_
 -- ==[ Feltölthető dokumentum típusok megadása ]==--
 insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'LELET');
 insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'LELET');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICUTRE' , 400000, 1000, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 400000, 1000, 'LELET');
 
 insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'ZAROJELENTES');
 insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'ZAROJELENTES');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICUTRE' , 400000, 1000, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 400000, 1000, 'ZAROJELENTES');
 
 insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'RONTGEN_KEP');
 insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 600000, 1000, 'RONTGEN_KEP');
