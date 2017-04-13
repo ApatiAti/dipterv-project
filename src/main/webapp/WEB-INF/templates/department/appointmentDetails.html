@@ -91,7 +91,7 @@
 								th:each="docFileApp : ${documentAppFileList}" th:object="${docFileApp}">
 								<td class="col-md-2" th:text="*{document.fileName}">IB520</td>
 								<td class="col-md-2" th:text="*{{document.createDate}}">2010-10-10 15:45:10</td>
-								<td class="col-md-2" th:text="*{createUser.username}">Valaki</td>
+								<td class="col-md-2" th:text="*{createUser.personalData.name.fullName}">Valaki</td>
 								<td class="col-md-4">
 									<div>
 										<a class="btn btn-info" href="#"
