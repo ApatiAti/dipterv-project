@@ -260,35 +260,20 @@ public class AppointmentController extends BaseController {
 			@RequestParam("documentType") DocumentTypeEnum documentTypeEnum,
 			RedirectAttributes redirectAttributes) {
 		
-		/* 
-		 * TODO paraméterek validálása külön metódusban
-		 * 	Nem üres		
-		 * 	Van kiterjesztése
-		 * 	Nem hosszabb 255-nél 
-		 */
-		
-		
-		/* 
-		 * TODO kiterjesztés szerint validálni hogy szabad-e ehhez a típushoz ilyet feltölteni
-		 * 	ch_tpye-hoz validálás
-		 */
-		
-		/*
-		 * TODO fájl validálása fájl típus szerint
-		 */
-		if (fileName != null && !fileName.trim().isEmpty()){
+		String errorMessage = DocumentUtil.validateFileName(fileName);
+		if (errorMessage != null){
+			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorMessage);
+			return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
+		}
 			
-			if (file != null && !file.isEmpty()){
-				try {
-					documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
-				} catch (BasicServiceException e) {
-					errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a fájl feltöltés közben", e);
-				}
-			} else {
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
+		if (file != null && !file.isEmpty()){
+			try {
+				documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
+			} catch (BasicServiceException e) {
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e);
 			}
 		} else {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File név megadása kötelező");
+			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
 		}
 				
 		return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
@@ -299,8 +284,7 @@ public class AppointmentController extends BaseController {
     public void downloadFile(HttpServletResponse response
     		, @PathVariable("appointmentId") Long appointmentId
     		, @PathVariable("documentId") Long documentId
-    		, RedirectAttributes redirectAttributes
-    				){
+    		, RedirectAttributes redirectAttributes){
      
     	try {
     		DocumentFile file = documentService.findDocumentByAppointmentIdAndDocumentFileAppId(appointmentId, documentId);

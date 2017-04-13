@@ -112,10 +112,23 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Lelet feltöltés</h3>
 			</div>
-			<div class="panel-body form-group">
-				<div class="row" th:each="documentType: ${documentTypeList}" th:object="${documentType}">
-					<th:block layout:replace="fragments/standardForms :: fileUploadForm(${documentType})" />
-				</div>
+			<div id="document-upload-div" class="panel-body form-group">
+				
+				<form method="POST" th:action="@{/appointment/__${appointment.id}__/uploadFile}" enctype="multipart/form-data">
+					<div class="row">
+						
+						<div class="col-md-2">
+							<span> Feltöltendő típus</span>
+						</div>
+						<div class="col-md-3">	
+							<select style="margin-bottom: 10px" class="form-control" name="documentType" >
+								<option th:each="documentType : ${documentTypeList}" th:value="${documentType}" th:text="#{enum.documentTypeEnum.__${documentType}__}"></option>
+							</select>	
+						</div>
+					
+						<th:block layout:replace="fragments/standardForms :: fileUpload" />
+					</div>
+				</form>
 			</div>
 		</div>
 

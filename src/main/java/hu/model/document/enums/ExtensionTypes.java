@@ -1,6 +1,6 @@
 package hu.model.document.enums;
 
-import org.springframework.util.StringUtils;
+import hu.web.util.DocumentUtil;
 
 public enum ExtensionTypes {
 	PDF(".pdf"),
@@ -16,7 +16,7 @@ public enum ExtensionTypes {
 	}
 
 	public static ExtensionTypes fromFileName(String fileName){
-		if (!StringUtils.isEmpty(fileName) && fileName.matches("(.)*\\.[\\w]{3,4}$")){
+		if (DocumentUtil.validateFileNameHasExtension(fileName)){
 			for (ExtensionTypes extensionTypes : ExtensionTypes.values()) {
 				for (Object extension : extensionTypes.extensions) {
 					if(fileName.endsWith(((String)extension))){

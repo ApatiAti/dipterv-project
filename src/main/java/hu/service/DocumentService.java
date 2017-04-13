@@ -30,6 +30,7 @@ import hu.repository.document.DocumentTypeRepository;
 import hu.repository.hospital.AppointmentRepository;
 import hu.service.security.SecurityService;
 import hu.util.EmailType;
+import hu.web.util.validator.documentType.DefaultDocumentFileValidator;
 
 @Service
 public class DocumentService {
@@ -67,12 +68,21 @@ public class DocumentService {
 				DocumentType documentType = getDocumentType(appointment , fileName, documentTypeId);
 				
 				if (documentType != null){
-					DocumentFile doc = createNewDocumentFile(file, fileName, documentType);
-					DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointment);
+					DefaultDocumentFileValidator documentumTypeValidator = new DefaultDocumentFileValidator();
 					
-					sendNotificationEmailToPatient(docFileApp);
-					
-					return true;
+					String errorMessage = documentumTypeValidator.validate(appointment, file, fileName, documentType);
+				
+					if (errorMessage == null){
+				
+						DocumentFile doc = createNewDocumentFile(file, fileName, documentType);
+						DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointment);
+						
+						sendNotificationEmailToPatient(docFileApp);
+						
+						return true;
+					} else {
+						throw new BasicServiceException(errorMessage);
+					}
 				} else {
 					throw new BasicServiceException("Nincs ilyen document típus!");
 				}
@@ -86,12 +96,20 @@ public class DocumentService {
 		}
 	}
 	
+	/**
+	 * Megadott paraméterek szerinti DocumentType keresése
+	 * @param appointment
+	 * @param fileName
+	 * @param documentTypeEnum
+	 * @return 
+	 * @throws BasicServiceException dobódik abban az esetben ha nem értelmezhető a megadott kiterjesztése a fájlnak
+	 */
 	@Transactional
 	private DocumentType getDocumentType(Appointment appointment, String fileName, DocumentTypeEnum documentTypeEnum) throws BasicServiceException {
 		ExtensionTypes extensionType = ExtensionTypes.fromFileName(fileName);
 		
 		if (extensionType == null){
-			throw new BasicServiceException("Ez a kiterjesztési forma nem támogatott");
+			throw new BasicServiceException("Ez a kiterjesztési típus nem támogatott");
 		} 
 		
 		return documentTypeRepository.getDocumentumTypeForUplodedFile(appointment.getConsultationHour().getType().getId(), documentTypeEnum, extensionType);

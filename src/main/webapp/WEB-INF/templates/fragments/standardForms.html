@@ -113,31 +113,23 @@
 	</th:block>
 
 
-	<th:block layout:fragment="fileUploadForm(documentType)">
-		<form method="POST" th:action="@{/appointment/__${appointment.id}__/uploadFile}" enctype="multipart/form-data">
-			
-				<div class="row">
-					<div class="col-md-3">
-						<span class="btn" th:text="| #{enum.documentTypeEnum.__${documentType}__} feltöltése|">${Lelet} feltöltése:</span>
-					</div>
-					
-					<div class="col-md-4">
-						<div class="row">
-							<label class="btn btn-info col-md-4" for="my-file-selector">
-								Fájl keresése
-								<input id="my-file-selector" type="file" style="display:none;" name="file"
-							    	onchange="$('#upload-file-info').val(this.files[0].name);"/>
-							</label>
-							<input class="col-md-6 btn" id="upload-file-info" name="name"></input>
-							<input hidden="true" name="documentType" th:value="${documentType}"/>
+	<th:block layout:fragment="fileUpload">
+		<div class="col-md-4">
+			<div class="row">
+				<label class="btn btn-info col-md-4" for="my-file-selector">
+					Fájl keresése
+					<input id="my-file-selector" type="file" style="display:none;" name="file"  
+				    	onchange="$('#upload-file-info').val(this.files[0].name)"/>
 
-						</div>
-						<div class="row" style="margin-top: 5px">
-							<input class="btn btn-warning col-md-4" type="submit" value="Feltöltés"/>
-						</div>	
-					</div>
-				</div>
-		</form>
+				</label>
+				<input class="col-md-6 btn" id="upload-file-info" name="name"></input>
+				
+			</div>
+			
+			<div class="row" style="margin-top: 5px">
+				<input class="btn btn-warning col-md-4" type="submit" value="Feltöltés"/>
+			</div>	
+		</div>
 	</th:block>
 
 	<!--/*-->

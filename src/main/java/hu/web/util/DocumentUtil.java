@@ -15,7 +15,9 @@ import hu.model.document.DocumentFile;
 
 public class DocumentUtil {
 
+	private static final String FILE_EXTENSIO_REGEXP = "(.)*\\.[\\w]{3,4}$";
 	public static final Logger logger = Logger.getLogger(DocumentUtil.class);
+	
 	
 	public static void setFileInResponse(HttpServletResponse response, DocumentFile file) throws IOException {
 		String mimeType = file.getContentType();
@@ -47,6 +49,34 @@ public class DocumentUtil {
     
 		//Copy bytes from source to destination(outputstream in this example), closes both streams.
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
+	}
+	
+	/**
+	 * Validálja a paraméterként kapott fájl nevet. 
+	 * @param fileName
+	 * @return
+	 */
+	public static String validateFileName(String fileName){
+		if (fileName == null || (fileName.trim()).isEmpty()){
+			return "File név megadása kötelező";
+		}
+		if (!fileName.matches(FILE_EXTENSIO_REGEXP)){
+			return "A megadott fájl névnek tartalmaznia kell valid fájl kiterjesztést";
+		}
+		if ( fileName.length() >= 255){
+			return "A megadott fájl név túl hosszú";
+		}
+			
+		return null;
+	}
+	
+	/**
+	 * Ellenőrzi, hogy a paraméterként kapott fájl név tartalmaz-e kiterjesztést.  
+	 * @param fileName
+	 * @return
+	 */
+	public static boolean validateFileNameHasExtension(String fileName){
+		return fileName != null && !(fileName.trim()).isEmpty() && fileName.matches(FILE_EXTENSIO_REGEXP);		
 	}
 	
 }
