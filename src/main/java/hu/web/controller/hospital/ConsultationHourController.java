@@ -1,4 +1,4 @@
-package hu.web.controller.department;
+package hu.web.controller.hospital;
 
 import java.util.List;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class ConsultationHourController extends BaseController {
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 		}
 		
-		List<ConsultationHour> consultationHourList = consultationHourService	.sortConsultationHour(searchEntity, departmentId);
+		List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(searchEntity, departmentId);
 		
 		redirectAttributes.addFlashAttribute(ModelKeys.ConsultationHourList, consultationHourList);
 		redirectAttributes.addFlashAttribute(ModelKeys.SearchEntity, searchEntity);
@@ -89,7 +89,6 @@ public class ConsultationHourController extends BaseController {
 	
 	/**
 	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület
-	 * /department/{id}/consultationHour/{id}ű
 	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}", method = RequestMethod.GET)
@@ -105,7 +104,6 @@ public class ConsultationHourController extends BaseController {
 
 	/**
 	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület megnyitása módosításra
-	 * /department/{id}/consultationHour/{id}/edit
 	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}/edit", method=RequestMethod.GET)
@@ -136,6 +134,7 @@ public class ConsultationHourController extends BaseController {
 		try {
 			ConsultationHour modifiedConsultationHour = consultationHourService.modifyConsultationHour(consultationHour);
 			succesLogAndDisplayMessage(redirectAttributes, "Sikeres rendelési idő módosítás!");
+			
 			return ViewNameHolder.redirectToConsultationHourDetails(modifiedConsultationHour);
 
 		} catch (BasicServiceException e) {
