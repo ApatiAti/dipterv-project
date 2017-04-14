@@ -67,7 +67,7 @@ public class DepartmentModificationController extends BaseController {
 
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		} catch (BasicServiceException e){
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage());
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage());
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
@@ -84,11 +84,11 @@ public class DepartmentModificationController extends BaseController {
 			Long depId = department.getId(); 
 			
 			if (depId != null){	
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
+				errorLogAndDisplayMessage(redirectAttributes);
 				return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 				
 			} else {
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "A megadott osztály nem módosítható");
+				errorLogAndDisplayMessage(redirectAttributes, "A megadott osztály nem módosítható");
 				return ViewNameHolder.REDIRECT_TO_HOME;
 			}
 		}
@@ -99,7 +99,7 @@ public class DepartmentModificationController extends BaseController {
 			succesLogAndDisplayMessage(redirectAttributes, "Osztály módosítása sikeres");
 			return ViewNameHolder.REDIRECT_TO_DEPARTMENT_MODIFICATION.replace("{depId}", modifiedDepartment.getId().toString());
 		} else {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a mentés során");
+			errorLogAndDisplayMessage(redirectAttributes, "Hiba a mentés során");
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
@@ -117,9 +117,9 @@ public class DepartmentModificationController extends BaseController {
 		boolean intervalError = consultationHour.getBeginDate().after(consultationHour.getEndDate());
 		if (hasError || intervalError){
 			if (intervalError){
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hibás adatok lettek megadva. Kezdő és vége dátum rosszul lett megadva");
+				errorLogAndDisplayMessage(redirectAttributes, "Hibás adatok lettek megadva. Kezdő és vége dátum rosszul lett megadva");
 			} else {
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
+				errorLogAndDisplayMessage(redirectAttributes);
 			}
 			return ViewNameHolder.REDIRECT_TO_DEPARTMENT_MODIFICATION.replace("{depId}", departmentId.toString());
 		}
@@ -131,7 +131,7 @@ public class DepartmentModificationController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(newConsultationHour);
 			
 		} catch (BasicServiceException | DepartmentNotFoundException e) {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}

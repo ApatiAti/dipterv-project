@@ -129,7 +129,7 @@ public class ConsultationHourController extends BaseController {
 
 		boolean hasError = handleValidationErrors(bindingResult, model);
 		if (hasError){
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes);
+			errorLogAndDisplayMessage(redirectAttributes);
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		}
 		
@@ -139,7 +139,7 @@ public class ConsultationHourController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(modifiedConsultationHour);
 
 		} catch (BasicServiceException e) {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}	

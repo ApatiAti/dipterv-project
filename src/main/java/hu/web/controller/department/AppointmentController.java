@@ -98,7 +98,7 @@ public class AppointmentController extends BaseController {
 			errorString = e.getMessage();
 		}
 		
-		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString);
+		errorLogAndDisplayMessage(redirectAttributes, errorString);
 		return ifErrorwhereToRedirect;
 	}
 
@@ -124,9 +124,9 @@ public class AppointmentController extends BaseController {
 			return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_LIST.replace("{depId}", appointment.getConsultationHour().getDepartment().getId().toString());
 		} catch (ConsultationHourNotFound  | UserNotFoundException e) {
 			String errorString = "A megadott paraméterek nem megfelelőek.";
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString, e);
+			errorLogAndDisplayMessage(redirectAttributes, errorString, e);
 		} catch (BasicServiceException e) {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 		}
 		
 		return ViewNameHolder.REDIRECT_TO_HOME;
@@ -185,7 +185,7 @@ public class AppointmentController extends BaseController {
 			return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 		
 		} catch (BasicServiceException e ){
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 		}
 		
 		return ViewNameHolder.REDIRECT_TO_HOME;
@@ -201,7 +201,7 @@ public class AppointmentController extends BaseController {
 		try {
 			appointmentService.modifyAppointment(appointment);
 		} catch (BasicServiceException e) {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 		}
 		
 		return ViewNameHolder.REDIRECT_TO_MY_APPOINTMENTS;
@@ -264,7 +264,7 @@ public class AppointmentController extends BaseController {
 			
 			String errorMessage = DocumentUtil.validateFileName(fileName);
 			if (errorMessage != null){
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorMessage);
+				errorLogAndDisplayMessage(redirectAttributes, errorMessage);
 				return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
 			}
 	
@@ -272,10 +272,10 @@ public class AppointmentController extends BaseController {
 				documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
 				succesLogAndDisplayMessage(redirectAttributes, "A megadott fájl sikeressen feltöltésre került.");
 			} catch (BasicServiceException e) {
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e);
+				errorLogAndDisplayMessage(redirectAttributes, e);
 			}
 		} else {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
+			errorLogAndDisplayMessage(redirectAttributes, "Fájl feltöltése kötelező");
 		}
 				
 		return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
@@ -295,9 +295,9 @@ public class AppointmentController extends BaseController {
     		
     		return responseEntity;
     	} catch ( AuthorizationException | BasicServiceException e ){
-    		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+    		errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 		} catch (IOException e) {
-    		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File letöltése közben hiba történt!", e);
+    		errorLogAndDisplayMessage(redirectAttributes, "File letöltése közben hiba történt!", e);
 		} 
     	return ViewNameHolder.REDIRECT_TO_HOME;
     }
