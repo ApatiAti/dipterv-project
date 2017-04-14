@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import hu.exception.security.AuthorizationException;
 import hu.model.document.DocumentFileAppointment;
+import hu.model.hospital.Appointment;
 import hu.model.user.User;
 import hu.repository.security.RoleGroupRepository;
 import hu.repository.user.UserRepository;
@@ -47,16 +48,34 @@ public class SecurityService {
 	}
 
 	/**
+	 * Fájl feltöltés authorizálása.
+	 * 	Beteg csak a saját fájlját tudja letölteni.
+	 * 	Orvos minden betegét letudja tölteni.
+	 * @param appointemnt
+	 * @throws AuthorizationException
+	 */
+	public void authorizeCurrenctUserToUpload(Appointment appointemnt) throws AuthorizationException{
+		String patientUserName = appointemnt.getPatient().getUsername();
+		
+		authorizeOwnerOrDoctor(patientUserName);
+	}
+
+	/**
 	 * Fájl letöltés authorizálása.
-	 * Beteg csak a saját fájlját tudja letölteni.
-	 * Orvos minden betegét letudja tölteni.
+	 * 	Beteg csak a saját fájlját tudja letölteni.
+	 * 	Orvos minden betegét letudja tölteni.
 	 * @param docFileApp
 	 * @throws AuthorizationException
 	 */
 	public void authorizeCurrentUserToDownload(DocumentFileAppointment docFileApp) throws AuthorizationException {
 		String patientUserName = docFileApp.getAppointment().getPatient().getUsername();
-		User currentUser = getCurrentUser();
 		
+		authorizeOwnerOrDoctor(patientUserName);
+	}
+	
+	
+	private void authorizeOwnerOrDoctor(String patientUserName) throws AuthorizationException {
+		User currentUser = getCurrentUser();
 		if (!currentUser.getUsername().equals(patientUserName)){
 			
 			int count = roleGroupRepository.countByUsersIdAndCode(currentUser.getId() , "DOCTOR");
@@ -66,7 +85,6 @@ public class SecurityService {
 			}
 		}
 	}
-	
 	
 	/**
 	 * Grant the given role group to the give user and to the user, who's request is currently invoke this method.
