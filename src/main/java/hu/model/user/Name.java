@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
+@SuppressWarnings("serial")
 @Embeddable
 public class Name implements Serializable {
 	private TitleEnum title;

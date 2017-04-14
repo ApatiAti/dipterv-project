@@ -63,7 +63,7 @@
 								<td class="col-md-3" ><a th:href="@{/personalData/__*{patient.id}__}" th:text="*{patient.personalData.name.fullName}">2010-10-10 15:45:10</a></td>
 								<td class="col-md-5" th:text="*{complaints}">2010-10-10 16:00:10</td>
 								<td class="col-md-2">
-									<a class="btn btn-info" th:href="@{/appointment/__*{id}__}" >Megtekintés</a>
+									<a class="btn btn-info" th:href="@{/appointment/__*{id}__}" sec:authorize="hasRole('VIEW_APPOINTMENT')">Megtekintés</a>
 								</td>
 							</tr>
 							<tr th:if="*{#lists.isEmpty(appointments)}"> 

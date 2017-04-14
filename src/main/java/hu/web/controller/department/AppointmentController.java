@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +32,9 @@ import hu.exception.UserNotFoundException;
 import hu.exception.security.AuthorizationException;
 import hu.model.document.DocumentFile;
 import hu.model.document.DocumentFileAppointment;
+import hu.model.document.enums.DocumentTypeEnum;
 import hu.model.hospital.Appointment;
+import hu.model.hospital.ConsultationHour;
 import hu.service.AppointmentService;
 import hu.service.DocumentService;
 import hu.service.MailService;
@@ -151,13 +153,17 @@ public class AppointmentController extends BaseController {
 	public String getAppointmentPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @PathVariable Long appointmentId){
 		
-		Appointment appointment = appointmentService.findAppointmentById(appointmentId);		
+		Appointment appointment = appointmentService.findAppointmentById(appointmentId);	
+		ConsultationHour consultationHour = appointment.getConsultationHour();
 		List<DocumentFileAppointment> documentAppFileList = documentService.findDocFileAppByAppointmentId(appointmentId);
+		List<DocumentTypeEnum> documentTypeEnumList = documentService.getDocumentTypeEnumByConsultationHourType(consultationHour.getType().getId()); 
+		
 		
 		model.put(ModelKeys.IsDisabled, true);
 		model.put(ModelKeys.Appointment, appointment);
-		model.put(ModelKeys.ConsultationHour, appointment.getConsultationHour());
+		model.put(ModelKeys.ConsultationHour, consultationHour);
 		model.put(ModelKeys.DocumentAppFileList, documentAppFileList);
+		model.put(ModelKeys.DOCUMENT_TYPE_LIST, documentTypeEnumList);
 		
 		return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 	}
@@ -244,28 +250,32 @@ public class AppointmentController extends BaseController {
 
 	
 	/**
-	 * Upload single file using Spring Controller
+	 * Egy fájl feltöltése egy létező Appointmenthez 
 	 */
 	@RequestMapping(value = "/appointment/{appointmentId}/uploadFile", method = RequestMethod.POST)
 	public String uploadFile(Model model,
 			@PathVariable("appointmentId") Long appointmentId,	
 			@RequestParam("name") String fileName,
-			@RequestParam("file") MultipartFile file,
+			@RequestParam("file") MultipartFile file,	
+			@RequestParam("documentType") DocumentTypeEnum documentTypeEnum,
 			RedirectAttributes redirectAttributes) {
-
-		if (fileName != null && !fileName.trim().isEmpty()){
+	
+		if (file != null && !file.isEmpty()){
 			
-			if (file != null && !file.isEmpty()){
-				try {
-					documentService.saveUploadedFile(appointmentId, file, fileName);
-				} catch (BasicServiceException e) {
-					errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hiba a fájl feltöltés közben", e);
-				}
-			} else {
-				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
+			String errorMessage = DocumentUtil.validateFileName(fileName);
+			if (errorMessage != null){
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorMessage);
+				return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
+			}
+	
+			try {
+				documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
+				succesLogAndDisplayMessage(redirectAttributes, "A megadott fájl sikeressen feltöltésre került.");
+			} catch (BasicServiceException e) {
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e);
 			}
 		} else {
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File név megadása kötelező");
+			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Fájl feltöltése kötelező");
 		}
 				
 		return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
@@ -273,21 +283,22 @@ public class AppointmentController extends BaseController {
 	
 	
     @RequestMapping(value="/appointment/{appointmentId}/download/{documentId}", method = RequestMethod.GET)
-    public void downloadFile(HttpServletResponse response
-    		, @PathVariable("appointmentId") Long appointmentId
+    public Object downloadFile( @PathVariable("appointmentId") Long appointmentId
     		, @PathVariable("documentId") Long documentId
-    		, RedirectAttributes redirectAttributes
-    				){
+    		, RedirectAttributes redirectAttributes) throws IOException{
      
     	try {
     		DocumentFile file = documentService.findDocumentByAppointmentIdAndDocumentFileAppId(appointmentId, documentId);
     		
-    		DocumentUtil.setFileInResponse(response, file);
+    		ResponseEntity<InputStreamResource> responseEntity = DocumentUtil.setFileIntoResponseEntity(file, true);
+    		logger.info("Sikeresen letöltötte a következő fájlt. Id : " + file.getFileName());
     		
+    		return responseEntity;
     	} catch ( AuthorizationException | BasicServiceException e ){
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
 		} catch (IOException e) {
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File letöltése közben hiba történt!", e);
 		} 
+    	return ViewNameHolder.REDIRECT_TO_HOME;
     }
 }

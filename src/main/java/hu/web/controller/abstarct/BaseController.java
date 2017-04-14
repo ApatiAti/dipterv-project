@@ -25,6 +25,10 @@ public abstract class BaseController {
 	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString) {
 		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString, null);
 	}
+
+	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, Exception e) {
+		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+	}
 	
 	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString, Exception e) {
 		if (e != null){
