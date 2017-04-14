@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,6 +33,7 @@ import hu.web.util.DocumentUtil;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
+@SessionAttributes({ModelKeys.APPOINTMENT_ID})
 @Controller
 public class AppointmentDetailsController extends BaseController {
 
@@ -47,25 +49,38 @@ public class AppointmentDetailsController extends BaseController {
 		return logger;
 	}
 	
-
 	/**
-	 * Beteg egy saját Appointment-jének megtekitése
+	 * Model feltöltése a appointmentDetails.html view-nak megfelelően.
+	 * @param model
+	 * @param appointmentId
+	 * @param appointment
+	 */
+	private void populateModelForViewAppointmentModify(Map<String, Object> model, Appointment appointment, boolean isDisabled) {
+		ConsultationHour consultationHour = appointment.getConsultationHour();
+		List<DocumentFileAppointment> documentAppFileList = documentService.findDocFileAppByAppointmentId(appointment.getId());
+		List<DocumentTypeEnum> documentTypeEnumList = documentService.getDocumentTypeEnumByConsultationHourType(consultationHour.getType().getId()); 
+		
+		
+		model.put(ModelKeys.IsDisabled, isDisabled);
+		model.put(ModelKeys.Appointment, appointment);
+		model.put(ModelKeys.APPOINTMENT_ID, appointment.getId());
+		model.put(ModelKeys.ConsultationHour, appointment.getConsultationHour());
+		
+		model.put(ModelKeys.DocumentAppFileList, documentAppFileList);
+		model.put(ModelKeys.DOCUMENT_TYPE_LIST, documentTypeEnumList);
+	}
+
+	
+	/**
+	 * Egy Appointment megtekitése
 	 */
 	@RequestMapping(value = "/appointment/{appointmentId}" , method = RequestMethod.GET)
 	public String getAppointmentPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @PathVariable Long appointmentId){
 		
 		Appointment appointment = appointmentService.findAppointmentById(appointmentId);	
-		ConsultationHour consultationHour = appointment.getConsultationHour();
-		List<DocumentFileAppointment> documentAppFileList = documentService.findDocFileAppByAppointmentId(appointmentId);
-		List<DocumentTypeEnum> documentTypeEnumList = documentService.getDocumentTypeEnumByConsultationHourType(consultationHour.getType().getId()); 
 		
-		
-		model.put(ModelKeys.IsDisabled, true);
-		model.put(ModelKeys.Appointment, appointment);
-		model.put(ModelKeys.ConsultationHour, consultationHour);
-		model.put(ModelKeys.DocumentAppFileList, documentAppFileList);
-		model.put(ModelKeys.DOCUMENT_TYPE_LIST, documentTypeEnumList);
+		populateModelForViewAppointmentModify(model, appointment, true);
 		
 		return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 	}
@@ -75,15 +90,13 @@ public class AppointmentDetailsController extends BaseController {
 	 * Megadott id-val rendelkező Appointment módosító felület
 	 */
 	@RequestMapping(value = "/appointment/modify" , method = RequestMethod.GET)
-	public String getAppointmentModifyPage(Model model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
+	public String getAppointmentModifyPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @RequestParam("appId") Long appointmentId, RedirectAttributes redirectAttributes){
 				
 		try {
 			Appointment appointment = appointmentService.findAppointmentByIdAndUserName(appointmentId, currentUserName);
-
-			model.addAttribute(ModelKeys.IsDisabled, false);
-			model.addAttribute(ModelKeys.Appointment, appointment);
-			model.addAttribute(ModelKeys.ConsultationHour, appointment.getConsultationHour());
+			
+			populateModelForViewAppointmentModify(model, appointment, false);
 			
 			return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 		
