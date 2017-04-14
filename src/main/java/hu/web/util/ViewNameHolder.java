@@ -35,16 +35,21 @@ public class ViewNameHolder {
 	public static final String VIEW_CONSULTATION_HOUR_LIST = "department/consultationHourList";
 	public static final String VIEW_CONSULTATION_HOUR_MODIFICATION = "department/consultationHourModification";
 	
-
-	public static final String VIEW_APPOINTMENT = "department/appointment";
-	public static final String VIEW_APPOINTMENT_MODIFY = "department/appointmentDetails";
+	/*
+	 * hospital/apppointment -hez tartozó view nevek.
+	 */
+	public static final String VIEW_APPOINTMENT = "hospital/appointment/appointment";
+	public static final String VIEW_APPOINTMENT_MODIFY = "hospital/appointment/appointmentDetails";
+	public static final String VIEW_MY_APPOINTMENT = "hospital/appointment/myAppointmentList";
 	
-	public static final String VIEW_MY_DOCUMENTS = "department/myDocumentfiles";
-	public static final String VIEW_MY_APPOINTMENT = "department/myAppointmentList";
-	
-	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_MY_APPOINTMENTS = "redirect:/myAppointments";
 	public static final String REDIRECT_TO_APPOINTMENT = "redirect:/appointment/{appId}";
+	
+	
+	public static final String VIEW_MY_DOCUMENTS = "department/myDocumentfiles";
+	
+	
+	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_CONSULTATION_HOUR_DETAILS = "redirect:/{depId}/consultationHour/{chId}";
 	
 	
