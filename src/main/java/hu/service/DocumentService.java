@@ -160,14 +160,16 @@ public class DocumentService {
 		return docFileAppointmentRepository.save(docFileApp);
 	}
 
-
+	@Transactional
 	public DocumentFile findDocumentByAppointmentIdAndDocumentFileAppId(Long appointmentId, Long documentFileAppId) throws BasicServiceException, AuthorizationException {
 		DocumentFileAppointment docFileApp = docFileAppointmentRepository.findOne(documentFileAppId);
 		
 		securityService.authorizeCurrentUserToDownload(docFileApp);
 		
 		if (docFileApp != null && appointmentId.equals(docFileApp.getAppointment().getId())){
-			return docFileApp.getDocument();
+			DocumentFile documentFile = docFileApp.getDocument();
+			Hibernate.initialize(documentFile.getContentFile());
+			return documentFile;
 		}
 		
 		throw new BasicServiceException("Keresett fájl nem található");

@@ -18,8 +18,14 @@ public class DocumentUtil {
 	private static final String FILE_EXTENSIO_REGEXP = "(.)*\\.[\\w]{3,4}$";
 	public static final Logger logger = Logger.getLogger(DocumentUtil.class);
 	
-	
-	public static void setFileInResponse(HttpServletResponse response, DocumentFile file) throws IOException {
+	/**
+	 * Megnyitja a böngészőben ha lehetséges vagy letölti a kiválaszott fájlt  
+	 * @param response
+	 * @param file
+	 * @param openInBrowser Ha true akkor a böngészőben nyitja meg a fájlt. Ha false akkor letölti. 
+	 * @throws IOException
+	 */
+	public static void setFileInResponse(HttpServletResponse response, DocumentFile file, boolean openInBrowser) throws IOException {
 		String mimeType = file.getContentType();
 		
 		if (mimeType == null){
@@ -34,20 +40,21 @@ public class DocumentUtil {
 		 
 		response.setContentType(mimeType);
 		 
-		/* "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser 
-		    while others(zip e.g) will be directly downloaded [may provide save as popup, based on your browser setting.]*/
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"%s\"", file.getFileName()));
-    
-		 
-		/* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
-	//	response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getFileName()));
-		 
+		if (openInBrowser){
+//			"Content-Disposition : inline" segítségével megnyitja a böngészőben is megtekinthető típusokat. Például : images/text/pdf  
+//			 Ha nem nyithatóak meg (pl.: zip) akkor a böngésző a fájl letöltését kezdeményezi
+			response.setHeader("Content-Disposition", String.format("inline; filename=\"%s\"", file.getFileName()));
+			
+		} else {
+//			"Content-Disposition : attachment" segítségével a böngésző a fájl letöltését kezdeményezi
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getFileName()));
+		}
+		
 		byte[] content = file.getContentFile().getContent();
 		response.setContentLength(content.length);
     
 		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(content));
     
-		//Copy bytes from source to destination(outputstream in this example), closes both streams.
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
 	}
 	

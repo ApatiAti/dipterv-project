@@ -291,8 +291,8 @@ public class AppointmentController extends BaseController {
     	try {
     		DocumentFile file = documentService.findDocumentByAppointmentIdAndDocumentFileAppId(appointmentId, documentId);
     		
-    		DocumentUtil.setFileInResponse(response, file);
-    		
+    		DocumentUtil.setFileInResponse(response, file, true);
+    		logger.info("Sikeresen letöltötte a következő fájlt. Id : " + file.getFileName());
     	} catch ( AuthorizationException | BasicServiceException e ){
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
 		} catch (IOException e) {
