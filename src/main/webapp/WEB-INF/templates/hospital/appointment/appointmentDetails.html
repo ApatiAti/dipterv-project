@@ -23,8 +23,6 @@
 			</div>
 			<div class="panel-body">
 				<form th:action="@{/appointment/modify}" th:object="${appointment}" method="post">
-					<input hidden="true" th:field="*{id}" />
-					
 					<th:block layout:replace="fragments/standardForms :: standardFormRowDisabled('consultationHour.department.name', 'Osztály név')" />
 					
 				

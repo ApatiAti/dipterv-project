@@ -113,9 +113,11 @@ public class AppointmentDetailsController extends BaseController {
 	 */
 	@RequestMapping(value = "/appointment/modify" , method = RequestMethod.POST)
 	public String modifyAppointment(Model model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUsername
+			, @ModelAttribute(ModelKeys.APPOINTMENT_ID) long appointementId
 			, Appointment appointment, RedirectAttributes redirectAttributes){
 	
 		try {
+			appointment.setId(appointementId);
 			appointmentService.modifyAppointment(appointment);
 			succesLogAndDisplayMessage(redirectAttributes, "Foglalás sikeresen módosítva");
 		} catch (BasicServiceException e) {
