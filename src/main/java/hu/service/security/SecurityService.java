@@ -46,6 +46,13 @@ public class SecurityService {
 		return userRepository.findByUsername(getCurrentUserName());
 	}
 
+	/**
+	 * Fájl letöltés authorizálása.
+	 * Beteg csak a saját fájlját tudja letölteni.
+	 * Orvos minden betegét letudja tölteni.
+	 * @param docFileApp
+	 * @throws AuthorizationException
+	 */
 	public void authorizeCurrentUserToDownload(DocumentFileAppointment docFileApp) throws AuthorizationException {
 		String patientUserName = docFileApp.getAppointment().getPatient().getUsername();
 		User currentUser = getCurrentUser();
@@ -55,11 +62,9 @@ public class SecurityService {
 			int count = roleGroupRepository.countByUsersIdAndCode(currentUser.getId() , "DOCTOR");
 			
 			if (count == 0){
-				throw new AuthorizationException("Nincs jogod hozzá");
+				throw new AuthorizationException("Az oldal megtekintéséhez nincs joga!");
 			}
 		}
-		
-		
 	}
 	
 	

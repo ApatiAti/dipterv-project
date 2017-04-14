@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -283,20 +283,22 @@ public class AppointmentController extends BaseController {
 	
 	
     @RequestMapping(value="/appointment/{appointmentId}/download/{documentId}", method = RequestMethod.GET)
-    public void downloadFile(HttpServletResponse response
-    		, @PathVariable("appointmentId") Long appointmentId
+    public Object downloadFile( @PathVariable("appointmentId") Long appointmentId
     		, @PathVariable("documentId") Long documentId
-    		, RedirectAttributes redirectAttributes){
+    		, RedirectAttributes redirectAttributes) throws IOException{
      
     	try {
     		DocumentFile file = documentService.findDocumentByAppointmentIdAndDocumentFileAppId(appointmentId, documentId);
     		
-    		DocumentUtil.setFileInResponse(response, file, true);
+    		ResponseEntity<InputStreamResource> responseEntity = DocumentUtil.setFileIntoResponseEntity(file, true);
     		logger.info("Sikeresen letöltötte a következő fájlt. Id : " + file.getFileName());
+    		
+    		return responseEntity;
     	} catch ( AuthorizationException | BasicServiceException e ){
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
 		} catch (IOException e) {
     		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "File letöltése közben hiba történt!", e);
 		} 
+    	return ViewNameHolder.REDIRECT_TO_HOME;
     }
 }
