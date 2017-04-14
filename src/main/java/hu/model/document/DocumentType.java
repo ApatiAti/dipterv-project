@@ -22,8 +22,8 @@ public class DocumentType implements Serializable {
 
 	private Long id;
 	private ExtensionTypes extensionType;
-	private int maxSize;
-	private int minSize;
+	private int maxSizeKB;
+	private int minSizeKB;
 	private DocumentTypeEnum typeName;
 
 	public DocumentType() {
@@ -49,22 +49,22 @@ public class DocumentType implements Serializable {
 		this.extensionType = extensionType;
 	}
 
-	@Column
-	public int getMaxSize() {
-		return this.maxSize;
+	@Column(name = "maxSize_kB")
+	public int getMaxSizeKB() {
+		return this.maxSizeKB;
 	}
 
-	public void setMaxSize(int maxSize) {
-		this.maxSize = maxSize;
+	public void setMaxSizeKB(int maxSize) {
+		this.maxSizeKB = maxSize;
 	}
 
-	@Column
-	public int getMinSize() {
-		return this.minSize;
+	@Column(name = "minSize_kB")
+	public int getMinSizeKB() {
+		return this.minSizeKB;
 	}
 
-	public void setMinSize(int minSize) {
-		this.minSize = minSize;
+	public void setMinSizeKB(int minSize) {
+		this.minSizeKB = minSize;
 	}
 	
 	@Enumerated(EnumType.STRING)

@@ -250,7 +250,7 @@ public class AppointmentController extends BaseController {
 
 	
 	/**
-	 * Upload single file using Spring Controller
+	 * Egy fájl feltöltése egy létező Appointmenthez 
 	 */
 	@RequestMapping(value = "/appointment/{appointmentId}/uploadFile", method = RequestMethod.POST)
 	public String uploadFile(Model model,
@@ -259,16 +259,18 @@ public class AppointmentController extends BaseController {
 			@RequestParam("file") MultipartFile file,	
 			@RequestParam("documentType") DocumentTypeEnum documentTypeEnum,
 			RedirectAttributes redirectAttributes) {
-		
-		String errorMessage = DocumentUtil.validateFileName(fileName);
-		if (errorMessage != null){
-			errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorMessage);
-			return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
-		}
-			
+	
 		if (file != null && !file.isEmpty()){
+			
+			String errorMessage = DocumentUtil.validateFileName(fileName);
+			if (errorMessage != null){
+				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorMessage);
+				return ViewNameHolder.REDIRECT_TO_APPOINTMENT.replace("{appId}", appointmentId.toString());
+			}
+	
 			try {
 				documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
+				succesLogAndDisplayMessage(redirectAttributes, "A megadott fájl sikeressen feltöltésre került.");
 			} catch (BasicServiceException e) {
 				errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e);
 			}

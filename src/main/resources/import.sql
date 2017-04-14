@@ -75,20 +75,20 @@ insert into consultationhour_type(name, departmentId) values( @consultationHour_
 
 
 -- ==[ Feltölthető dokumentum típusok megadása ]==--
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'LELET');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'LELET');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 400000, 1000, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' ,10240 , 1, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 10240 , 1, 'LELET');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'LELET');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'ZAROJELENTES');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 600000, 1000, 'ZAROJELENTES');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 400000, 1000, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 10240 , 1, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 10240 , 1, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'ZAROJELENTES');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 500000, 1000, 'RONTGEN_KEP');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 600000, 1000, 'RONTGEN_KEP');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 400000, 1000, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 10240 , 1, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 61840 , 50, 'RONTGEN_KEP');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('VIDEO' , 500000, 1000, 'ULTRAHANG_VIDEO');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 400000, 1000, 'ULTRAHANG_VIDEO');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('VIDEO' , 61840, 50, 'ULTRAHANG_VIDEO');
+insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 61840, 50, 'ULTRAHANG_VIDEO');
 
 
 

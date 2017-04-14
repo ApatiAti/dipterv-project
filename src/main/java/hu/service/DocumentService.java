@@ -9,10 +9,13 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import hu.component.documentFile.DocumentFileValidatorFactory;
+import hu.component.documentFile.validator.DocumentFileValidator;
 import hu.exception.BasicServiceException;
 import hu.exception.security.AuthorizationException;
 import hu.model.document.DocumentFile;
@@ -30,7 +33,6 @@ import hu.repository.document.DocumentTypeRepository;
 import hu.repository.hospital.AppointmentRepository;
 import hu.service.security.SecurityService;
 import hu.util.EmailType;
-import hu.web.util.validator.documentType.DefaultDocumentFileValidator;
 
 @Service
 public class DocumentService {
@@ -58,6 +60,9 @@ public class DocumentService {
 	@Autowired
 	MailService mailService;
 	
+	@Autowired
+	DocumentFileValidatorFactory documentFileValidatorFactory;
+	
 	
 	@Transactional
 	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName, DocumentTypeEnum documentTypeId) throws BasicServiceException {
@@ -68,7 +73,7 @@ public class DocumentService {
 				DocumentType documentType = getDocumentType(appointment , fileName, documentTypeId);
 				
 				if (documentType != null){
-					DefaultDocumentFileValidator documentumTypeValidator = new DefaultDocumentFileValidator();
+					DocumentFileValidator documentumTypeValidator = documentFileValidatorFactory.getDocumentFileValidator(documentType.getTypeName());
 					
 					String errorMessage = documentumTypeValidator.validate(appointment, file, fileName, documentType);
 				
