@@ -26,6 +26,7 @@ import hu.model.user.User;
 import hu.service.ConsultationHourService;
 import hu.service.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
+import hu.web.util.CalendarUtil;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
@@ -114,7 +115,8 @@ public class DepartmentModificationController extends BaseController {
 			, RedirectAttributes redirectAttributes){
 
 		boolean hasError = handleValidationErrors(bindingResult, model);
-		boolean intervalError = consultationHour.getBeginDate().after(consultationHour.getEndDate());
+		boolean intervalError = CalendarUtil.afterNotNull(consultationHour.getBeginDate(), consultationHour.getEndDate());
+		
 		if (hasError || intervalError){
 			if (intervalError){
 				errorLogAndDisplayMessage(redirectAttributes, "Hibás adatok lettek megadva. Kezdő és vége dátum rosszul lett megadva");
