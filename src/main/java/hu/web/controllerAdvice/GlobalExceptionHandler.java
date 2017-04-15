@@ -26,17 +26,16 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
 		
-		// Otherwise setup and send the user to a default error-view.
+		
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> map = mav.getModel();
 
 		String[] securityError = req.getParameterMap().get(ModelKeys.Security);
 		String content;
 		if (securityError != null){
-			// TODO messagePropertiesből olvasni.
-			content = e.getMessage() + ". You don't have the right privilage.";
+			content = e.getMessage() + ". Nincs megfelelő joga ehhez a művelethez.";
 		} else {
-			content = e.getMessage();
+			content = "Hiba történt.\n" + e.getMessage();
 		}
 		
 		map.put(ModelKeys.DisplayMessage, new CustomMessage(CustomMessageSeverity.ERROR, content));

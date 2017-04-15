@@ -102,6 +102,7 @@ public class ConsultationHourController extends BaseController {
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 
+	// TODO módosítás esetén nem elsz jó mert az orvos neve eltűnik a legördülűből
 	/**
 	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület megnyitása módosításra
 	 * @throws BasicServiceException 
@@ -128,6 +129,7 @@ public class ConsultationHourController extends BaseController {
 		boolean hasError = handleValidationErrors(bindingResult, model);
 		if (hasError){
 			errorLogAndDisplayMessage(redirectAttributes);
+			// TODO ez itt rossz mivel módosítani nem ott lehet
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		}
 		
