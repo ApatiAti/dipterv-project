@@ -1,12 +1,19 @@
 language: java
 sudo: false
 
+addons:
+  sonarqube:
+    organization: "apatiati-github"
+	branches:
+      - development
+    
 jdk:
   - oraclejdk8
 
 script:
-  - mvn clean install
+  - mvn clean install sonar:sonar
 
 cache:
   directories:
     - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
