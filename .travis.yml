@@ -4,7 +4,7 @@ sudo: false
 addons:
   sonarqube:
     organization: "apatiati-github"
-	branches:
+    branches:
       - development
     
 jdk:
