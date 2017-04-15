@@ -4,6 +4,8 @@ sudo: false
 addons:
   sonarqube:
     organization: "apatiati-github"
+    sonarqube:
+      token: $SONAR_TOKEN
     branches:
       - development
     
