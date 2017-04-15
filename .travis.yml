@@ -5,7 +5,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - mvn clean install jetty:run
+  - mvn clean install
 
 cache:
   directories:
