@@ -26,7 +26,7 @@
 
 
 	<th:block layout:fragment="consultationHour(disabled)" th:object="${consultationHour}">
-		<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(consultationHour)" />
+		<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(${disabled})" />
 		
 		<th:block th:unless="${disabled}">
 			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id', text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled = ${false})" />
