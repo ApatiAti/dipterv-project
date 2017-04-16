@@ -60,6 +60,8 @@ public class ConsultationHourService {
 				ConsultationHourType type = consultationHour.getType();
 				if (type != null) {
 					type = consultationHourTypeRepository.findOne(type.getId());
+					
+					consultationHour.setType(type);
 					consultationHour.setDepartment(department);
 					return consultationHourRepository.save(consultationHour);
 				} else {
