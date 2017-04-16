@@ -40,15 +40,13 @@ public class DocumentUtil {
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.parseMediaType(mimeType));
 		
-		// TODO javítani
 		if (openInBrowser){
 //			"Content-Disposition : inline" segítségével megnyitja a böngészőben is megtekinthető típusokat. Például : images/text/pdf  
 //			 Ha nem nyithatóak meg (pl.: zip) akkor a böngésző a fájl letöltését kezdeményezi
-//			header.setContentDispositionFormData("inline", file.getFileName());
-			
+			header.add("Content-disposition", "inline;filename=" + file.getFileName());
 		} else {
 //			"Content-Disposition : attachment" segítségével a böngésző a fájl letöltését kezdeményezi
-			header.setContentDispositionFormData("attachment", file.getFileName());
+			header.add("Content-disposition", "attachment;filename=" + file.getFileName());
 		}
 		
 		byte[] content = file.getContentFile().getContent();
