@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import hu.model.hospital.dto.ConsultationHourSearch;
+import hu.web.util.CalendarUtil;
 
 public class ConsultationHourSearchValidator implements Validator {
 
@@ -21,7 +22,7 @@ public class ConsultationHourSearchValidator implements Validator {
 		Date startDate = obj.getStartDate();
 		Date endDate = obj.getEndDate();
 
-		if (startDate != null && endDate != null && startDate.after(endDate)){
+		if (CalendarUtil.afterNotNull(startDate, endDate)){
 			errors.reject("beginDate", "consultationHourSearch.dates.wrongOrder");
 		}
 		

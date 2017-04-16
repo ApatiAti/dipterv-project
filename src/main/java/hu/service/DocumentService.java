@@ -69,6 +69,8 @@ public class DocumentService {
 		try {
 			Appointment appointment = appointmentRepository.findOne(appointmentId);
 			
+			securityService.authorizeCurrenctUserToUpload(appointment);
+			
 			if (appointment != null){	
 				DocumentType documentType = getDocumentType(appointment , fileName, documentTypeId);
 				
@@ -94,7 +96,7 @@ public class DocumentService {
 			} else {
 				throw new BasicServiceException("Appointment nem található");
 			}
-		} catch (IOException e) {
+		} catch (IOException | AuthorizationException e) {
 			String errorMessage = "Hiba történt a file mentése során";
 			logger.error(errorMessage, e);
 			throw new BasicServiceException(errorMessage);

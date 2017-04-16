@@ -14,7 +14,7 @@
 		<h3>Page Header</h3>
 	</div>
 
-	<th:block layout:fragment="consultationHour(disabled)" th:object="${consultationHour}">
+	<th:block layout:fragment="consultationHourShort(disabled)" th:object="${consultationHour}">
 		<div class="row">
 			<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('beginDate', 'Kezdet', ${disabled})" />
 			<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('endDate', 'Vége', ${disabled})" />					
@@ -22,15 +22,14 @@
 		
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'room', propertyName = 'Rendelés helye', disabled = ${disabled} )" />
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'maxNumberOfPatient', propertyName = 'Időpont limit', disabled = ${disabled} )" />
+	</th:block>
+
+
+	<th:block layout:fragment="consultationHour(disabled)" th:object="${consultationHour}">
+		<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(${disabled})" />
 		
-		<th:block th:unless="${disabled}">
-			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'type.id',text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled = ${false})" />
-			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName = 'doctor.id',text='personalData.name.fullName', title = 'Rendelő orvos', dropdownValues = ${doctorList}, disabled = ${disabled}, emptyEnabled = ${false})" />
-		</th:block>
-		<th:block th:if="${disabled}">
-			<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'type.name', propertyName= 'Rendelés típus', disabled = ${disabled})" />
-			<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'doctor.personalData.name.fullName', propertyName= 'Rendelő orvos', disabled = ${disabled})" />
-		</th:block>
+		<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='type.id', selectedValue=*{type.id} , text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled=${false})" />
+		<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='doctor.id', selectedValue=*{doctor.id} , text='personalData.name.fullName', title = 'Rendelő orvos', dropdownValues = ${doctorList}, disabled = ${disabled}, emptyEnabled=${false})" />
 	</th:block>
 
 	<th:block layout:fragment="consultationHourDisabled" th:object="${consultationHour}">
