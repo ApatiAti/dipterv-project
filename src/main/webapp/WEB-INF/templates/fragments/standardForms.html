@@ -14,10 +14,13 @@
 	<th:block layout:fragment="datepickerField(fieldName, disabled)">
 		<div class="col-md-4" >
 			<div>
-				<div class="input-group date form_datetime"  data-date-format="#{data.format}" data-link-field="dtp_input1">
-					<input class="form-control" th:disabled="${disabled}" size="16" type="text" th:field="*{__${fieldName}__}" style="margin-bottom: 10px"/>
+				<div th:unless="${disabled}" class="input-group date form_datetime"  data-date-format="#{data.format}" data-link-field="dtp_input1">
+					<input class="form-control" size="16" type="text" th:field="*{__${fieldName}__}" style="margin-bottom: 10px"/>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+	        	</div>
+	        	<div th:if="${disabled}">
+	        		<input class="form-control" size="16" disabled="true" type="text" th:field="*{__${fieldName}__}" style="margin-bottom: 10px"/>
 	        	</div>
 	        	<div th:if="${#fields.hasErrors('__${fieldName}__')}">
 					<span th:errors="*{__${fieldName}__}" th:errorclass="text-danger">nöm látszik</span>
@@ -76,16 +79,17 @@
 		<th:block layout:replace="fragments/standardForms :: standardFormRow(${fieldName}, ${propertyName}, ${true})"/>
 	</section>
 
-	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName, text, title, dropdownValues, disabled, emptyEnabled)">
+	<th:block layout:fragment="dropdownFormFieldWithTitle(fieldName, selectedValue, text, title, dropdownValues, disabled, emptyEnabled)">
 		<div class="row">
 			<div class="col-md-2">
 				<span th:text="${title}" ></span>
 			</div>
 			<div class="col-md-4">
-				<select class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}">
+				<select class="form-control" th:disabled="${disabled}" th:name="__${fieldName}__">
 					<option th:if="${emptyEnabled}" value=""></option>
-					<th:block th:each="option : ${dropdownValues}" th:object="${option}">
-						<option th:value="${option.id}" th:text="*{__${text}__}"></option>
+					<th:block th:each="option : ${dropdownValues}">
+							<option th:selected="${selectedValue ne null and selectedValue eq option.id }"
+									th:value="${option.id}" th:text="${option.__${text}__}"></option>
 					</th:block>
 				</select>
 			</div>

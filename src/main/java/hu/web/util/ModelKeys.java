@@ -40,6 +40,7 @@ public class ModelKeys {
 
 	public static final String Appointment = "appointment";
 	public static final String AppointmentList = "appointmentList";
+	public static final String APPOINTMENT_ID = "appointmentId";
 
 	public static final String IsDisabled = "isDisabled";
 
