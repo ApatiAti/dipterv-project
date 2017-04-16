@@ -40,7 +40,6 @@ public class AppointmentController extends BaseController {
 		return logger;
 	}
 	
-	// TODO nem kell departmentId
 	/**
 	 * Új Appointment létrehozó felület behozása 
 	 */
@@ -48,7 +47,7 @@ public class AppointmentController extends BaseController {
 	public String getCreateAppointmentPage(Model model
 			, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
 			, @RequestParam(value = "chId" , required = true) Long consultationHourId
-			, @RequestParam(value = "depId", required = false) Long departmentId, RedirectAttributes redirectAttributes){
+			, RedirectAttributes redirectAttributes){
 				
 		String errorString;
 		String ifErrorwhereToRedirect = ViewNameHolder.REDIRECT_TO_HOME;
@@ -62,11 +61,10 @@ public class AppointmentController extends BaseController {
 			return ViewNameHolder.VIEW_APPOINTMENT;
 		
 		} catch (AlreadyHaveAppointmentException e ) {
-			errorString = "A betegnek már van az adót időpontra időpontja foglalva";
-			if (departmentId != null){
-				ifErrorwhereToRedirect = ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_LIST.replace("{depId}", departmentId.toString());
+			errorString = "A betegnek már van az adott időpontra hely foglalva";
+			if (e.getDepartmentId()!= null){
+				ifErrorwhereToRedirect = ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_LIST.replace("{depId}", e.getDepartmentId().toString());
 			}
-
 		} catch (UserNotFoundException e) {
 			errorString = "A megadott username-el nem létezik felhasználó. Username : " + currentUserName;
 		} catch (ConsultationHourNotFound  e) {

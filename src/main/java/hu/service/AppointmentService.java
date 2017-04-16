@@ -56,7 +56,7 @@ public class AppointmentService {
 		if (appointments != null && !appointments.isEmpty()){
 			for (Appointment appointmentItem : appointments) {
 				if (appointmentItem.getPatient().getId().equals(currentUser.getId())){
-					throw new AlreadyHaveAppointmentException();
+					throw new AlreadyHaveAppointmentException(consultationHour.getDepartment().getId());
 				}
 			}
 		}
