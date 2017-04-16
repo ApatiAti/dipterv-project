@@ -14,11 +14,11 @@ public interface ConsultationHourRepository extends JpaRepository<ConsultationHo
 	
 	@Query("SELECT ch from ConsultationHour ch JOIN FETCH ch.department JOIN FETCH ch.type where 1 = 1"
 			+ " and (:departmentId is null or ch.department.id = :departmentId)"
-			+ " and (:startDate is null or ch.beginDate = :startDate)" 
-			+ " and (:endDate is null or ch.endDate = :endDate)"
+			+ " and (:startDate is null or ch.beginDate >= :startDate)" 
+			+ " and (:endDate is null or ch.endDate <= :endDate)"
 			+ " and (:typeId is null or ch.type.id = :typeId)"
 			)
-	List<ConsultationHour> findByDepartmentId(
+	List<ConsultationHour> searchByDepartmentIdAndSearchEntityProperties(
 			@Param(value = "departmentId") Long departmentId
 			, @Param(value = "startDate") Date startDate
 			, @Param(value = "endDate") Date endDate

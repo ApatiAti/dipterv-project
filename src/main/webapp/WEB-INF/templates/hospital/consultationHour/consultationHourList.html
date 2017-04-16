@@ -62,7 +62,7 @@
 					<section layout:fragment="more-action-button" th:remove="tag">
 						<div>
 							<a class="btn btn-info" href="#" sec:authorize="hasRole('CREATE_APPOINTMENT')"  
-								th:href="@{/appointment/create(chId=__*{id}__ , depId=__*{department.id}__)}"
+								th:href="@{/appointment/create(chId=__*{id}__)}"
 								th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
 
 							<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
