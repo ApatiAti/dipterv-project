@@ -13,13 +13,13 @@
 </head>
 <body>
 	<div class="page-header" layout:fragment="page_Header">
-		<h3>Page Header</h3>
+		<h3 th:text="|  #${consultationHour.id} Rendelési időpont |"></h3>
 	</div>
 
 	<section layout:fragment="page-content">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Consultation Hour</h3>
+				<h3 th:text="| #${consultationHour.id} Rendelési időpont|" class="panel-title">Consultation Hour</h3>
 			</div>
 			
 			<div class="panel-body form-group" th:object="${consultationHour}">
