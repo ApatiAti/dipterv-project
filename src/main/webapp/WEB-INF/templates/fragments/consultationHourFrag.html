@@ -28,8 +28,14 @@
 	<th:block layout:fragment="consultationHour(disabled)" th:object="${consultationHour}">
 		<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(${disabled})" />
 		
-		<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='type.id', selectedValue=*{type.id} , text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled=${false})" />
-		<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='doctor.id', selectedValue=*{doctor.id} , text='personalData.name.fullName', title = 'Rendelő orvos', dropdownValues = ${doctorList}, disabled = ${disabled}, emptyEnabled=${false})" />
+		<th:block th:unless="${disabled}">
+			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='type.id', selectedValue=*{type.id} , text='name', title = 'Rendelés típus', dropdownValues = ${consultationTypes}, disabled = ${disabled}, emptyEnabled=${false})" />
+			<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle(fieldName='doctor.id', selectedValue=*{doctor.id} , text='personalData.name.fullName', title = 'Rendelő orvos', dropdownValues = ${doctorList}, disabled = ${disabled}, emptyEnabled=${false})" />
+		</th:block>
+		<th:block th:if="${disabled}">
+			<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName='type.name', propertyName = 'Rendelés típus', disabled = ${disabled})" />
+			<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName='doctor.personalData.name.fullName', propertyName = 'Rendelő orvos', disabled = ${disabled})" />
+		</th:block>
 	</th:block>
 
 	<th:block layout:fragment="consultationHourDisabled" th:object="${consultationHour}">

@@ -60,6 +60,8 @@ public class ConsultationHourService {
 				ConsultationHourType type = consultationHour.getType();
 				if (type != null) {
 					type = consultationHourTypeRepository.findOne(type.getId());
+					
+					consultationHour.setType(type);
 					consultationHour.setDepartment(department);
 					return consultationHourRepository.save(consultationHour);
 				} else {
@@ -75,7 +77,7 @@ public class ConsultationHourService {
 
 	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
 		if (searchEntity != null) {
-			return consultationHourRepository.findByDepartmentId(departmentId, searchEntity.getStartDate(),
+			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(departmentId, searchEntity.getStartDate(),
 					searchEntity.getEndDate(), searchEntity.getChTypeId());
 		}
 
@@ -102,7 +104,7 @@ public class ConsultationHourService {
 		List<ConsultationHourType> types = consultationHourTypeRepository.findByDepartmentId(departmentId);
 
 		if (CollectionUtils.isEmpty(types)) {
-			throw new BasicServiceException("ConsultationHourTypes not fount for Department");
+			throw new BasicServiceException("Departmenthez nincs ConsultationHourType kapcsolva");
 		}
 
 		return types;

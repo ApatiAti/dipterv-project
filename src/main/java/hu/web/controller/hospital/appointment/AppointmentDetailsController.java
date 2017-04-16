@@ -174,7 +174,7 @@ public class AppointmentDetailsController extends BaseController {
     		DocumentFile file = documentService.findDocumentByAppointmentIdAndDocumentFileAppId(appointmentId, documentId);
     		
     		ResponseEntity<InputStreamResource> responseEntity = DocumentUtil.setFileIntoResponseEntity(file, true);
-    		logger.info("Sikeresen letöltötte a következő fájlt. Id : " + file.getFileName());
+    		logger.info("Sikeresen letöltötte a következő fájlt. Fájl id : " + file.getId());
     		
     		return responseEntity;
     	} catch ( AuthorizationException | BasicServiceException e ){

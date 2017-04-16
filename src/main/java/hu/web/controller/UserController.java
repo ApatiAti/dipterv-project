@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hu.exception.BasicServiceException;
+import hu.exception.security.AuthorizationException;
 import hu.model.user.PersonalData;
 import hu.service.UserService;
 import hu.web.controller.abstarct.BaseController;
@@ -82,16 +84,16 @@ public class UserController extends BaseController {
 	public String getPersonalDataEdit(Map<String, Object> model,
 			@ModelAttribute(ModelKeys.CurrentUserName) String username, @PathVariable Long personalDataId
 			, RedirectAttributes redirectAttributes) {
-		PersonalData personalData = userService.getEditablePersonalData(username, personalDataId);
-
-		if (personalData != null){
+		try{
+			PersonalData personalData = userService.getEditablePersonalData(username, personalDataId);
+		
 			model.put(ModelKeys.PersonalDataIsDisabled, false);
 			model.put(ModelKeys.PersonalData, personalData);
 	
 			return ViewNameHolder.VIEW_PERSONAL_DATA;
-		} else {
-			CustomMessage message = new CustomMessage(CustomMessageSeverity.ERROR, "Csak a saját adataidat módosíthatod");
-			redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+			
+		} catch (BasicServiceException | AuthorizationException e){
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
