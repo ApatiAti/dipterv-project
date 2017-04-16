@@ -65,7 +65,6 @@ public class ConsultationHourDetailsController extends BaseController {
 		model.put(ModelKeys.DOCTORS_LIST, employeeList);
 	}
 
-	// TODO módosítás esetén nem elsz jó mert az orvos neve eltűnik a legördülűből
 	/**
 	 * Megadott ConsoltationHour és a hozzá tartozó Appointment adatait részletező felület megnyitása módosításra
 	 * @throws BasicServiceException 

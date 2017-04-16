@@ -87,7 +87,6 @@ public class AppointmentController extends BaseController {
 			,@ModelAttribute(ModelKeys.CurrentUserName) String currentUser
 			, RedirectAttributes redirectAttributes){
 		
-		// TODO validation
 		if (handleValidationErrors(bindingResult, model)){
 			logger.error("Hibás adatok lettek megadva.");
 			return ViewNameHolder.VIEW_APPOINTMENT;
