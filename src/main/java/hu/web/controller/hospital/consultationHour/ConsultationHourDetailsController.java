@@ -1,5 +1,7 @@
 package hu.web.controller.hospital.consultationHour;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -15,7 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHour;
+import hu.model.hospital.Department;
+import hu.model.user.User;
 import hu.service.ConsultationHourService;
+import hu.service.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
@@ -27,6 +32,8 @@ public class ConsultationHourDetailsController extends BaseController {
 		
 	@Autowired 
 	private ConsultationHourService consultationHourService;
+	@Autowired
+	private DepartmentService departmentService;
 	
 	@Override
 	protected Logger getLogger() {
@@ -46,7 +53,16 @@ public class ConsultationHourDetailsController extends BaseController {
 		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, false);
 
+		addDoctorListToModel(model, departmentId);
+		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
+	}
+
+//	TODO javítani ezt és department_user összerendeléssel együtt
+	public void addDoctorListToModel(Map<String, Object> model, Long departmentId) {
+		Department department = departmentService.findDepartmentWithDoctors(departmentId);
+		List<User> employeeList = department != null ? department.getEmployee() : new ArrayList<>();
+		model.put(ModelKeys.DOCTORS_LIST, employeeList);
 	}
 
 	// TODO módosítás esetén nem elsz jó mert az orvos neve eltűnik a legördülűből
@@ -55,11 +71,13 @@ public class ConsultationHourDetailsController extends BaseController {
 	 * @throws BasicServiceException 
 	 */
 	@RequestMapping(value = "/{departmentId}/consultationHour/{consultationHourId}/edit", method=RequestMethod.GET)
-	public String modifyConsultationHour(Map<String, Object> model
+	public String getConsultationHourDeatilsPageForModification(Map<String, Object> model
 			, @PathVariable Long departmentId
 			, @PathVariable Long consultationHourId) throws BasicServiceException{
 		
 		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		addDoctorListToModel(model, departmentId);
+		
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, true);
 		
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS; 
@@ -68,7 +86,7 @@ public class ConsultationHourDetailsController extends BaseController {
 	/**
 	 * A kapott ConsoltationHour módosítása 
 	 */
-	@RequestMapping(value = "/consultationHour/{consultationHourId}/edit", method=RequestMethod.PUT)
+	@RequestMapping(value = "/consultationHour/{consultationHourId}/edit", method=RequestMethod.POST)
 	public String modifyConsultationHour(Map<String, Object> model
 			, @Valid ConsultationHour consultationHour, BindingResult bindingResult
 			, RedirectAttributes redirectAttributes){
@@ -76,8 +94,7 @@ public class ConsultationHourDetailsController extends BaseController {
 		boolean hasError = handleValidationErrors(bindingResult, model);
 		if (hasError){
 			errorLogAndDisplayMessage(redirectAttributes);
-			// TODO ez itt rossz mivel módosítani nem ott lehet
-			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
+			return ViewNameHolder.redirectToConsultationHourDetailsModify(consultationHour);
 		}
 		
 		try {

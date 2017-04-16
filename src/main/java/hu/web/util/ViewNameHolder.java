@@ -38,6 +38,7 @@ public class ViewNameHolder {
 
 	public static final String REDIRECT_TO_CONSULTATION_HOUR_LIST = "redirect:/{depId}/consultationHour/list";
 	public static final String REDIRECT_TO_CONSULTATION_HOUR_DETAILS = "redirect:/{depId}/consultationHour/{chId}";
+	public static final String REDIRECT_TO_CONSULTATION_HOUR_DETAILS_MODIFY = "redirect:/consultationHour/{chId}/edit";
 	
 	/*
 	 * hospital/apppointment mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
@@ -52,7 +53,17 @@ public class ViewNameHolder {
 	
 	
 	public static String redirectToConsultationHourDetails(ConsultationHour consultationHour) {
-		return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_DETAILS.replace("{depId}", consultationHour.getDepartment().getId().toString()).replace("{chId}", consultationHour.getId().toString());
+		return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_DETAILS
+				.replace("{depId}", consultationHour.getDepartment().getId().toString())
+				.replace("{chId}", consultationHour.getId().toString())
+				;
 	}
-		
+	
+	public static String redirectToConsultationHourDetailsModify(ConsultationHour consultationHour) {
+		return ViewNameHolder.REDIRECT_TO_CONSULTATION_HOUR_DETAILS_MODIFY
+				.replace("{depId}", consultationHour.getDepartment().getId().toString())
+				.replace("{chId}", consultationHour.getId().toString())
+				;
+	}
+	
 }

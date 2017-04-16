@@ -35,7 +35,7 @@
 					</th:block>
 					
 					<th:block th:case="true" >
-						<form th:action="@{/consultationHour/__*{id}__/edit}" method="PUT">
+						<form th:action="@{/consultationHour/__*{id}__/edit}" method="POST">
 							<input th:field="*{id}" hidden="hidden" ></input>
 							<th:block layout:replace="fragments/consultationHourFrag :: consultationHour(${false})"></th:block>
 							
