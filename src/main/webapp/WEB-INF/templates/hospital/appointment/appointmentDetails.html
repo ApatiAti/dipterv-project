@@ -26,9 +26,7 @@
 					<th:block layout:replace="fragments/standardForms :: standardFormRowDisabled('consultationHour.department.name', 'Osztály név')" />
 					
 				
-					<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(${true})" />
-					<th:block layout:replace="fragments/standardForms :: standardFormRowDisabled(fieldName = 'consultationHour.type.name', propertyName = 'Időpont típus')" />
-			
+					<th:block layout:replace="fragments/consultationHourFrag :: consultationHour(${true})" />			
 			
 					<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'complaints',propertyName = 'Panasz rövid leírása', disabled = ${isDisabled})" />
 
