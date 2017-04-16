@@ -11,91 +11,35 @@
 </head>
 <body>
 	<section layout:fragment="personalData" th:object="${personalData}">
-		<div class="form-group">
-			<div class="row">
-				<input hidden="true" th:field="*{id}" />
-				<div class="col-md-2">
-					<span>Name</span>
-				</div>
-				<div class="col-md-1">
-					<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithEnum(fieldName = 'name.title', enumValues = ${T(hu.model.user.TitleEnum).values()}, disabled = ${personalDataIsDisabled})" />
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
-						th:field="*{name.lastName}" value="Kovács" />
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
-						th:field="*{name.firstName}" value="János" />
-				</div>
-				<div class="col-md-3">
-					<span th:if="${#fields.hasErrors('name.lastName')}" th:errors="*{name.lastName}" th:errorclass="text-danger"> nöm
-						látszik</span>
-					<span th:if="${#fields.hasErrors('name.firstName')}" th:errors="*{name.firstName}" th:errorclass="text-danger">nöm
-						látszik</span>
-				</div>
+		
+		<input hidden="true" th:field="*{id}" />
+		<div class="row">
+			<div class="col-md-2">
+				<span>Teljes név</span>
 			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<span>Anyja neve</span>
-				</div>
-
-				<div class="col-md-4">
-					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
-						th:field="*{motherName}" value="Jenő" />
-				</div>
+			<div class="col-md-1">
+				<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithEnum(fieldName = 'name.title', enumValues = ${T(hu.model.user.TitleEnum).values()}, disabled = ${personalDataIsDisabled})" />
 			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<span>Születési dátum</span>
-				</div>
-
-				<div class="col-md-4">
-					<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
-						th:field="*{{birthDate}}" value="2012-10-10" />
-				</div>
-
-				<div class="col-md-4">
-					<span th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" th:errorclass="text-danger">nöm látszik</span>
-				</div>
+			<div class="col-md-3">
+				<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
+					th:field="*{name.lastName}" value="Kovács" />
 			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<span>Telefon szám</span>
-				</div>
-
-				<div class="col-md-4">
-					<input class="form-control" th:disabled="${personalDataIsDisabled}" th:field="*{phoneNumber}"
-						value="0630854236" />
-				</div>
-
-				<div class="col-md-4">
-					<span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" th:errorclass="text-danger">nöm látszik</span>
-				</div>
+			<div class="col-md-3">
+				<input class="form-control" required="required" th:disabled="${personalDataIsDisabled}"
+					th:field="*{name.firstName}" value="János" />
 			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<span>Taj szám</span>
-				</div>
-
-				<div class="col-md-4">
-					<input class="form-control" th:disabled="${personalDataIsDisabled}" th:field="*{tajNumber}"
-						value="0630854236" th:errorclass="text-danger" />
-				</div>
-				<div class="col-md-4" th:if="${#fields.hasErrors('tajNumber')}">
-					<strong><span th:if="${#fields.hasErrors('tajNumber')}" th:errors="*{tajNumber}"
-							th:errorclass="text-danger">nöm látszik</span></strong>
-				</div>
+			<div class="col-md-3">
+				<span th:if="${#fields.hasErrors('name.lastName')}" th:errors="*{name.lastName}" th:errorclass="text-danger"> nöm
+					látszik</span>
+				<span th:if="${#fields.hasErrors('name.firstName')}" th:errors="*{name.firstName}" th:errorclass="text-danger">nöm
+					látszik</span>
 			</div>
-			<ul>
-				<li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
-					<strong><span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span></strong> <strong><span
-							th:text="${e.message}" >The error message</span></strong>
-				</li>
-			</ul>
-
 		</div>
-
+		
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'motherName', propertyName = 'Anyja neve', disabled = ${personalDataIsDisabled})" />
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = '{birthDate}', propertyName = 'Születési dátum', disabled = ${personalDataIsDisabled})" />
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'phoneNumber', propertyName = 'Telefon szám', disabled = ${personalDataIsDisabled})" />
+		<th:block layout:replace="fragments/standardForms :: standardFormRow(fieldName = 'tajNumber', propertyName = 'Taj szám', disabled = ${personalDataIsDisabled})" />
 	</section>
 
 

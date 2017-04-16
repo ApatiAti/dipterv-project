@@ -46,7 +46,7 @@ public class PersonalDataValidator implements Validator {
 		
 		String phoneNumber = personalData.getPhoneNumber();
 		if (phoneNumber != null && phoneNumber.length() > 12){
-			errors.reject("phoneNumber", "personalData.phoneNumber.tooLong");
+			errors.rejectValue("phoneNumber", "personalData.phoneNumber.tooLong");
 		}
 		
 	}

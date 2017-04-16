@@ -18,8 +18,6 @@ import hu.exception.security.AuthorizationException;
 import hu.model.user.PersonalData;
 import hu.service.UserService;
 import hu.web.controller.abstarct.BaseController;
-import hu.web.util.CustomMessage;
-import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 import hu.web.util.validator.PersonalDataValidator;
@@ -49,11 +47,7 @@ public class UserController extends BaseController {
 		PersonalData personalData = userService.findPersonalDataByUsername(username);
 		
 		if (personalData == null){
-			String errorMessage = "A bejelentkezett felhasználónak nincs személyes adatai. Bejelentkezett felhasználó : " + username;
-			CustomMessage message = new CustomMessage(CustomMessageSeverity.ERROR, errorMessage);
-
-			logger.error(errorMessage);
-			redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+			errorLogAndDisplayMessage(redirectAttributes, "A bejelentkezett felhasználónak nincs személyes adatai. Bejelentkezett felhasználó : " + username);
 		}
 
 		model.put(ModelKeys.PersonalDataIsDisabled, true);
@@ -109,6 +103,7 @@ public class UserController extends BaseController {
 		personalDataValidator.validate(personalData, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			errorLogAndDisplayMessage(redirectAttributes);
 			return ViewNameHolder.VIEW_PERSONAL_DATA;
 		}
 
@@ -117,6 +112,8 @@ public class UserController extends BaseController {
 		redirectAttributes.addFlashAttribute(ModelKeys.PersonalDataIsDisabled, false);
 		redirectAttributes.addFlashAttribute(ModelKeys.PersonalData, updatedPersonalData);
 
+		succesLogAndDisplayMessage(redirectAttributes, "Személyes adatok mentése sikeresen megtörtént");
+		
 		return ViewNameHolder.REDIRECT_TO_PERSONAL_DATA.replace("{pdId}", updatedPersonalData.getId().toString());
 	}
 	
