@@ -13,11 +13,16 @@
 <body>
 	<div class="container">
 
-		<p th:if="${param.error}"> Hiba történt a feldolgozás során</p>
-		<br />
-		<p th:if="${param.logout}">Sikeres kijelentkezés</p>
-		<br />
-
+		<div th:if="${param.error}" class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="error"> Hibás felhasználó név vagy jelszó</span>
+		</div>		
+		
+		<div th:if="${param.logout}" class="alert alert-info">
+			<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			<span class="info">Sikeres kijelentkezés</span>
+		</div>
+		
 
 
 		<form class="form-signin" action="#" th:action="@{/login}" method="post">
@@ -29,6 +34,7 @@
 			<label for="inputPassword" class="sr-only" th:text="#{login.password}">Jelszó</label>
 			<input type="password" id="inputPassword" class="form-control" placeholder="Jelszó" th:placeholder="#{login.password}" required="true" name="password"/>
 			
+	
 			<button class="btn btn-lg btn-primary btn-block" type="submit" th:value="#{login.login}">Bejelentkezés</button>
 			
 		</form>

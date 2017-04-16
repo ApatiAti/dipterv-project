@@ -23,46 +23,14 @@
 			</div>
 			<div class="panel-body">
 				<form th:action="@{/appointment/modify}" th:object="${appointment}" method="post">
-					<input hidden="true" th:field="*{id}" />
-					<th:block th:object="${consultationHour.department}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Osztály név</span>
-							</div>
-							<div class="col-md-4">
-								<span class="form-control" th:disabled="disabled" th:text="*{name}" text="Szülészet"></span>
-							</div>
-						</div>
-					</th:block>
-					<th:block th:object="${consultationHour}">
-						<div class="row">
-							<div class="col-md-2">
-								<span>Fogadás kezdete</span>
-							</div>
-							<div class="col-md-4">
-								<span class="form-control" th:disabled="disabled" th:text="*{beginDate}" text="2012-12-12" />
-							</div>
-							<div class="col-md-2">
-								<span>Fogadás vége</span>
-							</div>
-							<div class="col-md-4">
-								<span class="form-control" th:disabled="disabled" th:text="*{endDate}" text="2012-12-13" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<span>Fogadás helye</span>
-							</div>
-							<div class="col-md-4">
-								<span class="form-control" th:disabled="disabled" th:text="*{room}" text="IB123" />
-							</div>
-						</div>
-						<section layout:replace="fragments/standardForms :: standardFormRowDisabled(fieldName = 'type.name', propertyName = 'Időpont típus')"></section>
-					</th:block>
-
-					<th:block th:object="${appointment}">
-						<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'complaints',propertyName = 'Panasz rövid leírása', disabled = ${isDisabled})" />
-					</th:block>
+					<th:block layout:replace="fragments/standardForms :: standardFormRowDisabled('consultationHour.department.name', 'Osztály név')" />
+					
+				
+					<th:block layout:replace="fragments/consultationHourFrag :: consultationHourShort(${true})" />
+					<th:block layout:replace="fragments/standardForms :: standardFormRowDisabled(fieldName = 'consultationHour.type.name', propertyName = 'Időpont típus')" />
+			
+			
+					<th:block layout:replace="fragments/standardForms :: standardFormTextAreaRow(fieldName = 'complaints',propertyName = 'Panasz rövid leírása', disabled = ${isDisabled})" />
 
 					<div class="row">
 						<input th:unless="${isDisabled}" class="btn btn-info" type="submit" value="Módosítás" />

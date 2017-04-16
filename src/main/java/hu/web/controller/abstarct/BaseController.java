@@ -18,19 +18,19 @@ public abstract class BaseController {
 	
 	protected abstract Logger getLogger();
 	
-	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes) {
-		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, "Hibás adatok lettek megadva", null);
+	public void errorLogAndDisplayMessage(RedirectAttributes redirectAttributes) {
+		errorLogAndDisplayMessage(redirectAttributes, "Hibás adatok lettek megadva", null);
 	}
 	
-	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString) {
-		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, errorString, null);
+	public void errorLogAndDisplayMessage(RedirectAttributes redirectAttributes, String errorString) {
+		errorLogAndDisplayMessage(redirectAttributes, errorString, null);
 	}
 
-	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, Exception e) {
-		errorLoggingAndCreateErrorFlashAttribute(redirectAttributes, e.getMessage(), e);
+	public void errorLogAndDisplayMessage(RedirectAttributes redirectAttributes, Exception e) {
+		errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 	}
 	
-	public void errorLoggingAndCreateErrorFlashAttribute(RedirectAttributes redirectAttributes, String errorString, Exception e) {
+	public void errorLogAndDisplayMessage(RedirectAttributes redirectAttributes, String errorString, Exception e) {
 		if (e != null){
 			getLogger().error(errorString, e);
 		} else {

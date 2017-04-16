@@ -30,7 +30,7 @@
 							<th:block layout:replace="fragments/standardForms :: datepickerFieldWithTitle('endDate', 'Vége', ${false})" />
 						</div>
 						
-						<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle('chTypeId', 'name', 'Rendelés típusa', ${consultationTypes}, ${false}, ${true})" />
+						<th:block layout:replace="fragments/standardForms :: dropdownFormFieldWithTitle('chTypeId', ${null}, 'name', 'Rendelés típusa', ${consultationTypes}, ${false}, ${true})" />
 						
 						<div class="row">
 							<ul th:if="${#fields.hasErrors('*')}">
