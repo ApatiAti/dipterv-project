@@ -75,7 +75,7 @@ public class ConsultationHourService {
 
 	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
 		if (searchEntity != null) {
-			return consultationHourRepository.findByDepartmentId(departmentId, searchEntity.getStartDate(),
+			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(departmentId, searchEntity.getStartDate(),
 					searchEntity.getEndDate(), searchEntity.getChTypeId());
 		}
 
