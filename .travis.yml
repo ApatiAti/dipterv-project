@@ -4,14 +4,17 @@ sudo: false
 addons:
   sonarqube:
     organization: "apatiati-github"
-    sonarqube:
-      token: $SONAR_TOKEN
+    token:
+      secure: $SONAR_TOKEN	
+    branches:
+      - master
+      - development
     
 jdk:
   - oraclejdk8
 
 script:
-  - mvn clean install sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=apatiati-github
+  - mvn clean install sonar:sonar
 
 cache:
   directories:
