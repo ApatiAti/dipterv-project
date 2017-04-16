@@ -11,7 +11,7 @@ public class ViewNameHolder {
 	public static final String REDIRECT_TO_HOME ="redirect:/home";
 	
 	/*
-	 * user/ mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
+	 * user mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
 	 */
 	public static final String VIEW_PERSONAL_DATA =  "user/personalData";
 
@@ -19,15 +19,18 @@ public class ViewNameHolder {
 	
 	
 	/*
-	 * department/ mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
+	 *  hospital/department mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
 	 */
-	public static final String VIEW_DEPARTMENTS = "department/departmentList";
-	public static final String VIEW_DEPARTMENT_MODIFICATION = "department/departmentModification";
+	public static final String VIEW_DEPARTMENTS = "hostpital/department/departmentList";
+	public static final String VIEW_DEPARTMENT_MODIFICATION = "hostpital/department/departmentModification";
 	
 	public static final String REDIRECT_TO_DEPARTMENT_MODIFICATION = "redirect:/department/{depId}";
 	
 	
-	public static final String VIEW_MY_DOCUMENTS = "department/myDocumentfiles";
+	/*
+	 *	document mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
+	 */
+	public static final String VIEW_MY_DOCUMENTS = "document/myDocumentfiles";
 	
 	/*
 	 * hospital/consultationHour mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek

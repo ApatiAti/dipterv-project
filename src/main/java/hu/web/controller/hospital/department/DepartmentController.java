@@ -1,4 +1,4 @@
-package hu.web.controller.hospital;
+package hu.web.controller.hospital.department;
 
 import java.util.List;
 import java.util.Map;

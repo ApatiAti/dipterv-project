@@ -1,4 +1,4 @@
-package hu.web.controller.hospital;
+package hu.web.controller.hospital.department;
 
 import java.util.ArrayList;
 import java.util.List;
