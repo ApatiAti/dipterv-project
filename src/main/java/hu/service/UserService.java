@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hu.exception.BasicServiceException;
+import hu.exception.security.AuthorizationException;
 import hu.model.user.PersonalData;
 import hu.model.user.User;
 import hu.repository.user.PersonalDataRepository;
@@ -45,21 +47,23 @@ public class UserService {
 	 * @param usernameParam
 	 * @param personalDataId
 	 * @return
+	 * @throws BasicServiceException 
 	 */
-	public PersonalData getEditablePersonalData(String usernameParam, Long personalDataId) {
+	public PersonalData getEditablePersonalData(String usernameParam, Long personalDataId) throws AuthorizationException, BasicServiceException {
 		PersonalData personalData = personalDataRepository.findOne(personalDataId);
 		
 		if (personalData == null){
 			String message = "Megadott personalDataId nem létezik a DB-ben. Id " + personalDataId.toString();
 			logger.error(message);
-			throw new EntityNotFoundException(message);
+			throw new BasicServiceException(message);
 		}
-		
+	
 		if (usernameParam.equals(personalData.getUser().getUsername())){
 			return personalData;
+		} else {
+			throw new AuthorizationException("Csak a saját adataidanak a módosításához van engedélye.");
 		}
 		
-		return null;
 	}
 
 
