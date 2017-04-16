@@ -21,8 +21,8 @@ public class ViewNameHolder {
 	/*
 	 *  hospital/department mappában található view-k elérése és hozzájuk kapcsolódó redirect stringek
 	 */
-	public static final String VIEW_DEPARTMENTS = "hostpital/department/departmentList";
-	public static final String VIEW_DEPARTMENT_MODIFICATION = "hostpital/department/departmentModification";
+	public static final String VIEW_DEPARTMENTS = "hospital/department/departmentList";
+	public static final String VIEW_DEPARTMENT_MODIFICATION = "hospital/department/departmentModification";
 	
 	public static final String REDIRECT_TO_DEPARTMENT_MODIFICATION = "redirect:/department/{depId}";
 	
