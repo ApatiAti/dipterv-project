@@ -21,7 +21,6 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Consultation Hour</h3>
 			</div>
-<!-- 			isConsultationHourModification -->
 			
 			<div class="panel-body form-group" th:object="${consultationHour}">
 				<th:block th:switch="${isConsultationHourModification}" >
@@ -35,7 +34,7 @@
 					</th:block>
 					
 					<th:block th:case="true" >
-						<form th:action="@{/consultationHour/__*{id}__/edit}" method="POST">
+						<form th:action="@{/consultationHour/edit}" method="POST">
 							<input th:field="*{id}" hidden="hidden" ></input>
 							<th:block layout:replace="fragments/consultationHourFrag :: consultationHour(${false})"></th:block>
 							

@@ -85,7 +85,7 @@ public class ConsultationHourDetailsController extends BaseController {
 	/**
 	 * A kapott ConsoltationHour módosítása 
 	 */
-	@RequestMapping(value = "/consultationHour/{consultationHourId}/edit", method=RequestMethod.POST)
+	@RequestMapping(value = "/consultationHour/edit", method=RequestMethod.POST)
 	public String modifyConsultationHour(Map<String, Object> model
 			, @Valid ConsultationHour consultationHour, BindingResult bindingResult
 			, RedirectAttributes redirectAttributes){
