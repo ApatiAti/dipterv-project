@@ -104,7 +104,7 @@ public class ConsultationHourService {
 		List<ConsultationHourType> types = consultationHourTypeRepository.findByDepartmentId(departmentId);
 
 		if (CollectionUtils.isEmpty(types)) {
-			throw new BasicServiceException("ConsultationHourTypes not fount for Department");
+			throw new BasicServiceException("Departmenthez nincs ConsultationHourType kapcsolva");
 		}
 
 		return types;
