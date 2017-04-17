@@ -65,6 +65,7 @@
 
 
 	<mvc:interceptors>
+		<bean class="hu.web.util.LoggingInterceptor" />
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="locale" />
 	</mvc:interceptors>
 

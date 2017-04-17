@@ -2,7 +2,8 @@ package hu.web.controller.document;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ import hu.web.util.ViewNameHolder;
 @Controller
 public class DocumentController extends BaseController{
 
-	public static final Logger logger = Logger.getLogger(DocumentController.class);
+	public static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
 	
 	@Autowired
 	DocumentService documentService;

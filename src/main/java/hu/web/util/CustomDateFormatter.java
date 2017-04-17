@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.format.Formatter;
 
+import hu.util.MessageConstants;
+
 /*
  * Különböző a felületen megjelenő dátumok formázására 
  * forrás:
@@ -39,7 +41,7 @@ public class CustomDateFormatter implements Formatter<Date> {
 	}
 	
 	public static SimpleDateFormat createDateFormatStatic(final MessageSource messageSource, final Locale locale) {
-		final String format = messageSource.getMessage("date.format", null, locale);
+		final String format = messageSource.getMessage(MessageConstants.DATE_FORMAT, null, locale);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		dateFormat.setLenient(false);
 		return dateFormat;
