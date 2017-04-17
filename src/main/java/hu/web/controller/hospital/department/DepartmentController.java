@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import hu.model.hospital.Department;
-import hu.service.DepartmentService;
+import hu.service.interfaces.DepartmentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;

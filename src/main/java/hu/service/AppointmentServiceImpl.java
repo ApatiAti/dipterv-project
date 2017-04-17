@@ -18,33 +18,34 @@ import hu.model.hospital.ConsultationHour;
 import hu.model.user.User;
 import hu.repository.document.DocumentFileAppointmentRepository;
 import hu.repository.hospital.AppointmentRepository;
-import hu.repository.hospital.ConsultationHourRepository;
 import hu.repository.user.UserRepository;
+import hu.service.interfaces.AppointmentService;
+import hu.service.interfaces.ConsultationHourService;
+import hu.service.interfaces.DocumentService;
 import hu.web.util.CalendarUtil;
 
 @Service
-public class AppointmentService {
+public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
-	ConsultationHourRepository consultationHourRepository;
-	
-	@Autowired
 	AppointmentRepository appointmentRepository;
+	
 	@Autowired
 	DocumentFileAppointmentRepository documentFileAppointmentRepository;
 	
 	@Autowired
 	UserRepository userRepository;
-
+	
 	@Autowired
 	DocumentService documentService;
-
-	@Autowired
-	private ConsultationHourService consultationHourService;
 	
+	@Autowired
+	ConsultationHourService consultationHourService;
+	
+	@Override
 	@Transactional
 	public Appointment buildNewAppointment(Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException {
-		ConsultationHour consultationHour = consultationHourRepository.findOne(consultationHourId);
+		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
 		
 		consultationHourService.validateConsultationHour(consultationHour);
 		
@@ -73,10 +74,10 @@ public class AppointmentService {
 	}
 
 
+	@Override
 	@Transactional
 	public void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
-		
-		ConsultationHour consultationHour = consultationHourRepository.findOne(consultationHourId);
+		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
 		
 		consultationHourService.validateConsultationHour(consultationHour);
 		
@@ -92,14 +93,17 @@ public class AppointmentService {
 		appointmentRepository.save(appointment);
 	}
 
-	public List<Appointment> getAppintmentByUsername(String currentUserName) {
+	@Override
+	public List<Appointment> getAppointmentByUsername(String currentUserName) {
 		return appointmentRepository.findByPatientUsername(currentUserName);	
 	}
 
+	@Override
 	public Appointment findAppointmentById(Long appointmentId) {
 		return appointmentRepository.findOne(appointmentId);
 	}
 
+	@Override
 	public Appointment findAppointmentByIdAndUserName(Long appointmentId, String currentUserName) throws BasicServiceException {
 		Appointment appointment = appointmentRepository.findOne(appointmentId);
 		
@@ -116,6 +120,7 @@ public class AppointmentService {
 		throw new BasicServiceException("Megadott foglalás nem létezik");
 	}
 
+	@Override
 	@Transactional
 	public void modifyAppointment(Appointment editAppointment) throws BasicServiceException {
 		Appointment oldAppointment = appointmentRepository.findOne(editAppointment.getId());
@@ -128,6 +133,7 @@ public class AppointmentService {
 		throw new BasicServiceException("Nem létezik a megadott foglalás");
 	}
 
+	@Override
 	@Transactional	
 	public void deleteAppointment(Long appointmentId) throws BasicServiceException {
 		Appointment appointment = appointmentRepository.findOne(appointmentId);

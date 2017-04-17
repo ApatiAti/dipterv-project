@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import hu.service.security.SecurityService;
+import hu.service.interfaces.security.SecurityService;
 import hu.web.util.ModelKeys;
 
 @ControllerAdvice(basePackages = {"hu.web.controller"} )

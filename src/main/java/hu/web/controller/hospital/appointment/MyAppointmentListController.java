@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
 import hu.model.hospital.Appointment;
-import hu.service.AppointmentService;
+import hu.service.interfaces.AppointmentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.CustomMessage;
 import hu.web.util.ModelKeys;
@@ -47,7 +47,7 @@ public class MyAppointmentListController extends BaseController {
 	@RequestMapping(value = "/myAppointments" , method = RequestMethod.GET)
 	public String getMyAppointmentsPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName){
 		
-		List<Appointment> myAppointmentList = appointmentService.getAppintmentByUsername(currentUserName);
+		List<Appointment> myAppointmentList = appointmentService.getAppointmentByUsername(currentUserName);
 		
 		model.put(ModelKeys.AppointmentList, myAppointmentList);
 	

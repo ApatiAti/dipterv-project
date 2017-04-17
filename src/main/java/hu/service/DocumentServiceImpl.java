@@ -31,12 +31,13 @@ import hu.repository.document.DocumentFileContentRepository;
 import hu.repository.document.DocumentFileRepository;
 import hu.repository.document.DocumentTypeRepository;
 import hu.repository.hospital.AppointmentRepository;
+import hu.service.interfaces.DocumentService;
 import hu.service.interfaces.MailService;
-import hu.service.security.SecurityService;
+import hu.service.interfaces.security.SecurityService;
 import hu.util.EmailType;
 
 @Service
-public class DocumentService {
+public class DocumentServiceImpl implements DocumentService{
 
 	private static final Logger logger = Logger.getLogger(DocumentService.class);
 	
@@ -64,7 +65,7 @@ public class DocumentService {
 	@Autowired
 	DocumentFileValidatorFactory documentFileValidatorFactory;
 	
-	
+	@Override
 	@Transactional
 	public boolean saveUploadedFile(Long appointmentId, MultipartFile file, String fileName, DocumentTypeEnum documentTypeId) throws BasicServiceException {
 		try {
@@ -131,7 +132,7 @@ public class DocumentService {
 		emailModel.put("name" , patient.getPersonalData().getName());
 		emailModel.put("createDate", new Date());
 		
-		mailService.sendTemplateEnginedMail("tntiti@hotmail.com", EmailType.DOCUMENT_UPLOADED, emailModel);
+		mailService.sendTemplateEnginedMail(patient.getEmail(), EmailType.DOCUMENT_UPLOADED, emailModel);
 	}
 
 	@Transactional
@@ -163,6 +164,7 @@ public class DocumentService {
 		return docFileAppointmentRepository.save(docFileApp);
 	}
 
+	@Override
 	@Transactional
 	public DocumentFile findDocumentByAppointmentIdAndDocumentFileAppId(Long appointmentId, Long documentFileAppId) throws BasicServiceException, AuthorizationException {
 		DocumentFileAppointment docFileApp = docFileAppointmentRepository.findOne(documentFileAppId);
@@ -178,18 +180,19 @@ public class DocumentService {
 		throw new BasicServiceException("Keresett fájl nem található");
 	}
 
-
+	@Override
 	public List<DocumentFileAppointment> findDocFileAppByAppointmentId(Long appointmentId) {
 		return docFileAppointmentRepository.findByAppointmentId(appointmentId);
 	}
 
-
+	@Override
 	public List<DocumentFileAppointment> findDocFileAppByCurrentUser() {
 		Long currentUserID = securityService.getCurrentUser().getId();
 
 		return docFileAppointmentRepository.findByAppointmentPatientId(currentUserID);
 	}
-
+	
+	@Override
 	public List<DocumentTypeEnum> getDocumentTypeEnumByConsultationHourType(Long consultationHourTypeId) {
 		return documentTypeRepository.findTypeNameByConsultationHourTypeIdAndSysDate(consultationHourTypeId);
 	}

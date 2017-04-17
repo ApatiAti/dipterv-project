@@ -21,7 +21,7 @@ import hu.exception.BasicServiceException;
 import hu.exception.ConsultationHourNotFound;
 import hu.exception.UserNotFoundException;
 import hu.model.hospital.Appointment;
-import hu.service.AppointmentService;
+import hu.service.interfaces.AppointmentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;

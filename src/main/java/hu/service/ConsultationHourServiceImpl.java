@@ -27,11 +27,12 @@ import hu.model.user.User;
 import hu.repository.hospital.ConsultationHourRepository;
 import hu.repository.hospital.ConsultationHourTypeRepository;
 import hu.repository.hospital.DepartmentRepository;
+import hu.service.interfaces.ConsultationHourService;
 import hu.service.interfaces.MailService;
 import hu.util.EmailType;
 
 @Service
-public class ConsultationHourService {
+public class ConsultationHourServiceImpl implements ConsultationHourService {
 
 	private static final Logger logger = Logger.getLogger(ConsultationHourService.class);
 
@@ -47,11 +48,14 @@ public class ConsultationHourService {
 	@Autowired
 	private MailService mailService;
 
+	@Override
 	public List<ConsultationHour> findConsultationHourList(Long departmentId) {
 		List<ConsultationHour> consultationHourList = consultationHourRepository.findByDepartmentId(departmentId);
 		return consultationHourList;
 	}
 
+	@Override
+	@Transactional
 	public ConsultationHour createConsultationHour(ConsultationHour consultationHour, Long departmentId)
 			throws DepartmentNotFoundException, BasicServiceException {
 		if (departmentId != null) {
@@ -76,6 +80,7 @@ public class ConsultationHourService {
 		}
 	}
 
+	@Override
 	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
 		if (searchEntity != null) {
 			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(departmentId, searchEntity.getStartDate(),
@@ -85,11 +90,13 @@ public class ConsultationHourService {
 		return new ArrayList<ConsultationHour>();
 	}
 
+	@Override
 	public ConsultationHour findConsultationHour(Long consultationHourId) {
 		return consultationHourRepository.findOne(consultationHourId);
 	}
 
 	// transsactional a Hibernate.initialize miatt kell
+	@Override
 	@Transactional
 	public ConsultationHour findConsultationHourWithAppointment(Long consultationHourId) {
 		ConsultationHour consultationHour = consultationHourRepository.findOne(consultationHourId);
@@ -100,6 +107,7 @@ public class ConsultationHourService {
 		return consultationHour;
 	}
 
+	@Override
 	public List<ConsultationHourType> findConsultationHourTypeByDepartmentId(long departmentId)
 			throws BasicServiceException {
 		List<ConsultationHourType> types = consultationHourTypeRepository.findByDepartmentId(departmentId);
@@ -111,6 +119,7 @@ public class ConsultationHourService {
 		return types;
 	}
 
+	@Override
 	@Transactional
 	public ConsultationHour modifyConsultationHour(ConsultationHour consultationHour) throws BasicServiceException {
 		ConsultationHour dbConsultationHour = consultationHourRepository.findOne(consultationHour.getId());
@@ -133,6 +142,20 @@ public class ConsultationHourService {
 		}
 	}
 
+	@Override
+	public void validateConsultationHour(ConsultationHour consultationHour)
+			throws ConsultationHourNotFound, BasicServiceException {
+		if (consultationHour == null) {
+			throw new ConsultationHourNotFound();
+		}
+		if (consultationHour.getBeginDate().before(new Date())) {
+			throw new BasicServiceException("Nen lehet időpontot foglalni a kezdés után!");
+		}
+		if (consultationHour.getNumberOfAppointment() >= consultationHour.getMaxNumberOfPatient()) {
+			throw new BasicServiceException("Időpont betelt!");
+		}
+	}
+	
 	private void notifyAllPatientAfterModification(ConsultationHour consultationHour) throws BasicServiceException {
 		List<Appointment> appointments = consultationHour.getAppointments();
 
@@ -151,16 +174,4 @@ public class ConsultationHourService {
 		}
 	}
 
-	public void validateConsultationHour(ConsultationHour consultationHour)
-			throws ConsultationHourNotFound, BasicServiceException {
-		if (consultationHour == null) {
-			throw new ConsultationHourNotFound();
-		}
-		if (consultationHour.getBeginDate().before(new Date())) {
-			throw new BasicServiceException("Nen lehet időpontot foglalni a kezdés után!");
-		}
-		if (consultationHour.getNumberOfAppointment() >= consultationHour.getMaxNumberOfPatient()) {
-			throw new BasicServiceException("Időpont betelt!");
-		}
-	}
 }
