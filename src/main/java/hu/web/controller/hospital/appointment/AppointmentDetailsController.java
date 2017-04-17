@@ -121,6 +121,7 @@ public class AppointmentDetailsController extends BaseController {
 			appointment.setId(appointementId);
 			appointmentService.modifyAppointment(appointment);
 			succesLogAndDisplayMessage(redirectAttributes, "Foglalás sikeresen módosítva");
+			
 		} catch (BasicServiceException e) {
 			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
 		}
@@ -151,6 +152,7 @@ public class AppointmentDetailsController extends BaseController {
 			try {
 				documentService.saveUploadedFile(appointmentId, file, fileName, documentTypeEnum);
 				succesLogAndDisplayMessage(redirectAttributes, "A megadott fájl sikeressen feltöltésre került.");
+				
 			} catch (BasicServiceException e) {
 				errorLogAndDisplayMessage(redirectAttributes, e);
 			}

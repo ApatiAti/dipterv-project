@@ -69,7 +69,7 @@ public class DepartmentModificationController extends BaseController {
 
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		} catch (BasicServiceException e){
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage());
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
@@ -134,7 +134,7 @@ public class DepartmentModificationController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(newConsultationHour);
 			
 		} catch (BasicServiceException | DepartmentNotFoundException e) {
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}

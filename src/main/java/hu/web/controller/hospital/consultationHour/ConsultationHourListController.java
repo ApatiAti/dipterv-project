@@ -75,6 +75,7 @@ public class ConsultationHourListController extends BaseController {
 		 
 		if (bindingResult.hasErrors()){
 			model.put(ModelKeys.SearchEntity, searchEntity);
+			errorLogAndDisplayMessage(redirectAttributes);
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 		}
 		

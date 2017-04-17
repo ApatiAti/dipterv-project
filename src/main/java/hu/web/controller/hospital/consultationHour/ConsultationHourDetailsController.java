@@ -51,7 +51,7 @@ public class ConsultationHourDetailsController extends BaseController {
 			, @PathVariable Long departmentId
 			, @PathVariable Long consultationHourId) throws BasicServiceException{
 		
-		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		populateModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, false);
 
 		addDoctorListToModel(model, departmentId);
@@ -59,7 +59,6 @@ public class ConsultationHourDetailsController extends BaseController {
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 
-//	TODO javítani ezt és department_user összerendeléssel együtt
 	public void addDoctorListToModel(Map<String, Object> model, Long departmentId) {
 		Department department = departmentService.findDepartmentWithDoctors(departmentId);
 		List<User> employeeList = department != null ? department.getEmployee() : new ArrayList<>();
@@ -75,7 +74,7 @@ public class ConsultationHourDetailsController extends BaseController {
 			, @PathVariable Long departmentId
 			, @PathVariable Long consultationHourId) throws BasicServiceException{
 		
-		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		populateModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
 		addDoctorListToModel(model, departmentId);
 		
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, true);
@@ -104,12 +103,12 @@ public class ConsultationHourDetailsController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(modifiedConsultationHour);
 
 		} catch (BasicServiceException e) {
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}	
 
-	private void createModelForConsultationHourDetailsPage(Map<String, Object> model, Long departmentId,
+	private void populateModelForConsultationHourDetailsPage(Map<String, Object> model, Long departmentId,
 			Long consultationHourId) throws BasicServiceException {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHourWithAppointment(consultationHourId);
 		

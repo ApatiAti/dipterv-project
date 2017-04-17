@@ -42,9 +42,7 @@ public class HomeController extends BaseController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getDefaultPAge(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
-		handleSecurityParam(model, security);
-
-		return ViewNameHolder.VIEW_HOME;
+		return getHome(model, security);
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class MyAppointmentListController extends BaseController {
 
 
 	/**
-	 * Egy user a saját időpont foglalásainak listázása listMyAppointments->myAppointments
+	 * Egy user a saját időpont foglalásainak listázása
 	 */
 	@RequestMapping(value = "/myAppointments" , method = RequestMethod.GET)
 	public String getMyAppointmentsPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName){

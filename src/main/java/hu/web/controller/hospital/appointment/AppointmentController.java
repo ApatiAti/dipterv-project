@@ -89,7 +89,7 @@ public class AppointmentController extends BaseController {
 			, RedirectAttributes redirectAttributes){
 		
 		if (handleValidationErrors(bindingResult, model)){
-			logger.error("Hibás adatok lettek megadva.");
+			errorLogAndDisplayMessage(redirectAttributes, "Hibás adatok lettek megadva.");
 			return ViewNameHolder.VIEW_APPOINTMENT;
 		}
 		
@@ -102,7 +102,7 @@ public class AppointmentController extends BaseController {
 			String errorString = "A megadott paraméterek nem megfelelőek.";
 			errorLogAndDisplayMessage(redirectAttributes, errorString, e);
 		} catch (BasicServiceException e) {
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e);
 		}
 		
 		return ViewNameHolder.REDIRECT_TO_HOME;
