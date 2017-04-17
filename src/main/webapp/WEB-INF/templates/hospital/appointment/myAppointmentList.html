@@ -101,7 +101,7 @@
 
 							}).fail(function(data) {
 								var responseText = JSON.parse(data.responseText);
-								putAlertBox("danger","Error", responseText.errorMessage);				
+								putAlertBox(responseText.severity, responseText.content);				
 							});
 					 });
 				});

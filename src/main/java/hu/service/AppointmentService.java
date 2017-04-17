@@ -1,5 +1,6 @@
 package hu.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,9 +16,11 @@ import hu.exception.UserNotFoundException;
 import hu.model.hospital.Appointment;
 import hu.model.hospital.ConsultationHour;
 import hu.model.user.User;
+import hu.repository.document.DocumentFileAppointmentRepository;
 import hu.repository.hospital.AppointmentRepository;
 import hu.repository.hospital.ConsultationHourRepository;
 import hu.repository.user.UserRepository;
+import hu.web.util.CalendarUtil;
 
 @Service
 public class AppointmentService {
@@ -27,6 +30,8 @@ public class AppointmentService {
 	
 	@Autowired
 	AppointmentRepository appointmentRepository;
+	@Autowired
+	DocumentFileAppointmentRepository documentFileAppointmentRepository;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -124,7 +129,19 @@ public class AppointmentService {
 	}
 
 	@Transactional	
-	public void deleteAppointment(Long appointmentId) {
+	public void deleteAppointment(Long appointmentId) throws BasicServiceException {
+		Appointment appointment = appointmentRepository.findOne(appointmentId);
+		ConsultationHour consultationHour = appointment.getConsultationHour();
+		
+		if (CalendarUtil.afterNotNull(consultationHour.getBeginDate(), new Date())){
+			throw new BasicServiceException("Nem törölhető foglalás a rendelési idő megkezdése után.");
+		} else {
+			int count = documentFileAppointmentRepository.countByAppointmentId(appointmentId);
+			if (count > 0){
+				throw new BasicServiceException("Nem törölhető foglalás mert már tartozik hozzá feltöltött dokumentum!");
+			}
+		}
+		
 		appointmentRepository.delete(appointmentId);
 	}
 

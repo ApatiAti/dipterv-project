@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hu.exception.BasicServiceException;
 import hu.model.hospital.Appointment;
 import hu.service.AppointmentService;
 import hu.web.controller.abstarct.BaseController;
@@ -64,7 +65,7 @@ public class MyAppointmentListController extends BaseController {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpStatus status;
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 		CustomMessage message;
 		
 		try{
@@ -75,11 +76,14 @@ public class MyAppointmentListController extends BaseController {
 			String messageString = "Időpont foglalás törlése sikeres!";
 			logger.info(messageString);
 			message = new CustomMessage(CustomMessageSeverity.SUCCESS, messageString);
+		
+		} catch ( BasicServiceException e) {
+			logger.error("Hibe történt", e);
+			message = new CustomMessage(CustomMessageSeverity.ERROR, e.getMessage());
+		
 		} catch ( Exception e) {
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			
 			String errorMessage = "Időpont foglalás törlése sikertelen!";
-			logger.error(errorMessage );
+			logger.error(errorMessage, e);
 			message = new CustomMessage(CustomMessageSeverity.ERROR, errorMessage );
 		}
 
