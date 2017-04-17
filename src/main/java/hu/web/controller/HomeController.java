@@ -31,10 +31,9 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getHome(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
-		logger.info("/home megnyitása");
 		handleSecurityParam(model, security);
 		
-		return ViewNameHolder.VIEW_HOME;
+		return debugLogAtNavigation(ViewNameHolder.VIEW_HOME);
 	}
 	
 	/**

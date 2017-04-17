@@ -4,17 +4,25 @@ import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHourType;
 import hu.service.ConsultationHourService;
+import hu.util.MessageConstants;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 
+@Component
 public abstract class BaseController {
+	
+	@Autowired
+	MessageSource messageSource;	
 	
 	protected abstract Logger getLogger();
 	
@@ -46,6 +54,15 @@ public abstract class BaseController {
 		
 		CustomMessage message = new CustomMessage(CustomMessageSeverity.SUCCESS, succesMessage);
 		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
+	}
+	
+	protected String debugLogAtNavigation(String viewName){
+		if (getLogger().isDebugEnabled()){
+			String logMessage = messageSource.getMessage(MessageConstants.LOGGING_CONTROLLER_VIEW_OPEN, null, null);
+					
+			getLogger().debug(logMessage, viewName);
+		}
+		return viewName;
 	}
 	
 	public boolean handleValidationErrors(BindingResult bindingResult, Map<String, Object> model) {
