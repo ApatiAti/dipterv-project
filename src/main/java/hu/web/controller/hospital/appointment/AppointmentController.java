@@ -4,7 +4,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ import hu.web.util.ViewNameHolder;
 @Controller
 public class AppointmentController extends BaseController {
 
-	public static final Logger logger = Logger.getLogger(AppointmentService.class);
+	public static final Logger logger = LoggerFactory.getLogger(AppointmentService.class);
 	
 	@Autowired
 	AppointmentService appointmentService;

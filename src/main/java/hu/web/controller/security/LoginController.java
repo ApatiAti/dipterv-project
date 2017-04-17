@@ -1,7 +1,8 @@
 package hu.web.controller.security;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import hu.web.util.ViewNameHolder;
 @Controller
 public class LoginController extends BaseController{
 
-	public static final Logger logger = Logger.getLogger(LoginController.class);
+	public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	UserRepository citizenRepository;

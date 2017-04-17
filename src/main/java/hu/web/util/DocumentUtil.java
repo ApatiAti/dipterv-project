@@ -4,7 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLConnection;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import hu.model.document.DocumentFile;
 public class DocumentUtil {
 
 	private static final String FILE_EXTENSIO_REGEXP = "(.)*\\.[\\w]{3,4}$";
-	public static final Logger logger = Logger.getLogger(DocumentUtil.class);
+	public static final Logger logger = LoggerFactory.getLogger(DocumentUtil.class);
 	
 	/**
 	 * Megnyitja a böngészőben ha lehetséges vagy letölti a kiválaszott fájlt  

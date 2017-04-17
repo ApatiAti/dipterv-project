@@ -1,6 +1,7 @@
 package hu.web.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,9 @@ import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
 @Controller
-public class HomeController extends BaseController{
+public class HomeController extends BaseController {
 
-	public static final Logger logger = Logger.getLogger(HomeController.class);
+	public static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	UserRepository citizenRepository;

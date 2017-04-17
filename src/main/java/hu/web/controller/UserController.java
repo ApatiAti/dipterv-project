@@ -2,7 +2,8 @@ package hu.web.controller;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,7 @@ import hu.web.util.validator.PersonalDataValidator;
 @SessionAttributes({ ModelKeys.PersonalDataIsDisabled })
 public class UserController extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	PersonalDataValidator personalDataValidator;

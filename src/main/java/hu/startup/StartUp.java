@@ -1,7 +1,8 @@
 package hu.startup;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 
 
@@ -9,7 +10,7 @@ import javax.annotation.PostConstruct;
 public class StartUp{ 
 //public class StartUp implements ApplicationListener<ContextRefreshedEvent> {
 
-	private static final Logger logger = Logger.getLogger(StartUp.class);
+	private static final Logger logger = LoggerFactory.getLogger(StartUp.class);
 
 	@PostConstruct
 	public void startVoteTimers() {
