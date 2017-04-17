@@ -87,7 +87,7 @@ public class MailServiceImpl implements MailService {
 		    
 		} catch (MailException | MessagingException | IOException e) {
 			String errorMessage = "Hiba történt az email kiküldése során";
-			logger.error(errorMessage);
+			logger.error(errorMessage, e);
 			throw new BasicServiceException(errorMessage);
 		}
 	}

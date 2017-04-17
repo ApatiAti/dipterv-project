@@ -27,6 +27,7 @@ import hu.model.user.User;
 import hu.repository.hospital.ConsultationHourRepository;
 import hu.repository.hospital.ConsultationHourTypeRepository;
 import hu.repository.hospital.DepartmentRepository;
+import hu.service.interfaces.MailService;
 import hu.util.EmailType;
 
 @Service
