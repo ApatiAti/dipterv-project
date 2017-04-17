@@ -16,6 +16,9 @@
 		  http://www.springframework.org/schema/task/spring-task-3.0.xsd
 ">
 
+	<!-- THYMELEAF-LAYOUT SPECIFIC ARTIFACT -->
+	<bean id="mailGroupingStrategy" class="nz.net.ultraq.thymeleaf.decorators.strategies.GroupingStrategy" />
+
 	<bean id="mailTemplateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
 		<property name="prefix" value="/mail/" />
 		<property name="suffix" value=".html" />
@@ -26,6 +29,30 @@
 
 	<bean id="mailTemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="mailTemplateResolver" />
+		<property name="additionalDialects">
+			<set>
+				<bean class="nz.net.ultraq.thymeleaf.LayoutDialect">
+					<constructor-arg ref="mailGroupingStrategy" />
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+		<!-- MailService-be -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="schoretes@gmail.com" />
+		<property name="password" value="*****" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.debug">false</prop>
+			</props>
+		</property>
 	</bean>
 
 </beans>

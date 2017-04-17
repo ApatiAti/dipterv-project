@@ -16,14 +16,13 @@
 		  http://www.springframework.org/schema/task/spring-task-3.0.xsd
 ">
 
-	<!-- jpa:repositories a jpa repositorik helyét adhatjuk meg vele, hogy hol 
-		keresse -->
+	<!-- jpa:repositories a jpa repositorik helyét adhatjuk meg vele, hogy hol keresse -->
 	<jpa:repositories base-package="hu.repository" />
 
 	<!-- swinges service helyét adhatjuk meg vele hogy hol keresse -->
 	<context:component-scan base-package="hu.service" />
 	<context:component-scan base-package="hu.component" />
-
+	
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="diptervPU" />
@@ -35,13 +34,6 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
-
-	<!-- TaskSchedulerhez szukseges -->
-	<!-- <task:executor id="executor" pool-size="8-25" queue-capacity="100" 
-		/> -->
-	<!-- <task:scheduler id="scheduler" pool-size="10" /> -->
-
 
 	<tx:annotation-driven />
 
@@ -59,8 +51,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages/messages" />
 		<property name="defaultEncoding" value="UTF-8" />
-		<!-- Cache-léssel meg van adva hogy menyi időnként tőltse újra a messages 
-			properties-t -->
+		<!-- Cache-léssel meg van adva hogy menyi időnként töltse újra a messages properties-t -->
 		<property name="cacheSeconds" value="1" />
 	</bean>
 
@@ -68,23 +59,5 @@
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="hu" />
 	</bean>
-
-
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="schoretes@gmail.com" />
-		<property name="password" value="****" />
-
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.debug">true</prop>
-			</props>
-		</property>
-	</bean>
-
 
 </beans>

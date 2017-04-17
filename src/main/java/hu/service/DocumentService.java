@@ -31,6 +31,7 @@ import hu.repository.document.DocumentFileContentRepository;
 import hu.repository.document.DocumentFileRepository;
 import hu.repository.document.DocumentTypeRepository;
 import hu.repository.hospital.AppointmentRepository;
+import hu.service.interfaces.MailService;
 import hu.service.security.SecurityService;
 import hu.util.EmailType;
 
