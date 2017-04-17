@@ -10,5 +10,5 @@ public class EnviromentConstans {
 	public static final String MAIL_SERVIC_DISABLED = "mail.service.disabled";
 	public static final String MAIL_SERVIC_DEFAULT_EMAIL = "mail.service.default.email";
 	
-	
+	public static final String MVC_REQUEST_LOGGING_EXCLUDE_REGEXP = "mvc.request.logging.exclude.reqext";
 }
