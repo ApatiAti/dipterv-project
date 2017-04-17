@@ -56,15 +56,6 @@ public abstract class BaseController {
 		redirectAttributes.addFlashAttribute(ModelKeys.DisplayMessage, message);
 	}
 	
-	protected String debugLogAtNavigation(String viewName){
-		if (getLogger().isDebugEnabled()){
-			String logMessage = messageSource.getMessage(MessageConstants.LOGGING_CONTROLLER_VIEW_OPEN, null, null);
-					
-			getLogger().debug(logMessage, viewName);
-		}
-		return viewName;
-	}
-	
 	public boolean handleValidationErrors(BindingResult bindingResult, Map<String, Object> model) {
 		boolean hasErrors = bindingResult.hasErrors();
 		if (hasErrors){

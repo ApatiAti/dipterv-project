@@ -33,7 +33,7 @@ public class HomeController extends BaseController {
 	public String getHome(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
 		handleSecurityParam(model, security);
 		
-		return debugLogAtNavigation(ViewNameHolder.VIEW_HOME);
+		return ViewNameHolder.VIEW_HOME;
 	}
 	
 	/**
