@@ -54,13 +54,13 @@ public class DepartmentModificationController extends BaseController {
 		try{
 			Department department = departmentService.findDepartmentWithDoctors(departmentId);
 			
-			addConsultationTypesToModel(model, departmentId, consultationHourService);
-			
 			ConsultationHour consultationHour = new ConsultationHour();
 			consultationHour.setType(new ConsultationHourType());
+			consultationHour.setDoctor(new User());
 			
 			List<User> employeeList = department != null ? department.getEmployee() : new ArrayList<>();
 			
+			addConsultationTypesToModel(model, departmentId, consultationHourService);
 			model.put(ModelKeys.ConsultationHour, consultationHour);
 			model.put(ModelKeys.DOCTORS_LIST, employeeList);
 			model.put(ModelKeys.DEPARTMENT, department);

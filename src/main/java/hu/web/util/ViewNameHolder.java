@@ -16,6 +16,7 @@ public class ViewNameHolder {
 	public static final String VIEW_PERSONAL_DATA =  "user/personalData";
 
 	public static final String REDIRECT_TO_PERSONAL_DATA =  "redirect:/personalData/{pdId}";
+	public static final String REDIRECT_TO_PERSONAL_DATA_MODIFY =  "redirect:/personalData/{pdId}/edit";
 	
 	
 	/*

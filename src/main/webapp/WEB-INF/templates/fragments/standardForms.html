@@ -44,7 +44,7 @@
 			<input class="form-control" th:disabled="${disabled}" th:field="*{__${fieldName}__}" value="műtét" style="margin-bottom: 10px"/>
 		</div>
 		<div class="col-md-4" th:if="${#fields.hasErrors('__${fieldName}__')}">
-			<span th:errors="*{__${fieldName}__}" th:errorclass="text-danger">nöm látszik</span>
+			<strong><span th:errors="*{__${fieldName}__}" th:errorclass="text-danger">nöm látszik</span></strong>
 		</div>
 	</section>
 	
@@ -67,7 +67,6 @@
 	<th:block layout:fragment="standardFormTextAreaRowDisabled(fieldName,propertyName)">
 		<th:block layout:fragment="fragments/standardForms :: standardFormTextArea(fieldName = ${fieldName}, propertyName = ${propertyName}, disabled = ${true})" />"
 	</th:block>
-	
 	
 	<section layout:fragment="standardFormRow(fieldName,propertyName,disabled)">
 		<div class="row">
@@ -115,7 +114,6 @@
 			</div>
 		</div>
 	</th:block>
-
 
 	<th:block layout:fragment="fileUpload">
 		<div class="col-md-4">

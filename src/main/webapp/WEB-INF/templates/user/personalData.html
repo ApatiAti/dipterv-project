@@ -24,9 +24,7 @@
 			<div class="panel-body" th:object="${personalData}">
 				
 				<form id="editPersonalData" th:unless="${personalDataIsDisabled}" action="#" th:action="@{/personalData/edit}" th:object="${personalData}" method="post" >
-					<div class="form-group">
-						<section layout:include="fragments/personalDataFrag :: personalData" ></section>
-					</div>
+					<th:block layout:include="fragments/personalDataFrag :: personalData" />
 					
 					<div class = "row" align="left">
 						<button class="btn btn-default btn-info" type="submit" value="Személyes adatok mentése"> Személyes adatok mentése</button>
