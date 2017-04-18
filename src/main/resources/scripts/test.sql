@@ -22,8 +22,8 @@
 
 
 -- == [Tábla módosítások]== --
- ALTER TABLE user ADD COLUMN enabled TINYINT(4) NULL DEFAULT '1';
- ALTER TABLE user ADD COLUMN password VARCHAR(255) NULL;
+-- ALTER TABLE user ADD COLUMN enabled TINYINT(4) NULL DEFAULT '1';
+-- ALTER TABLE user ADD COLUMN password VARCHAR(255) NULL;
 
 -- == [Lakosok és vezetők beállítása]== --
 SET @patient1 = 'beteg1';
@@ -75,20 +75,20 @@ insert into consultationhour_type(name, departmentId) values( @consultationHour_
 
 
 -- ==[ Feltölthető dokumentum típusok megadása ]==--
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' ,10240 , 1, 'LELET');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 10240 , 1, 'LELET');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'LELET');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PDF' ,10240 , 1, 'LELET');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('WORD_DOC' , 10240 , 1, 'LELET');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PICTURE' , 10240 , 1, 'LELET');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 10240 , 1, 'ZAROJELENTES');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('WORD_DOC' , 10240 , 1, 'ZAROJELENTES');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PDF' , 10240 , 1, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('WORD_DOC' , 10240 , 1, 'ZAROJELENTES');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PICTURE' , 10240 , 1, 'ZAROJELENTES');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PDF' , 10240 , 1, 'RONTGEN_KEP');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('PICTURE' , 10240 , 1, 'RONTGEN_KEP');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 61840 , 50, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PDF' , 10240 , 1, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('PICTURE' , 10240 , 1, 'RONTGEN_KEP');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('ES3' , 61840 , 50, 'RONTGEN_KEP');
 
-insert into documentType(extensionType, maxSize, minSize, typeName) values('VIDEO' , 61840, 50, 'ULTRAHANG_VIDEO');
-insert into documentType(extensionType, maxSize, minSize, typeName) values('ES3' , 61840, 50, 'ULTRAHANG_VIDEO');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('VIDEO' , 61840, 50, 'ULTRAHANG_VIDEO');
+insert into documentType(extensionType, maxSize_kB, minSize_kB, typeName) values('ES3' , 61840, 50, 'ULTRAHANG_VIDEO');
 
 
 
