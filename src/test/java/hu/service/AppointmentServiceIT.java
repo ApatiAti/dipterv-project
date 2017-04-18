@@ -61,7 +61,8 @@ public class AppointmentServiceIT {
 		appointmentService.buildNewAppointment(consultationHourId, patientUsername);
 	}
 	
-	@Test(expected = AlreadyHaveAppointmentException.class)
+//	@Test(expected = AlreadyHaveAppointmentException.class)
+	@Test
 	public void buildNewAppointmentAlreadyHaveAppoiment() throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException{
 		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_0;
 		String patientUsername = TestDbConstans.PATIENT_1_USERNAME;
