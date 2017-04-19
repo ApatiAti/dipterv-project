@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import hu.model.document.DocumentFileAppointment;
-import hu.service.DocumentService;
+import hu.service.interfaces.DocumentService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;

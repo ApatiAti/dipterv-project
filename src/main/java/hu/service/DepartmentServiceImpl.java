@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import hu.model.hospital.Department;
 import hu.repository.hospital.DepartmentRepository;
+import hu.service.interfaces.DepartmentService;
 
 @Service
-public class DepartmentService {
+public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
 	private DepartmentRepository departmentRepository;

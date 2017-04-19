@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHourType;
-import hu.service.ConsultationHourService;
+import hu.service.interfaces.ConsultationHourService;
 import hu.web.util.CustomMessage;
 import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;

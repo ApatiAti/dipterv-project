@@ -1,6 +1,5 @@
 package hu.service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -14,9 +13,10 @@ import hu.model.user.PersonalData;
 import hu.model.user.User;
 import hu.repository.user.PersonalDataRepository;
 import hu.repository.user.UserRepository;
+import hu.service.interfaces.UserService;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
@@ -25,7 +25,8 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;
-	
+
+	@Override
 	@Transactional
 	public PersonalData updatePersonalDate(PersonalData data, String username){
 		User user = userRepository.findByUsername(username);
@@ -36,20 +37,12 @@ public class UserService {
 		return personalDataRepository.save(data);
 	}
 
-
+	@Override
 	public PersonalData findPersonalDataByUserId(Long userId) {
 		return personalDataRepository.findByUserId(userId);
 	}
 
-	/**
-	 * Ha personalDataId létezik a DB-ben és ahozzá tartoóz user-nek a username = usernameParam => visszatért personalDataId-hoz tartozó personalDAta-val
-	 * amúgy null
-	 * 
-	 * @param usernameParam
-	 * @param personalDataId
-	 * @return
-	 * @throws BasicServiceException 
-	 */
+	@Override
 	public PersonalData getEditablePersonalData(String usernameParam, Long personalDataId) throws AuthorizationException, BasicServiceException {
 		PersonalData personalData = personalDataRepository.findOne(personalDataId);
 		
@@ -67,7 +60,7 @@ public class UserService {
 		
 	}
 
-
+	@Override
 	public PersonalData findPersonalDataByUsername(String username) {
 		return personalDataRepository.findByUser_Username(username);
 		

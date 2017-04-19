@@ -66,10 +66,8 @@ public class MailServiceImpl implements MailService {
 		    ctx.setVariables(model);
 
 		    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
-		    final MimeMessageHelper message =
-		        new MimeMessageHelper(mimeMessage, true, UTF_8); // true = multipart
+		    final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, UTF_8);
 		    message.setSubject(emailType.getEmailSubject());
-		    message.setFrom("thymeleaf@example.com");
 		    
 		    boolean isTestServer = env.getProperty(EnviromentConstans.IS_TEST_SERVER, Boolean.class, true);
 			if (Boolean.TRUE.equals(isTestServer)){
@@ -80,7 +78,7 @@ public class MailServiceImpl implements MailService {
 		    
 		    // HTML üzenet létrehozása Thymeleaf-fel
 		    final String htmlContent = this.templateEngine.process(emailType.getEmailTemplateName(), ctx);
-		    message.setText(htmlContent, true); // true = isHtml
+		    message.setText(htmlContent, true);
 	
 		    addFooterImage(message);
 	
@@ -108,7 +106,7 @@ public class MailServiceImpl implements MailService {
 	 * @param imageBytes
 	 * @throws MessagingException
 	 */
-	public void addInlineImage(final MimeMessageHelper message, String imageResourceName, String imageContentType,  byte[] imageBytes) throws MessagingException {
+	private void addInlineImage(final MimeMessageHelper message, String imageResourceName, String imageContentType,  byte[] imageBytes) throws MessagingException {
 		final InputStreamSource imageSource = new ByteArrayResource(imageBytes);
 		message.addInline(imageResourceName, imageSource, imageContentType);
 	}

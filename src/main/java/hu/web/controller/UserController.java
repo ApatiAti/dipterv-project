@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hu.exception.BasicServiceException;
 import hu.exception.security.AuthorizationException;
 import hu.model.user.PersonalData;
-import hu.service.UserService;
+import hu.service.interfaces.UserService;
 import hu.web.controller.abstarct.BaseController;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
