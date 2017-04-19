@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,7 @@ import hu.web.util.ViewNameHolder;
 @Controller
 public class ConsultationHourDetailsController extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(ConsultationHourDetailsController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConsultationHourDetailsController.class);
 		
 	@Autowired 
 	private ConsultationHourService consultationHourService;
@@ -50,7 +51,7 @@ public class ConsultationHourDetailsController extends BaseController {
 			, @PathVariable Long departmentId
 			, @PathVariable Long consultationHourId) throws BasicServiceException{
 		
-		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		populateModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, false);
 
 		addDoctorListToModel(model, departmentId);
@@ -58,7 +59,6 @@ public class ConsultationHourDetailsController extends BaseController {
 		return ViewNameHolder.VIEW_CONSULTATION_HOUR_DETAILS;
 	}
 
-//	TODO javítani ezt és department_user összerendeléssel együtt
 	public void addDoctorListToModel(Map<String, Object> model, Long departmentId) {
 		Department department = departmentService.findDepartmentWithDoctors(departmentId);
 		List<User> employeeList = department != null ? department.getEmployee() : new ArrayList<>();
@@ -74,7 +74,7 @@ public class ConsultationHourDetailsController extends BaseController {
 			, @PathVariable Long departmentId
 			, @PathVariable Long consultationHourId) throws BasicServiceException{
 		
-		createModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
+		populateModelForConsultationHourDetailsPage(model, departmentId, consultationHourId);
 		addDoctorListToModel(model, departmentId);
 		
 		model.put(ModelKeys.IS_CONSULTATIONHOUR_MOFICATION, true);
@@ -103,12 +103,12 @@ public class ConsultationHourDetailsController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(modifiedConsultationHour);
 
 		} catch (BasicServiceException e) {
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}	
 
-	private void createModelForConsultationHourDetailsPage(Map<String, Object> model, Long departmentId,
+	private void populateModelForConsultationHourDetailsPage(Map<String, Object> model, Long departmentId,
 			Long consultationHourId) throws BasicServiceException {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHourWithAppointment(consultationHourId);
 		

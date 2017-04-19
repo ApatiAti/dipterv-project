@@ -3,7 +3,8 @@ package hu.web.controller.hospital.consultationHour;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,7 @@ import hu.web.util.validator.ConsultationHourSearchValidator;
 @Controller
 public class ConsultationHourListController extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(ConsultationHourListController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConsultationHourListController.class);
 	
 	@Autowired
 	private DepartmentService departmentService;
@@ -74,6 +75,7 @@ public class ConsultationHourListController extends BaseController {
 		 
 		if (bindingResult.hasErrors()){
 			model.put(ModelKeys.SearchEntity, searchEntity);
+			errorLogAndDisplayMessage(redirectAttributes);
 			return ViewNameHolder.VIEW_CONSULTATION_HOUR_LIST;
 		}
 		

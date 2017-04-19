@@ -1,6 +1,7 @@
 package hu.web.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,9 @@ import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
 @Controller
-public class HomeController extends BaseController{
+public class HomeController extends BaseController {
 
-	public static final Logger logger = Logger.getLogger(HomeController.class);
+	public static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	UserRepository citizenRepository;
@@ -30,7 +31,6 @@ public class HomeController extends BaseController{
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getHome(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
-		logger.info("/home megnyitása");
 		handleSecurityParam(model, security);
 		
 		return ViewNameHolder.VIEW_HOME;
@@ -42,9 +42,7 @@ public class HomeController extends BaseController{
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getDefaultPAge(Model model, @RequestParam(value = ModelKeys.Security, required = false) String security) {
-		handleSecurityParam(model, security);
-
-		return ViewNameHolder.VIEW_HOME;
+		return getHome(model, security);
 	}
 
 	/**

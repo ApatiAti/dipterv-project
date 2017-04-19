@@ -8,7 +8,8 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ import hu.util.EmailType;
 @Service
 public class DocumentServiceImpl implements DocumentService{
 
-	private static final Logger logger = Logger.getLogger(DocumentService.class);
+	private static final Logger logger = LoggerFactory.getLogger(DocumentService.class);
 	
 	@Autowired
 	DocumentFileRepository documentFileRepository;

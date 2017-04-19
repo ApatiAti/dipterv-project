@@ -9,7 +9,8 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ import hu.util.EmailType;
 @Service
 public class ConsultationHourServiceImpl implements ConsultationHourService {
 
-	private static final Logger logger = Logger.getLogger(ConsultationHourService.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConsultationHourService.class);
 
 	@Autowired
 	private DepartmentRepository departmentRepository;

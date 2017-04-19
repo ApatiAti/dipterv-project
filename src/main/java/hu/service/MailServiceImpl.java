@@ -7,7 +7,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +31,7 @@ import hu.util.EmailType;
 @Service
 public class MailServiceImpl implements MailService {
 
-	public static final Logger logger = Logger.getLogger(MailServiceImpl.class);
+	public static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 	
 	private static final String UTF_8 = "UTF-8";
 

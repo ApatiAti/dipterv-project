@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,7 +35,7 @@ import hu.web.util.ViewNameHolder;
 @SessionAttributes({ModelKeys.DEPARTMENT_ID, ModelKeys.DEPARTMENT, ModelKeys.DOCTORS_LIST, ModelKeys.CONSULTATIONHOUR_TYPES})
 public class DepartmentModificationController extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(DepartmentModificationController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DepartmentModificationController.class);
 	
 	@Autowired
 	private DepartmentService departmentService;
@@ -68,7 +69,7 @@ public class DepartmentModificationController extends BaseController {
 
 			return ViewNameHolder.VIEW_DEPARTMENT_MODIFICATION;
 		} catch (BasicServiceException e){
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage());
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
@@ -133,7 +134,7 @@ public class DepartmentModificationController extends BaseController {
 			return ViewNameHolder.redirectToConsultationHourDetails(newConsultationHour);
 			
 		} catch (BasicServiceException | DepartmentNotFoundException e) {
-			errorLogAndDisplayMessage(redirectAttributes, e.getMessage(), e);
+			errorLogAndDisplayMessage(redirectAttributes, e);
 			return ViewNameHolder.REDIRECT_TO_HOME;
 		}
 	}
