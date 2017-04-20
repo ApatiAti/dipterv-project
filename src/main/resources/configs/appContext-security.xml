@@ -25,13 +25,6 @@
 
 	<sec:http auto-config="true" >
 		<sec:access-denied-handler error-page="/home?security=forbidden" />
-	
-		<!-- A logout ki kényszerítésé miatt -->
-<!-- 		<sec:custom-filter ref="concurrencyFilter" after="CONCURRENT_SESSION_FILTER"/> -->
-	
-<!-- 		<sec:session-management invalid-session-url="/login?time=1" session-authentication-strategy-ref="sas"> -->
-<!--             <sec:concurrency-control max-sessions="1" expired-url="/login?time=1" /> -->
-<!--         </sec:session-management> -->
 
 		<sec:session-management invalid-session-url="/login?time=1">
             <sec:concurrency-control max-sessions="1" expired-url="/login?time=1" />
@@ -99,34 +92,5 @@
 		<property name="jndiName" value="java:/jdbc/dipterv" />
 <!-- 		<property name="jndiName" value="jdbc:h2:./target/webshoptest" /> -->
 	</bean>
-
-
-	<!--  User kényszerített kiléptetéséhez -->
-<!-- 	<bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter"> -->
-<!--         <constructor-arg name="sessionRegistry" ref="sessionRegistry" /> -->
-<!--         <constructor-arg name="expiredUrl" value="/login?time=1" /> -->
-<!--     </bean> -->
-    
-    <!-- Nem biztos hogy kell mivel nincs automatikus kijelenetkeztetés -->
-    <!-- User kilogoltatásához kellett -->
-<!--     <bean id="sas" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy"> -->
-<!-- 	  <constructor-arg> -->
-<!-- 	    <list> -->
-<!-- 	      <bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy"> -->
-<!-- 	        <constructor-arg ref="sessionRegistry"/> -->
-<!-- 	        <property name="maximumSessions" value="1" /> -->
-<!-- 	        <property name="exceptionIfMaximumExceeded" value="true" /> -->
-<!-- 	      </bean> -->
-<!-- 	      <bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"> -->
-<!-- 	      </bean> -->
-<!-- 	      <bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy"> -->
-<!-- 	        <constructor-arg ref="sessionRegistry"/> -->
-<!-- 	      </bean> -->
-<!-- 	    </list> -->
-<!-- 	  </constructor-arg> -->
-<!-- 	</bean> -->
-
-<!--  Át kellett rakni a appContext.xml-be hogy működjön -->
-<!-- 	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" /> -->
 
 </beans>
