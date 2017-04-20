@@ -23,4 +23,5 @@ public interface ApiImplementor {
                    
 	ResponseEntity<Object> apiGetDepartmentsAndTypesGet();
 
+	ResponseEntity<LoginResponse> apiLoginPost(LoginRequest email);
 }

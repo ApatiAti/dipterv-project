@@ -127,6 +127,15 @@ public class ApiImplementorImp implements ApiImplementor {
 				);
 	}
 
+	@Override
+	public ResponseEntity<LoginResponse> apiLoginPost(LoginRequest email) {
+//		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
+//				, "Sikertelen Appointment lista lekérdezés. "
+//				, () -> ( return null )
+//				);
+		return null;
+	}
+
 	private ResponseEntity<Object> handlingServiceCall(String succesLog, String errorLog, Callable<Object> method){
 		try{
 			Object result = method.call();
