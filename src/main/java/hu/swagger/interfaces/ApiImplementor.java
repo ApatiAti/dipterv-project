@@ -19,4 +19,6 @@ public interface ApiImplementor {
                    
 	ResponseEntity<Object> apiAppointmentPut(Appointment request);
                    
+	ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request);
+                   
 }

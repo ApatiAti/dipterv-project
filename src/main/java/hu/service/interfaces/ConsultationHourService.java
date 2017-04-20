@@ -25,6 +25,8 @@ public interface ConsultationHourService {
 
 	List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId);
 
+	List<ConsultationHour> sortConsultationHour(ConsultationHourSearch seachEntity, String departmentName);
+	
 	ConsultationHour findConsultationHour(Long consultationHourId);
 	
 	ConsultationHour findConsultationHourWithAppointment(Long consultationHourId);
@@ -41,5 +43,6 @@ public interface ConsultationHourService {
 	ConsultationHour modifyConsultationHour(ConsultationHour consultationHour) throws BasicServiceException;
 
 	void validateConsultationHour(ConsultationHour consultationHour) throws ConsultationHourNotFound, BasicServiceException;
+
 
 }

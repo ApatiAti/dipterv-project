@@ -100,6 +100,21 @@ public class ApiImplementorImp implements ApiImplementor {
 				});
 	}
 
+	@Override
+	public ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request) {
+		return handlingServiceCall("Sikeres ConsultationHour keresés"
+				, "Sikertelen ConsultationHour keresés"
+				, new Callable<Object>() {
+					@Override
+					public Object call() throws Exception {
+						hu.model.hospital.dto.ConsultationHourSearch seachEntity = ApiHospitalMapper.mapConsultationHourSearchFromApi(request);
+						
+						List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(seachEntity, request.getDepartmentName());
+						
+						return ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
+					}
+				});
+	}
 
 	private ResponseEntity<Object> handlingServiceCall(String succesLog, String errorLog, Callable<Object> method){
 		try{

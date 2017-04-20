@@ -90,6 +90,17 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 
 		return new ArrayList<ConsultationHour>();
 	}
+	
+	@Override
+	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, String departmentName) {
+		Department department = departmentRepository.findByName(departmentName);
+		if (searchEntity != null) {
+			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(department.getId(), searchEntity.getStartDate(),
+					searchEntity.getEndDate(), searchEntity.getChTypeId());
+		}
+		
+		return null;
+	}
 
 	@Override
 	public ConsultationHour findConsultationHour(Long consultationHourId) {
