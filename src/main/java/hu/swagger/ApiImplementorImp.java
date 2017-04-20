@@ -116,6 +116,17 @@ public class ApiImplementorImp implements ApiImplementor {
 				});
 	}
 
+	@Override
+	public ResponseEntity<Object> apiGetDepartmentsAndTypesGet() {
+		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
+				, "Sikertelen Appointment lista lekérdezés."
+				, () -> {
+					Map<hu.model.hospital.Department, List<ConsultationHourType>> departmentAndTypes = departmentService.getAllDepartmentsAndTypesGet();
+					return ApiHospitalMapper.mapDepartmentsAndConsultationHourTypeMapToApi(departmentAndTypes);
+				}
+				);
+	}
+
 	private ResponseEntity<Object> handlingServiceCall(String succesLog, String errorLog, Callable<Object> method){
 		try{
 			Object result = method.call();

@@ -21,4 +21,6 @@ public interface ApiImplementor {
                    
 	ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request);
                    
+	ResponseEntity<Object> apiGetDepartmentsAndTypesGet();
+
 }
