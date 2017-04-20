@@ -19,7 +19,8 @@ import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
-@ControllerAdvice
+// Swaggerrel generált controllerre nem szabad érvényesnek lennie
+@ControllerAdvice(basePackages = {"hu.web.controller"} )
 public class GlobalExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class); 
