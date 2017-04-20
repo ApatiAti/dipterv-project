@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.exception.BasicServiceException;
+import hu.exception.security.AuthorizationException;
 import hu.model.hospital.Appointment;
 import hu.service.interfaces.AppointmentService;
 import hu.web.controller.abstarct.BaseController;
@@ -78,7 +79,7 @@ public class MyAppointmentListController extends BaseController {
 			logger.info(messageString);
 			message = new CustomMessage(CustomMessageSeverity.SUCCESS, messageString);
 		
-		} catch ( BasicServiceException e) {
+		} catch ( AuthorizationException | BasicServiceException e) {
 			logger.error("Hibe történt", e);
 			message = new CustomMessage(CustomMessageSeverity.ERROR, e.getMessage());
 		

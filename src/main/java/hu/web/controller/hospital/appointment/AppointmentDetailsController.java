@@ -77,13 +77,19 @@ public class AppointmentDetailsController extends BaseController {
 	 */
 	@RequestMapping(value = "/appointment/{appointmentId}" , method = RequestMethod.GET)
 	public String getAppointmentPage(Map<String, Object> model, @ModelAttribute(ModelKeys.CurrentUserName) String currentUserName
-			, @PathVariable Long appointmentId){
+			, @PathVariable Long appointmentId, RedirectAttributes redirectAttributes){
 		
-		Appointment appointment = appointmentService.findAppointmentById(appointmentId);	
+		try {
+			Appointment appointment = appointmentService.findAppointmentById(appointmentId);
 		
-		populateModelForViewAppointmentModify(model, appointment, true);
+			populateModelForViewAppointmentModify(model, appointment, true);
+			
+			return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
 		
-		return ViewNameHolder.VIEW_APPOINTMENT_MODIFY;
+		} catch (AuthorizationException e) {
+			errorLogAndDisplayMessage(redirectAttributes, e);
+			return ViewNameHolder.REDIRECT_TO_HOME;
+		}
 	}
 
 

@@ -34,4 +34,8 @@ public interface SecurityService {
 	 * @throws AuthorizationException
 	 */
 	public void authorizeCurrentUserToDownload(DocumentFileAppointment docFileApp) throws AuthorizationException;
+
+	public void authorizeOwner(Appointment a) throws AuthorizationException;
+
+	public void authorizeOwnerByUserId(Long patientId) throws AuthorizationException;;
 }

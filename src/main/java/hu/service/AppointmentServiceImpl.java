@@ -13,6 +13,7 @@ import hu.exception.AlreadyHaveAppointmentException;
 import hu.exception.BasicServiceException;
 import hu.exception.ConsultationHourNotFound;
 import hu.exception.UserNotFoundException;
+import hu.exception.security.AuthorizationException;
 import hu.model.hospital.Appointment;
 import hu.model.hospital.ConsultationHour;
 import hu.model.user.User;
@@ -22,6 +23,7 @@ import hu.repository.user.UserRepository;
 import hu.service.interfaces.AppointmentService;
 import hu.service.interfaces.ConsultationHourService;
 import hu.service.interfaces.DocumentService;
+import hu.service.interfaces.security.SecurityService;
 import hu.web.util.CalendarUtil;
 
 @Service
@@ -41,6 +43,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Autowired
 	ConsultationHourService consultationHourService;
+	
+	@Autowired
+	SecurityService securityService;
 	
 	@Override
 	@Transactional
@@ -77,30 +82,53 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	@Transactional
 	public void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
-		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
-		
-		consultationHourService.validateConsultationHour(consultationHour);
-		
 		User currentUser = userRepository.findByUsername(currentUserName);
 		
 		if (currentUser == null){
 			throw new UserNotFoundException();
 		}
 		
+		saveAppointment(appointment, consultationHourId, currentUser);
+	}
+	
+	@Override
+	@Transactional
+	public void saveAppointment(String complaints, long consultationHourId, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException {
+		Appointment appointment = new Appointment();
+		appointment.setComplaints(complaints);
+		
+		User currentUser = userRepository.findOne(userId);
+		
+		if (currentUser == null){
+			throw new UserNotFoundException();
+		}
+		
+		saveAppointment(appointment, consultationHourId, currentUser);
+		
+	}
+
+	@Transactional
+	private void saveAppointment(Appointment appointment, long consultationHourId, User user) throws ConsultationHourNotFound, BasicServiceException {
+		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
+		
+		consultationHourService.validateConsultationHour(consultationHour);
+		
 		appointment.setConsultationHour(consultationHour);
-		appointment.setPatient(currentUser);
+		appointment.setPatient(user);
 		
 		appointmentRepository.save(appointment);
 	}
-
+	
 	@Override
 	public List<Appointment> getAppointmentByUsername(String currentUserName) {
 		return appointmentRepository.findByPatientUsername(currentUserName);	
 	}
 
 	@Override
-	public Appointment findAppointmentById(Long appointmentId) {
-		return appointmentRepository.findOne(appointmentId);
+	public Appointment findAppointmentById(Long appointmentId) throws AuthorizationException {
+		Appointment appointment = appointmentRepository.findOne(appointmentId);
+		securityService.authorizeOwner(appointment);
+		return appointment;
 	}
 
 	@Override
@@ -120,11 +148,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 		throw new BasicServiceException("Megadott foglalás nem létezik");
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public void modifyAppointment(Appointment editAppointment) throws BasicServiceException {
 		Appointment oldAppointment = appointmentRepository.findOne(editAppointment.getId());
-		
+			
 		if (oldAppointment != null){
 			oldAppointment.setComplaints(editAppointment.getComplaints());
 			return;
@@ -133,13 +161,33 @@ public class AppointmentServiceImpl implements AppointmentService {
 		throw new BasicServiceException("Nem létezik a megadott foglalás");
 	}
 
+	@Transactional
+	@Override
+	public void modifyAppointment(long appointmentId, String complaints) throws BasicServiceException, AuthorizationException {
+		Appointment oldAppointment = appointmentRepository.findOne(appointmentId);
+		
+		securityService.authorizeOwner(oldAppointment);
+		
+		if (oldAppointment != null){
+			oldAppointment.setComplaints(complaints);
+			return;
+		} 
+		
+		throw new BasicServiceException("Nem létezik a megadott foglalás");
+	}
+	
+
+
 	@Override
 	@Transactional	
-	public void deleteAppointment(Long appointmentId) throws BasicServiceException {
+	public void deleteAppointment(Long appointmentId) throws BasicServiceException, AuthorizationException {
 		Appointment appointment = appointmentRepository.findOne(appointmentId);
 		ConsultationHour consultationHour = appointment.getConsultationHour();
 		
-		if (CalendarUtil.afterNotNull(consultationHour.getBeginDate(), new Date())){
+		securityService.authorizeOwner(appointment);
+		
+		
+		if (CalendarUtil.beforeNotNull(consultationHour.getBeginDate(), new Date())){
 			throw new BasicServiceException("Nem törölhető foglalás a rendelési idő megkezdése után.");
 		} else {
 			int count = documentFileAppointmentRepository.countByAppointmentId(appointmentId);
@@ -150,6 +198,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 		
 		appointmentRepository.delete(appointmentId);
 	}
+
+
+	@Override
+	public List<Appointment> getAppointmentByUserId(long patientId) throws AuthorizationException {
+		securityService.authorizeOwnerByUserId(patientId);
+		return appointmentRepository.findByPatientId(patientId);
+	}
+	
+	
 
 	
 }
