@@ -38,4 +38,9 @@ public class CalendarUtil {
 		c.setTime(new Date());
 		return c;
 	}
+
+	public static boolean beforeNotNull(Date startDate, Date endDate) {
+		return startDate != null && endDate != null && startDate.before(endDate);
+		
+	}
 }
