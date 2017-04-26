@@ -23,20 +23,25 @@
 
 <!-- 	<sec:debug /> -->
 
-	<sec:http auto-config="true" >
+	<sec:http entry-point-ref="hospitalAuthenticationEntryPoint" auto-config="true" >
 		<sec:access-denied-handler error-page="/home?security=forbidden" />
 
 		<sec:session-management invalid-session-url="/login?time=1">
             <sec:concurrency-control max-sessions="1" expired-url="/login?time=1" />
         </sec:session-management>
  
+
         <sec:form-login login-page="/login" 
 	        				login-processing-url="/login" 
 	        				default-target-url="/home" 
 	        				always-use-default-target="true" 
-	        				authentication-failure-url="/login?error" 
 	        				username-parameter="username" 
-	        				password-parameter="password" />
+	        				password-parameter="password" 
+	        				authentication-success-handler-ref="mySuccessHandler"
+         					authentication-failure-handler-ref="myFailureHandler" />
+<!--   myFailureHandler-ben található a authentication-failure-url -->
+<!-- 						authentication-failure-url="/login?error"  -->
+
  
         <sec:logout logout-url="/logout" 
 				        logout-success-url="/login?logout" 
@@ -65,14 +70,13 @@
 		<sec:intercept-url pattern="/personalDataEdit**" access="hasRole('MODIFY_PERSONAL_DATA')" />
 		 
 
-		
 		<sec:intercept-url pattern="/login**" access="permitAll()" />
+		
 		<sec:intercept-url pattern="/**" access="hasRole('USER')" />
 		
 		
 		<sec:csrf disabled="true" />
 	</sec:http>
-
 
 
 	<sec:authentication-manager>
@@ -93,4 +97,15 @@
 <!-- 		<property name="jndiName" value="jdbc:h2:./target/webshoptest" /> -->
 	</bean>
 
+	
+	<bean id="hospitalAuthenticationEntryPoint" class="hu.web.security.HospitalAuthenticationEntryPoint">
+		<constructor-arg value="/login" />
+	</bean>
+	<bean id="mySuccessHandler" class="hu.web.security.HospitalSavedRequestAwareAuthenticationSuccessHandler" />
+	<bean id="myFailureHandler" class="hu.web.security.HospitalSimpleUrlAuthenticationFailureHandler">
+		<constructor-arg value="/login?error" />	
+	</bean>
+	
+ 	<bean id="authentiacationHelper" class="hu.web.security.HospitalAuthenticationHelper" />
+	
 </beans>
