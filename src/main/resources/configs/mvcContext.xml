@@ -14,8 +14,14 @@
 
 	<mvc:annotation-driven conversion-service="conversionService"/>
 	<context:component-scan base-package="hu.web" />
+	<context:component-scan base-package="io.swagger" />
 	<mvc:resources mapping="/template_files/**" location="/template_files/" />
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
 
+
+<!-- 	swagger config -->
+	<bean class="io.swagger.configuration.SwaggerDocumentationConfig"/>
 
 	<!-- *************************************************************** -->
 	<!-- THYMELEAF-SPECIFIC ARTIFACTS 									 -->

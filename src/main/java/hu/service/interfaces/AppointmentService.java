@@ -6,6 +6,7 @@ import hu.exception.AlreadyHaveAppointmentException;
 import hu.exception.BasicServiceException;
 import hu.exception.ConsultationHourNotFound;
 import hu.exception.UserNotFoundException;
+import hu.exception.security.AuthorizationException;
 import hu.model.hospital.Appointment;
 
 public interface AppointmentService {
@@ -27,7 +28,7 @@ public interface AppointmentService {
 	 * Appointement mentése
 	 * @param appointment 	Mentendő Appointment
 	 * @param consultationHourId 	ConsultationHour amihez szeretnénk menteni
-	 * @param currentUserName	Épp bejelentkezett felhasználó
+	 * @param currentUserName	A Appointmentett létrehozó felhasználó
 	 * @throws ConsultationHourNotFound		Nem létezik a megadott consultationHourId-hoz entitás
 	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
 	 * @throws BasicServiceException
@@ -35,6 +36,18 @@ public interface AppointmentService {
 	void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName)
 			throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException;
 
+	
+	/**
+	 * Appointement mentése
+	 * @param complaints   A beteg panasza
+	 * @param consultationHourId 	ConsultationHour id-ja, amelyhez szeretnénk menteni
+	 * @param currentUserName	A Appointmentett létrehozó felhasználó id-ja
+	 * @throws ConsultationHourNotFound		Nem létezik a megadott consultationHourId-hoz entitás
+	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
+	 * @throws BasicServiceException
+	 */
+	void saveAppointment(String complaints, long longValue, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException;
+	
 	/**
 	 * Megadott felhasználó összes Appointementjét visszaadja
 	 * @param currentUserName
@@ -42,12 +55,18 @@ public interface AppointmentService {
 	 */
 	List<Appointment> getAppointmentByUsername(String currentUserName);
 
-	Appointment findAppointmentById(Long appointmentId);
+	Appointment findAppointmentById(Long appointmentId) throws AuthorizationException;
 
 	Appointment findAppointmentByIdAndUserName(Long appointmentId, String currentUserName) throws BasicServiceException;
 
 	void modifyAppointment(Appointment editAppointment) throws BasicServiceException;
 
-	void deleteAppointment(Long appointmentId) throws BasicServiceException;
+	void modifyAppointment(long appointmentId, String complaints) throws BasicServiceException, AuthorizationException;
+	
+	void deleteAppointment(Long appointmentId) throws BasicServiceException, AuthorizationException;
+
+	List<Appointment> getAppointmentByUserId(long longValue) throws AuthorizationException;
+
+
 
 }

@@ -48,7 +48,7 @@ public class Department implements Serializable {
 
 	@Length(min =4)
 	@NotNull
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	public String getName() {
 		return name;
 	}

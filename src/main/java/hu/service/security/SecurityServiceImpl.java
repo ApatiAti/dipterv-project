@@ -54,7 +54,22 @@ public class SecurityServiceImpl implements SecurityService{
 		authorizeOwnerOrDoctor(patientUserName);
 	}
 	
-	
+	@Override
+	public void authorizeOwner(Appointment appointment) throws AuthorizationException {
+		if (!getCurrentUser().equals(appointment.getPatient())){
+			throw new AuthorizationException("A művelet elvégzéséhez nincs joga!");
+		}
+	}
+
+
+	@Override
+	public void authorizeOwnerByUserId(Long patientId) throws AuthorizationException {
+		if (!getCurrentUser().getId().equals(patientId)){
+			throw new AuthorizationException("A művelet elvégzéséhez nincs joga!");
+		}
+		
+	}
+
 	private void authorizeOwnerOrDoctor(String patientUserName) throws AuthorizationException {
 		User currentUser = getCurrentUser();
 		if (!currentUser.getUsername().equals(patientUserName)){

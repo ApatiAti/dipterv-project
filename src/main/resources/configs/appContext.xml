@@ -20,6 +20,7 @@
 	<jpa:repositories base-package="hu.repository" />
 
 	<!-- swinges service helyét adhatjuk meg vele hogy hol keresse -->
+	<context:component-scan base-package="hu.swagger" />
 	<context:component-scan base-package="hu.service" />
 	<context:component-scan base-package="hu.component" />
 	
