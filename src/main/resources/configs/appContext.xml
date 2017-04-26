@@ -38,6 +38,7 @@
 	</bean>
 	
 	<bean class="java.net.URI" id="dbUrl">
+		<!-- környezeti változókpnt is megadható -->
 	    <constructor-arg value="${DATABASE_URL}"/>
 	</bean>
 
