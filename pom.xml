@@ -266,12 +266,6 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.3.3.v20150827</version>
-				<configuration>
-					<!-- <encoding>UTF-8</encoding> -->
-					<webApp>
-						<jettyEnvXml>${project.basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
-					</webApp>
-				</configuration>
 			</plugin>
 
 
