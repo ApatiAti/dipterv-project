@@ -15,4 +15,6 @@ public interface DocumentFileAppointmentRepository  extends JpaRepository<Docume
 	List<DocumentFileAppointment> findByAppointmentId(Long appointmentId);
 
 	List<DocumentFileAppointment> findByAppointmentPatientId(Long currentUserID);
+	
+	int countByAppointmentId(Long appointmentId);
 }

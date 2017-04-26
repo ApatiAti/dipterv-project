@@ -1,28 +1,34 @@
-/**
- * 
- */
 
-//function createDatePicker() {
-//	   $('#datetimepicker1').dateTimePicker();
-//}
-
-//function createDatePicker() {
-//    $('#sandbox-container .input-group.date').datepicker({
-//    	format: "yyyy-mm-dd",
-//        todayBtn: "linked",
-//        language: "hu",
-//        autoclose: true,
-//        todayHighlight: true
-//    });
-//}
 
 function putAlertBox(severity, errorMessage) {
+	var severityText = getSeverityText(severity);
 	$("#alertBox").show();
-	$("#alertBox").attr('class', "alert alert-"+ severity.toLowerCase());
+	$("#alertBox").attr('class', "alert alert-"+ severityText);
 	$("#alert_severity_text").html(capitalize(severity));
 	$("#alert_text").html(errorMessage);	
 }
 
+
+function getSeverityText(severity){
+	switch (severity) {
+	  case "SUCCES":
+		  return "success";
+		  
+	  case "INFO":
+		  return "info";
+		  
+	  case "WARNING":
+		  return "warning";
+		  
+	  case "ERROR":
+		  return "danger";
+		  
+	  default:
+		  return "info";
+	}
+}
+
 function capitalize( str ) {
-    return str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
+    // #strings.capitalize(menuItem.desFnz)
+	return str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
 }

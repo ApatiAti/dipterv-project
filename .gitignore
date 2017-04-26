@@ -16,7 +16,7 @@ local.properties
 .settings/
 .loadpath
 target/
-test/
+test/resources/jetty-env.xml
 src/main/resources/configs/appContext.xml
 
 # External tool builders

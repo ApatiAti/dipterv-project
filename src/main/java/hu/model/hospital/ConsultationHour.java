@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Formula;
 import org.hibernate.validator.constraints.NotBlank;
 
+import hu.model.user.User;
+
+/**
+ * @author Apati
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "ConsultationHour")
@@ -34,7 +42,7 @@ public class ConsultationHour implements Serializable {
 	private String room;	
 	private List<Appointment> appointments;
 	private ConsultationHourType type;
-	// TODO orvost rendelni a cosultationHourhöz???
+	private User doctor;
 
 	
 //	@Formula("select count(*) from Appointment a where a.consultationHour.id = id")
@@ -62,6 +70,7 @@ public class ConsultationHour implements Serializable {
 
 	@Future
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	public Date getBeginDate() {
 		return beginDate;
@@ -73,6 +82,7 @@ public class ConsultationHour implements Serializable {
 
 	@Future
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	public Date getEndDate() {
 		return endDate;
@@ -130,6 +140,17 @@ public class ConsultationHour implements Serializable {
 	
 	public void setNumberOfAppointment(int numberOfAppointment) {
 		this.numberOfAppointment = numberOfAppointment;
+	}
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "doctorId", nullable = false)
+	public User getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(User doctor) {
+		this.doctor = doctor;
 	}
 	
 	

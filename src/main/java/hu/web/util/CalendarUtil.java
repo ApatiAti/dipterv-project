@@ -29,10 +29,18 @@ public class CalendarUtil {
 		return c.getTime();
 	}
 	
+	public static boolean afterNotNull(Date startDate, Date endDate) {
+		return startDate != null && endDate != null && startDate.after(endDate);
+	}
 	
 	private static Calendar getCurrentDateCalendar(){
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		return c;
+	}
+
+	public static boolean beforeNotNull(Date startDate, Date endDate) {
+		return startDate != null && endDate != null && startDate.before(endDate);
+		
 	}
 }

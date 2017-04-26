@@ -24,7 +24,6 @@ public class User implements Serializable {
 	private String email;
 	private PersonalData personalData;
 	
-
 	public User() {
 	}
 
@@ -99,7 +98,4 @@ public class User implements Serializable {
 	public void setPersonalData(PersonalData personalData) {
 		this.personalData = personalData;
 	}
-
-	
-	
 }

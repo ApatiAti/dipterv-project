@@ -6,7 +6,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,25 +19,25 @@ import hu.web.util.CustomMessage.CustomMessageSeverity;
 import hu.web.util.ModelKeys;
 import hu.web.util.ViewNameHolder;
 
-@ControllerAdvice
+// Swaggerrel generált controllerre nem szabad érvényesnek lennie
+@ControllerAdvice(basePackages = {"hu.web.controller"} )
 public class GlobalExceptionHandler {
 
-	private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class); 
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class); 
 	
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
 		
-		// Otherwise setup and send the user to a default error-view.
+		
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> map = mav.getModel();
 
 		String[] securityError = req.getParameterMap().get(ModelKeys.Security);
 		String content;
 		if (securityError != null){
-			// TODO messagePropertiesből olvasni.
-			content = e.getMessage() + ". You don't have the right privilage.";
+			content = e.getMessage() + ". Nincs megfelelő joga ehhez a művelethez.";
 		} else {
-			content = e.getMessage();
+			content = "Hiba történt.\n" + e.getMessage();
 		}
 		
 		map.put(ModelKeys.DisplayMessage, new CustomMessage(CustomMessageSeverity.ERROR, content));
@@ -65,7 +66,7 @@ public class GlobalExceptionHandler {
 		
 		mav.setViewName(ViewNameHolder.VIEW_HOME);
 		
-		logger.error("Hiba történt" , e);
+		logger.error(content , e);
 		
 		return mav;
 	}
