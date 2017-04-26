@@ -1,0 +1,5 @@
+{
+  "name": "Dipterv",
+  "description": "Dipterv 2017",
+  "addons": [ "heroku-postgresql" ]
+}

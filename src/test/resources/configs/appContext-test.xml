@@ -26,7 +26,7 @@
 	
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="diptervPU" />
+		<property name="persistenceUnitName" value="diptervPU_test" />
 		<property name="dataSource" ref="dataSource" ></property>
 	</bean>
 
@@ -37,21 +37,20 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	
-	<bean class="java.net.URI" id="dbUrl">
-		<!-- környezeti változókpnt is megadható -->
-	    <constructor-arg value="${DATABASE_URL}"/>
-	</bean>
+<!-- 	<bean class="java.net.URI" id="dbUrl"> -->
+<!-- 	    <constructor-arg value="${DATABASE_URL}"/> -->
+<!-- 	</bean> -->
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	    <property name="driverClassName" value="${database.driverClassName}"/>
-	    <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>
-	    <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-	    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+<!-- 	    <property name="driverClassName" value="${database.driverClassName}"/> -->
+<!-- 	    <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/> -->
+<!-- 	    <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/> -->
+<!-- 	    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/> -->
 	    
-<!-- 		<property name="driverClassName" value="${database.driverClassName}" /> -->
-<!-- 		<property name="url" value="${database.url}" /> -->
-<!-- 		<property name="username" value="${database.username}" /> -->
-<!-- 		<property name="password" value="${database.password}" /> -->
+		<property name="driverClassName" value="${database.driverClassName}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
 	</bean>
 
 	<tx:annotation-driven />
