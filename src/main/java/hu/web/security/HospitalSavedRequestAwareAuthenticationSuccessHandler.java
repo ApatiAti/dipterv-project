@@ -30,8 +30,8 @@ public class HospitalSavedRequestAwareAuthenticationSuccessHandler extends Simpl
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-
-		if (authenticationHelper.isRequestToAPI(request)){
+		
+		if (authenticationHelper.isRequestToAPI(request) || authenticationHelper.isRequestIsApiLogin(request)){
 			APICallOnAuthenticationSuccess(request, response, authentication);
 		} else {
 			defaultOnAuthenticationSuccess(request, response, authentication);

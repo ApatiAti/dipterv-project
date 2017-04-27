@@ -41,6 +41,7 @@ public class ApiImplementorImp implements ApiImplementor {
 	
 	@Override
 	public ResponseEntity<Object> apiAppointmentDelete(Appointment request) {
+		logger.debug("call apiAppointmentDelete. Parameters  Appointment = " + request.toString());
 		try {
 			appointmentService.deleteAppointment(request.getAppointmentId());
 			
@@ -53,6 +54,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiAppointmentGet(Long appointmentId) {
+		logger.debug("call apiAppointmentGet. Parameters  appointmentId = " + appointmentId.toString());
 		return handlingServiceCall("Sikeres Appointment lekérdezés", "Sikertelen Appointment lekérdezés. Id : " + appointmentId,
 				() -> { 
 					hu.model.hospital.Appointment appointment = appointmentService.findAppointmentById(appointmentId);
@@ -64,6 +66,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiAppointmentListGet(Long userId) {
+		logger.debug("call apiAppointmentListGet. Parameters  userId = " + userId.toString());
 		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
 				, "Sikertelen Appointment lista lekérdezés. UserId : " + userId,
 				() -> {
@@ -75,6 +78,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiAppointmentPost(final Appointment request) {
+		logger.debug("call apiAppointmentPost. Parameters  Appointment = " + request.toString());
 		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
 				, "Sikertelen Appointment lista lekérdezés.",
 				new Callable<Object>() {
@@ -89,6 +93,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiAppointmentPut(Appointment request) {
+		logger.debug("call apiAppointmentPut. Parameters  Appointment = " + request.toString());
 		return handlingServiceCall("Sikeres Appoinment módosítás"
 				, "Sikertelen Appoinment módosítás."
 				, new Callable<Object>() {
@@ -102,6 +107,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request) {
+		logger.debug("call apiConsultationHourSearchPost. Parameters  ConsultationHourSearch = " + request.toString());
 		return handlingServiceCall("Sikeres ConsultationHour keresés"
 				, "Sikertelen ConsultationHour keresés"
 				, new Callable<Object>() {
@@ -118,6 +124,7 @@ public class ApiImplementorImp implements ApiImplementor {
 
 	@Override
 	public ResponseEntity<Object> apiGetDepartmentsAndTypesGet() {
+		logger.debug("call apiGetDepartmentsAndTypesGet. No Parameters");
 		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
 				, "Sikertelen Appointment lista lekérdezés."
 				, () -> {
