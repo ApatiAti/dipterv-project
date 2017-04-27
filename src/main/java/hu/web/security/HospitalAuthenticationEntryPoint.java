@@ -24,7 +24,7 @@ public class HospitalAuthenticationEntryPoint extends LoginUrlAuthenticationEntr
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		
-		if (authenticationHelper.isRequestToAPI(request)){
+		if (authenticationHelper.isRequestToAPI(request) || authenticationHelper.isRequestIsApiLogin(request)){
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
 		} else {
 			super.commence(request, response, authException);

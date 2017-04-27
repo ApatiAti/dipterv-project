@@ -25,6 +25,11 @@ public class HospitalAuthenticationHelper {
 		HospitalAuthenticationHelper.API_REQUEST_BASE = env.getProperty(EnviromentConstans.MVC_API_REQUEST_BASE, "/api");
 	}
 	
+	public boolean isRequestIsApiLogin(HttpServletRequest request) {
+		return request.getParameter("mobile-api") != null;
+		
+	}
+	
 	public boolean isRequestToAPI(HttpServletRequest request) {
 		return request.getRequestURI().startsWith(HospitalAuthenticationHelper.API_REQUEST_BASE);
 	}
