@@ -16,12 +16,8 @@
 	<context:component-scan base-package="hu.web" />
 	<context:component-scan base-package="io.swagger" />
 	<mvc:resources mapping="/template_files/**" location="/template_files/" />
-	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
-	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
 
 
-<!-- 	swagger config -->
-	<bean class="io.swagger.configuration.SwaggerDocumentationConfig"/>
 
 	<!-- *************************************************************** -->
 	<!-- THYMELEAF-SPECIFIC ARTIFACTS 									 -->
@@ -74,15 +70,5 @@
 		<bean class="hu.web.util.LoggingInterceptor" />
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="locale" />
 	</mvc:interceptors>
-
-	<!-- Fájl fel-/letöltésnél beállítja a apache.common MultipartReesolverét -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
-		<!-- A feltölthető fájl maximális mérete bájtban-->
-		<!-- 1 KB = 	  1 024 B -->
-		<!-- 1 MB =  10 485 760 B -->
-		<!-- 7 MB = 639 627 260 B -->
-		<property name="maxUploadSize" value="639627260" />
-	</bean>
 
 </beans>

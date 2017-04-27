@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import hu.exception.security.AuthorizationException;
-import hu.model.document.DocumentFileAppointment;
 import hu.model.hospital.Appointment;
 import hu.model.user.User;
 import hu.repository.security.RoleGroupRepository;
@@ -43,13 +42,6 @@ public class SecurityServiceImpl implements SecurityService{
 	@Override
 	public void authorizeCurrenctUserToUpload(Appointment appointemnt) throws AuthorizationException{
 		String patientUserName = appointemnt.getPatient().getUsername();
-		
-		authorizeOwnerOrDoctor(patientUserName);
-	}
-
-	@Override
-	public void authorizeCurrentUserToDownload(DocumentFileAppointment docFileApp) throws AuthorizationException {
-		String patientUserName = docFileApp.getAppointment().getPatient().getUsername();
 		
 		authorizeOwnerOrDoctor(patientUserName);
 	}

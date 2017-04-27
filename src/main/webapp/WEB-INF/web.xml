@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:configs/appContext.xml classpath:configs/appContext-security.xml classpath:configs/appContext-mail.xml</param-value>
+    <param-value>classpath:configs/appContext.xml classpath:configs/appContext-security.xml</param-value>
   </context-param>
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
@@ -11,9 +11,9 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <!-- ez nem kell talán -->
-  <listener>
-    <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-  </listener>
+<!--   <listener> -->
+<!--     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class> -->
+<!--   </listener> -->
   <filter>
     <filter-name>encoding-filter</filter-name>
     <filter-class>

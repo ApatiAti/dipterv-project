@@ -9,9 +9,9 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -29,8 +29,6 @@ import hu.repository.hospital.ConsultationHourRepository;
 import hu.repository.hospital.ConsultationHourTypeRepository;
 import hu.repository.hospital.DepartmentRepository;
 import hu.service.interfaces.ConsultationHourService;
-import hu.service.interfaces.MailService;
-import hu.util.EmailType;
 
 @Service
 public class ConsultationHourServiceImpl implements ConsultationHourService {
@@ -46,8 +44,6 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 	@Autowired
 	private ConsultationHourTypeRepository consultationHourTypeRepository;
 
-	@Autowired
-	private MailService mailService;
 
 	@Override
 	public List<ConsultationHour> findConsultationHourList(Long departmentId) {
@@ -181,7 +177,7 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 				emailModel.put("endDate", consultationHour.getEndDate());
 
 				String email = patient.getEmail();
-				mailService.sendTemplateEnginedMail(email, EmailType.CONSULTATION_HOUR_MODIFIED, emailModel);
+			
 			}
 		}
 	}

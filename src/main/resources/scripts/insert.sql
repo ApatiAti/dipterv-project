@@ -1,15 +1,15 @@
-Ôªø --
+ --
 -- Table structure for table user
 --
-ALTER TABLE user ADD password VARCHAR(255);
+ALTER TABLE users ADD password VARCHAR(255);
 --
 -- Dumping data for table user
 --
 
-INSERT INTO user(id, username, email, password) VALUES (1,'beteg1','a@a.a','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (2,'beteg2','c@c.c','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (3,'orvos' ,'b@b.b','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (4,'orvos2','d@d.d','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (1,'beteg1','a@a.a','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (2,'beteg2','c@c.c','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (3,'orvos' ,'b@b.b','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (4,'orvos2','d@d.d','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 
 
 --
@@ -22,8 +22,8 @@ INSERT INTO user(id, username, email, password) VALUES (4,'orvos2','d@d.d','$2a$
 
 INSERT INTO personaldata VALUES (1,'1985-10-10 00:00:00','Kiss Piroska','Teszt','User1',NULL,'06301234567','123456789',1);
 INSERT INTO personaldata VALUES (2,'1985-10-10 00:00:00','Valami Ember','Teszt','User2',NULL,'06301234567','123466789',2);
-INSERT INTO personaldata VALUES (3,'1985-10-10 00:00:00','Teszt Admina','Admin','B√©la','DR','06301234123','345556789',3);
-INSERT INTO personaldata VALUES (4,'1985-10-10 00:00:00','Doktor Robertina','Doctor','J√≥zsef','DR','06301234123','345555289',4);
+INSERT INTO personaldata VALUES (3,'1985-10-10 00:00:00','Teszt Admina','Admin','BÈla','DR','06301234123','345556789',3);
+INSERT INTO personaldata VALUES (4,'1985-10-10 00:00:00','Doktor Robertina','Doctor','JÛzsef','DR','06301234123','345555289',4);
 
 
 --
@@ -34,8 +34,8 @@ INSERT INTO personaldata VALUES (4,'1985-10-10 00:00:00','Doktor Robertina','Doc
 -- Dumping data for table department
 --
 
-INSERT INTO department VALUES (10000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','Szem√©szet','36305248967','IB025',3);
-INSERT INTO department VALUES (10001,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','Ortop√©dia','36305345967','IB025',4);
+INSERT INTO department VALUES (10000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','SzemÈszet','36305248967','IB025',3);
+INSERT INTO department VALUES (10001,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','OrtopÈdia','36305345967','IB025',4);
 
 
 --
@@ -58,12 +58,12 @@ INSERT INTO department_to_user VALUES (10000,4);
 -- Dumping data for table consultationhour_type
 --
 
-INSERT INTO consultationhour_type VALUES (2,'L√°t√°s vizsg√©lat',10000);
-INSERT INTO consultationhour_type VALUES (3,'Sz√ºrkeh√°lyog vizsg?√°lat',10000);
-INSERT INTO consultationhour_type VALUES (1,'Szem m≈±t√©t',10000);
-INSERT INTO consultationhour_type VALUES (4,'√Åltal√°nos vizsg√°lat',10001);
-INSERT INTO consultationhour_type VALUES (5,'L√∫dtalp vizsg√°lat',10001);
-INSERT INTO consultationhour_type VALUES (6,'Prot√©zis m≈±t√©t',10001);
+INSERT INTO consultationhour_type VALUES (2,'L·t·s vizsgÈlat',10000);
+INSERT INTO consultationhour_type VALUES (3,'Sz¸rkeh·lyog vizsg?·lat',10000);
+INSERT INTO consultationhour_type VALUES (1,'Szem m˚tÈt',10000);
+INSERT INTO consultationhour_type VALUES (4,'¡ltal·nos vizsg·lat',10001);
+INSERT INTO consultationhour_type VALUES (5,'L˙dtalp vizsg·lat',10001);
+INSERT INTO consultationhour_type VALUES (6,'ProtÈzis m˚tÈt',10001);
 
 
 --
@@ -73,7 +73,7 @@ INSERT INTO consultationhour_type VALUES (6,'Prot√©zis m≈±t√©t',10001);
 --
 -- Dumping data for table documenttype
 --
-
+/*
 INSERT INTO documenttype VALUES (1,'PDF',10240,1,'LELET');
 INSERT INTO documenttype VALUES (2,'WORD_DOC',10240,1,'LELET');
 INSERT INTO documenttype VALUES (3,'PICTURE',10240,1,'LELET');
@@ -86,7 +86,7 @@ INSERT INTO documenttype VALUES (9,'ES3',61840,50,'RONTGEN_KEP');
 INSERT INTO documenttype VALUES (10,'VIDEO',61840,50,'ULTRAHANG_VIDEO');
 INSERT INTO documenttype VALUES (11,'ES3',61840,50,'ULTRAHANG_VIDEO');
 
-
+*/
 --
 -- Table structure for table documenttype_to_consultationhourtype
 --
@@ -94,7 +94,7 @@ INSERT INTO documenttype VALUES (11,'ES3',61840,50,'ULTRAHANG_VIDEO');
 --
 -- Dumping data for table documenttype_to_consultationhourtype
 --
-
+/*
 INSERT INTO documenttype_to_consultationhourtype VALUES (1,'2016-06-01 16:00:00',NULL,1,1);
 INSERT INTO documenttype_to_consultationhourtype VALUES (2,'2016-06-01 16:00:00',NULL,1,2);
 INSERT INTO documenttype_to_consultationhourtype VALUES (3,'2016-06-01 16:00:00',NULL,1,3);
@@ -133,7 +133,7 @@ INSERT INTO documenttype_to_consultationhourtype VALUES (35,'2016-06-01 16:00:00
 INSERT INTO documenttype_to_consultationhourtype VALUES (37,'2016-06-01 16:00:00',NULL,6,7);
 INSERT INTO documenttype_to_consultationhourtype VALUES (38,'2016-06-01 16:00:00',NULL,6,8);
 INSERT INTO documenttype_to_consultationhourtype VALUES (39,'2016-06-01 16:00:00',NULL,6,9);
-
+*/
 --
 -- Table structure for table consultationhour
 --
@@ -155,7 +155,7 @@ INSERT INTO consultationhour VALUES (10002,'2015-06-01 16:00:00','2015-06-01 16:
 -- Dumping data for table appointment
 --
 
-INSERT INTO appointment VALUES (1,'F√°j a szemem',10000,1);
+INSERT INTO appointment VALUES (1,'F·j a szemem',10000,1);
 
 
 --
@@ -166,21 +166,21 @@ INSERT INTO appointment VALUES (1,'F√°j a szemem',10000,1);
 -- Dumping data for table role
 --
 
-INSERT INTO role VALUES (1,'ROLE_USER','Egyszer≈± bejelentkezett felhaszn√°l√≥i jog');
-INSERT INTO role VALUES (2,'ROLE_MODIFY_PERSONAL_DATA','Szem√©lyes adatok m√≥dos√≠t√°sa');
-INSERT INTO role VALUES (3,'ROLE_VIEW_CONSULTATION_HOUR','Rendel√©si id≈ë megtekint√©se');
-INSERT INTO role VALUES (4,'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS','Rendel√©si id≈ëh√∂z foglalt id≈ëpontok megtekint√©se');
-INSERT INTO role VALUES (5,'ROLE_CREATE_CONSULTATION_HOUR','Rendel√©si id≈ë k√©sz√≠t√©se');
-INSERT INTO role VALUES (6,'ROLE_MODIFY_CONSULTATION_HOUR','Rendel√©si id≈ë szerkeszt√©se');
-INSERT INTO role VALUES (7,'ROLE_LIST_MY_APPOINTMENTS','Foglalt id≈ëpontjaim list√°z√°sa');
-INSERT INTO role VALUES (8,'ROLE_VIEW_APPOINTMENT','Foglal√°si id≈ëpont megtekint√©se');
-INSERT INTO role VALUES (9,'ROLE_CREATE_APPOINTMENT','Foglal√°si id≈ëpont k√©sz√≠t√©se');
-INSERT INTO role VALUES (10,'ROLE_MODIFY_APPOINTMENT','Foglal√°si id≈ëpont m√≥dos√≠t√°sa');
-INSERT INTO role VALUES (11,'ROLE_CANCEL_APPOINTMENT','Foglal√°si id≈ëpont visszamond√°sa');
-INSERT INTO role VALUES (12,'ROLE_VIEW_MY_DOCUMENTS','Saj√°t leletek megtekint√©se');
-INSERT INTO role VALUES (13,'ROLE_UPLOAD_DOCUMENT','Leletek felt√∂lt√©se');
-INSERT INTO role VALUES (14,'ROLE_DOWNLOAD_DOCUMENT','Leletek let?¬∂lt√©se');
-INSERT INTO role VALUES (15,'ROLE_MODIFY_DEPARTMENT','Oszt√°ly adatainak m√≥dos√≠t√°sa');
+INSERT INTO role VALUES (1,'ROLE_USER','Egyszer˚ bejelentkezett felhaszn·lÛi jog');
+INSERT INTO role VALUES (2,'ROLE_MODIFY_PERSONAL_DATA','SzemÈlyes adatok mÛdosÌt·sa');
+INSERT INTO role VALUES (3,'ROLE_VIEW_CONSULTATION_HOUR','RendelÈsi idı megtekintÈse');
+INSERT INTO role VALUES (4,'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS','RendelÈsi idıhˆz foglalt idıpontok megtekintÈse');
+INSERT INTO role VALUES (5,'ROLE_CREATE_CONSULTATION_HOUR','RendelÈsi idı kÈszÌtÈse');
+INSERT INTO role VALUES (6,'ROLE_MODIFY_CONSULTATION_HOUR','RendelÈsi idı szerkesztÈse');
+INSERT INTO role VALUES (7,'ROLE_LIST_MY_APPOINTMENTS','Foglalt idıpontjaim list·z·sa');
+INSERT INTO role VALUES (8,'ROLE_VIEW_APPOINTMENT','Foglal·si idıpont megtekintÈse');
+INSERT INTO role VALUES (9,'ROLE_CREATE_APPOINTMENT','Foglal·si idıpont kÈszÌtÈse');
+INSERT INTO role VALUES (10,'ROLE_MODIFY_APPOINTMENT','Foglal·si idıpont mÛdosÌt·sa');
+INSERT INTO role VALUES (11,'ROLE_CANCEL_APPOINTMENT','Foglal·si idıpont visszamond·sa');
+INSERT INTO role VALUES (12,'ROLE_VIEW_MY_DOCUMENTS','Saj·t leletek megtekintÈse');
+INSERT INTO role VALUES (13,'ROLE_UPLOAD_DOCUMENT','Leletek feltˆltÈse');
+INSERT INTO role VALUES (14,'ROLE_DOWNLOAD_DOCUMENT','Leletek let?∂ltÈse');
+INSERT INTO role VALUES (15,'ROLE_MODIFY_DEPARTMENT','Oszt·ly adatainak mÛdosÌt·sa');
 
 
 --
@@ -191,7 +191,7 @@ INSERT INTO role VALUES (15,'ROLE_MODIFY_DEPARTMENT','Oszt√°ly adatainak m√≥dos√
 -- Dumping data for table rolegroup
 --
 
-INSERT INTO rolegroup VALUES (1,'COMMON_USER','Egyszer≈± felhaszn√≥l√≥i csoport');
+INSERT INTO rolegroup VALUES (1,'COMMON_USER','Egyszer˚ felhasznÛlÛi csoport');
 INSERT INTO rolegroup VALUES (2,'DOCTOR','Orvos');
 INSERT INTO rolegroup VALUES (3,'ADMIN','Adminstrator');
 
@@ -244,3 +244,4 @@ INSERT INTO user_to_rolegroup VALUES (1,1);
 INSERT INTO user_to_rolegroup VALUES (1,2);
 INSERT INTO user_to_rolegroup VALUES (2,3);
 INSERT INTO user_to_rolegroup VALUES (2,4);
+

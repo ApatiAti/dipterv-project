@@ -17,12 +17,10 @@ import hu.exception.security.AuthorizationException;
 import hu.model.hospital.Appointment;
 import hu.model.hospital.ConsultationHour;
 import hu.model.user.User;
-import hu.repository.document.DocumentFileAppointmentRepository;
 import hu.repository.hospital.AppointmentRepository;
 import hu.repository.user.UserRepository;
 import hu.service.interfaces.AppointmentService;
 import hu.service.interfaces.ConsultationHourService;
-import hu.service.interfaces.DocumentService;
 import hu.service.interfaces.security.SecurityService;
 import hu.web.util.CalendarUtil;
 
@@ -33,13 +31,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	AppointmentRepository appointmentRepository;
 	
 	@Autowired
-	DocumentFileAppointmentRepository documentFileAppointmentRepository;
-	
-	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	DocumentService documentService;
+
 	
 	@Autowired
 	ConsultationHourService consultationHourService;
@@ -190,10 +183,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		if (CalendarUtil.beforeNotNull(consultationHour.getBeginDate(), new Date())){
 			throw new BasicServiceException("Nem törölhető foglalás a rendelési idő megkezdése után.");
 		} else {
-			int count = documentFileAppointmentRepository.countByAppointmentId(appointmentId);
-			if (count > 0){
-				throw new BasicServiceException("Nem törölhető foglalás mert már tartozik hozzá feltöltött dokumentum!");
-			}
+			
 		}
 		
 		appointmentRepository.delete(appointmentId);

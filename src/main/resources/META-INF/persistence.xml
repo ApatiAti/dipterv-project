@@ -13,8 +13,6 @@
 		<class>hu.model.hospital.Department</class>
 		<class>hu.model.hospital.ConsultationHourType</class>
 		<class>hu.model.hospital.ConsultationHour</class>
-		<class>hu.model.document.DocumentFileContent</class>
-		<class>hu.model.document.DocumentType</class>
 		<class>hu.model.document.DocumenttypeConsultationhourtype</class>
 		
 
@@ -24,13 +22,12 @@
 			<!-- Ez kell ide nem elég a jetty-s jetty-env.xml-ben leirni a connection-t mert
 			különben nem fog jól csatlakozni a DB-hez -->
 			
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 
-			
-			<property name="hibernate.hbm2ddl.import_files" value="scripts/import.sql" />
-<!-- 			<property name="hibernate.hbm2ddl.auto" value="update" /> -->
- 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" /> 
+ 			<property name="hibernate.hbm2ddl.import_files" value="scripts/insert.sql" />
+<!--  			<property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+<!-- 			<property name="hibernate.show_sql" value="true" /> -->
 		</properties>
 	</persistence-unit>
 </persistence>
