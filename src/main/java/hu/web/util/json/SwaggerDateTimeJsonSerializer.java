@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -18,17 +21,17 @@ import hu.web.util.CustomDateFormatter;
  * Custom Json Serializer for Date.
  * Can be used in @JsonSerialize( using = CustomDateJsonSerializer.class)
  */
-public class CustomDateJsonSerializer extends JsonSerializer<Date> {
+public class SwaggerDateTimeJsonSerializer extends JsonSerializer<DateTime> {
 
 	@Autowired
 	MessageSource messageSource;
 	
 	@Override
-	public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider)
+	public void serialize(DateTime value, JsonGenerator jgen, SerializerProvider provider)
 			throws IOException, JsonProcessingException {
 		
-		SimpleDateFormat dateFormat = CustomDateFormatter.createDateFormatStatic(messageSource, provider.getLocale());
-		String dateString = dateFormat.format(value);
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		String dateString = dtf.print(value);
 		
 		jgen.writeString(dateString);
 		
