@@ -24,7 +24,7 @@ import hu.repository.hospital.ConsultationHourRepository;
 import hu.service.interfaces.AppointmentService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations ={ "classpath:configs/appContext-test.xml" ,"classpath:configs/appContext-mail.xml"})
+@ContextConfiguration(locations ={ "classpath:configs/appContext.xml" ,"classpath:configs/appContext-mail.xml"})
 public class AppointmentServiceIT {
 
 	@Autowired

@@ -82,7 +82,7 @@
 	<sec:authentication-manager>
 		<sec:authentication-provider>
 			<sec:password-encoder ref="bcyritEncoder" />
-			<sec:jdbc-user-service data-source-ref="dataSource" 
+			<sec:jdbc-user-service data-source-ref="dipterv" 
 		 		users-by-username-query="select c.username,c.password,c.enabled from user c where c.username=?"
 		 		authorities-by-username-query="select c.username, r.code from user c , user_to_rolegroup u_t_rg , rolegroup rg , role_to_rolegroup r_t_rg , role r where c.username = ? and c.id = u_t_rg.idUser and u_t_rg.idRoleGroup = rg.id and rg.id = r_t_rg.idRoleGroup and r_t_rg.idRole = r.id" />
 		</sec:authentication-provider>
@@ -92,12 +92,12 @@
 		<constructor-arg name="strength" value="10" /> 
 	</bean>
 	
-<!-- 	<bean id="dipterv" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!-- 		<property name="jndiName" value="java:/jdbc/dipterv" /> -->
+	<bean id="dipterv" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/jdbc/dipterv" />
 <!-- 		<property name="jndiName" value="jdbc:h2:./target/webshoptest" /> -->
-<!-- 	</bean> -->
+	</bean>
 
-
+	
 	<bean id="hospitalAuthenticationEntryPoint" class="hu.web.security.HospitalAuthenticationEntryPoint">
 		<constructor-arg value="/login" />
 	</bean>
