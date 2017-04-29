@@ -1,0 +1,285 @@
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: WebKorhaz API
+  description: WebKorhaz API
+  version: "1.0.0"
+# the domain of the service
+host: localhost:8080
+# array of all schemes that your API supports
+schemes:
+  - https
+  - http
+# will be prefixed to all paths
+basePath: /api
+produces:
+  - application/json
+paths:
+  /getDepartmentsAndTypes:
+    post:
+      summary: Get Departments and department's consultationHour's Types
+      description: |
+        The DepartmentsAndTypes endpoint returns information about the hospital's departments and about the consultation Hour's tpyes
+      parameters: []
+      tags:
+        - Department
+      responses:
+        200:
+          description: An array of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Department'
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /consultationHourSearch:
+    post:
+      summary: Search for ConsultationHour
+      description: |
+        The consultationHourSearch endpoint returns information about the searched consultationHours
+      parameters:
+      - name: request
+        in: body
+        description: Search data
+        required: true
+        schema:
+          $ref: '#/definitions/ConsultationHourSearch'
+      tags:
+        - ConsultationHour
+      responses:
+        200:
+          description: An array of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ConsultationHour'
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /appointment/list:
+    get:
+      summary: Get appointmentList
+      description: |
+        This endpoint returns information aboutthe user's appointment
+      tags:
+        - Appointment
+      responses:
+        200:
+          description: An array of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Appointment'
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /appointment:
+    post:
+      summary: Post appointment
+      description: |
+        With this endpoint user can create a new appointment
+      parameters:
+      - name: request
+        in: body
+        description: Appointment
+        required: true
+        schema:
+          $ref: '#/definitions/Appointment'
+      tags:
+        - Appointment
+      responses:
+        200:
+          description: Succes
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Put appointment
+      description: |
+        With this endpoint user can update an existing appointment
+      parameters:
+      - name: request
+        in: body
+        description: Appointment
+        required: true
+        schema:
+          $ref: '#/definitions/Appointment'
+      tags:
+        - Appointment
+      responses:
+        200:
+          description: Succes
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Get appointment
+      description: |
+        With this endpoint user can get an existing appointment with it's id
+      parameters:
+      - name: appointmentId
+        in: query
+        description: Appointment
+        required: true
+        type: integer
+        format: int64
+      tags:
+        - Appointment
+      responses:
+        200:
+          description: Succes
+          schema:
+            $ref: '#/definitions/Appointment'
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete appointment
+      description: |
+        With this endpoint user can delete an existing appointment
+      parameters:
+      - name: request
+        in: body
+        description: Appointment
+        required: true
+        schema:
+          $ref: '#/definitions/Appointment'
+      tags:
+        - Appointment
+      responses:
+        200:
+          description: Succes
+        400:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Department:
+    type: object
+    properties:
+      departmentId:
+        type: integer
+        format: int64
+        description: Id of department from server
+      departmentName:
+        type: string
+        description: Name of the department
+      consultationHourType:
+        type: array
+        items:
+          $ref: "#/definitions/ConsultationHourType"
+  ConsultationHourType:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Id of ConsultationHourType
+      consultationTypeid:
+        type: integer
+        format: int64
+        description: Id of ConsultationHourType from server
+      name:
+        type: string
+        description: Name of the ConsultationHourType
+  ConsultationHourSearch:
+    type: object
+    properties:
+      departmentName:
+        type: string
+        description: Department's name
+      typeId:
+        type: integer
+        format: int64
+        description: Id of the consultationHourType
+      beginDate:
+        type: string
+        format: date-time
+        description: Start date of the ConsultationHour
+      endDate:
+        type: string
+        format: date-time
+        description: End date of the ConsultationHour
+  ConsultationHour:
+    type: object
+    properties:
+      consultationHourId:
+        type: integer
+        format: int64
+        description: Id of ConsultationHour
+      typeId:
+        type: integer
+        format: int64
+        description: Id of ConsultationHourType from server
+      beginDate:
+        type: string
+        format: date-time
+        description: Start date of the ConsultationHour
+      endDate:
+        type: string
+        format: date-time
+        description: End date of the ConsultationHour
+      maxPatientCount:
+        type: integer
+        format: int32
+        description: Maxinum number of patient count allowed in this consultationHour
+      currentPatientCount:
+        type: integer
+        format: int32
+        description: Current number of patient count in this consultationHour
+  Appointment:
+    type: object
+    properties:
+      appointmentId:
+        type: integer
+        format: int64
+        description: Id of Appointment from server
+      beginDate:
+        type: string
+        format: date-time
+        description: Start date of the ConsultationHour
+      endDate:
+        type: string
+        format: date-time
+        description: End date of the ConsultationHour
+      room:
+        type: string
+        description: Room of the ConsultationHour
+      doctorsName:
+        type: string
+        description: Doctors name who goint to holf the ConsultationHour
+      complaints:
+        type: string
+        description: Complaint of the patient
+      userName:
+        type: string
+        description: Username of the patient
+      consultationHourId:
+        type: integer
+        format: int64
+        description: Id of ConsultationHour from server
+      departmentId:
+        type: integer
+        format: int64
+        description: Id of Department
+      consultationTypeId:
+        type: integer
+        format: int64
+        description: Id of ConsultationHourType from server
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
