@@ -10,11 +10,11 @@ import javax.validation.constraints.*;
 /**
  * ConsultationHourSearch
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T21:36:14.400Z")
 
 public class ConsultationHourSearch   {
-  @JsonProperty("departmentName")
-  private String departmentName = null;
+  @JsonProperty("departmentId")
+  private String departmentId = null;
 
   @JsonProperty("typeId")
   private Long typeId = null;
@@ -25,22 +25,22 @@ public class ConsultationHourSearch   {
   @JsonProperty("endDate")
   private DateTime endDate = null;
 
-  public ConsultationHourSearch departmentName(String departmentName) {
-    this.departmentName = departmentName;
+  public ConsultationHourSearch departmentId(String departmentId) {
+    this.departmentId = departmentId;
     return this;
   }
 
    /**
-   * Department's name
-   * @return departmentName
+   * Department's id
+   * @return departmentId
   **/
-  @ApiModelProperty(value = "Department's name")
-  public String getDepartmentName() {
-    return departmentName;
+  @ApiModelProperty(value = "Department's id")
+  public String getDepartmentId() {
+    return departmentId;
   }
 
-  public void setDepartmentName(String departmentName) {
-    this.departmentName = departmentName;
+  public void setDepartmentId(String departmentId) {
+    this.departmentId = departmentId;
   }
 
   public ConsultationHourSearch typeId(Long typeId) {
@@ -107,7 +107,7 @@ public class ConsultationHourSearch   {
       return false;
     }
     ConsultationHourSearch consultationHourSearch = (ConsultationHourSearch) o;
-    return Objects.equals(this.departmentName, consultationHourSearch.departmentName) &&
+    return Objects.equals(this.departmentId, consultationHourSearch.departmentId) &&
         Objects.equals(this.typeId, consultationHourSearch.typeId) &&
         Objects.equals(this.beginDate, consultationHourSearch.beginDate) &&
         Objects.equals(this.endDate, consultationHourSearch.endDate);
@@ -115,7 +115,7 @@ public class ConsultationHourSearch   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(departmentName, typeId, beginDate, endDate);
+    return Objects.hash(departmentId, typeId, beginDate, endDate);
   }
 
   @Override
@@ -123,7 +123,7 @@ public class ConsultationHourSearch   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConsultationHourSearch {\n");
     
-    sb.append("    departmentName: ").append(toIndentedString(departmentName)).append("\n");
+    sb.append("    departmentId: ").append(toIndentedString(departmentId)).append("\n");
     sb.append("    typeId: ").append(toIndentedString(typeId)).append("\n");
     sb.append("    beginDate: ").append(toIndentedString(beginDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");

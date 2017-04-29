@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 /**
  * ConsultationHour
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T21:36:14.400Z")
 
 public class ConsultationHour   {
   @JsonProperty("consultationHourId")
@@ -24,6 +24,12 @@ public class ConsultationHour   {
 
   @JsonProperty("endDate")
   private DateTime endDate = null;
+
+  @JsonProperty("room")
+  private String room = null;
+
+  @JsonProperty("doctorsName")
+  private String doctorsName = null;
 
   @JsonProperty("maxPatientCount")
   private Integer maxPatientCount = null;
@@ -103,6 +109,42 @@ public class ConsultationHour   {
     this.endDate = endDate;
   }
 
+  public ConsultationHour room(String room) {
+    this.room = room;
+    return this;
+  }
+
+   /**
+   * Room of the ConsultationHour
+   * @return room
+  **/
+  @ApiModelProperty(value = "Room of the ConsultationHour")
+  public String getRoom() {
+    return room;
+  }
+
+  public void setRoom(String room) {
+    this.room = room;
+  }
+
+  public ConsultationHour doctorsName(String doctorsName) {
+    this.doctorsName = doctorsName;
+    return this;
+  }
+
+   /**
+   * Doctors name who goint to holf the ConsultationHour
+   * @return doctorsName
+  **/
+  @ApiModelProperty(value = "Doctors name who goint to holf the ConsultationHour")
+  public String getDoctorsName() {
+    return doctorsName;
+  }
+
+  public void setDoctorsName(String doctorsName) {
+    this.doctorsName = doctorsName;
+  }
+
   public ConsultationHour maxPatientCount(Integer maxPatientCount) {
     this.maxPatientCount = maxPatientCount;
     return this;
@@ -153,13 +195,15 @@ public class ConsultationHour   {
         Objects.equals(this.typeId, consultationHour.typeId) &&
         Objects.equals(this.beginDate, consultationHour.beginDate) &&
         Objects.equals(this.endDate, consultationHour.endDate) &&
+        Objects.equals(this.room, consultationHour.room) &&
+        Objects.equals(this.doctorsName, consultationHour.doctorsName) &&
         Objects.equals(this.maxPatientCount, consultationHour.maxPatientCount) &&
         Objects.equals(this.currentPatientCount, consultationHour.currentPatientCount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(consultationHourId, typeId, beginDate, endDate, maxPatientCount, currentPatientCount);
+    return Objects.hash(consultationHourId, typeId, beginDate, endDate, room, doctorsName, maxPatientCount, currentPatientCount);
   }
 
   @Override
@@ -171,6 +215,8 @@ public class ConsultationHour   {
     sb.append("    typeId: ").append(toIndentedString(typeId)).append("\n");
     sb.append("    beginDate: ").append(toIndentedString(beginDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
+    sb.append("    room: ").append(toIndentedString(room)).append("\n");
+    sb.append("    doctorsName: ").append(toIndentedString(doctorsName)).append("\n");
     sb.append("    maxPatientCount: ").append(toIndentedString(maxPatientCount)).append("\n");
     sb.append("    currentPatientCount: ").append(toIndentedString(currentPatientCount)).append("\n");
     sb.append("}");
