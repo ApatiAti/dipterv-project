@@ -60,6 +60,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throw new UserNotFoundException();
 		}
 		
+		hasAppointmentInConsultationHour(consultationHour, currentUser);
+		
+		Appointment buildAppointment = new Appointment();
+		buildAppointment.setConsultationHour(consultationHour);
+		
+		return buildAppointment;
+	}
+
+
+	public void hasAppointmentInConsultationHour(ConsultationHour consultationHour, User currentUser)
+			throws AlreadyHaveAppointmentException {
 		Hibernate.initialize(consultationHour.getAppointments());
 		
 		List<Appointment> appointments = consultationHour.getAppointments();
@@ -71,17 +82,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 				}
 			}
 		}
-		
-		Appointment buildAppointment = new Appointment();
-		buildAppointment.setConsultationHour(consultationHour);
-		
-		return buildAppointment;
 	}
 
 
 	@Override
 	@Transactional
-	public void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
+	public void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName) throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		User currentUser = userRepository.findByUsername(currentUserName);
 		
 		if (currentUser == null){
@@ -94,7 +100,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	@Transactional
-	public void saveAppointment(String complaints, long consultationHourId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException{
+	public void saveAppointment(String complaints, long consultationHourId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException{
 		Appointment appointment = new Appointment();
 		appointment.setComplaints(complaints);
 		
@@ -109,7 +115,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Override
 	@Transactional
-	public void saveAppointment(String complaints, long consultationHourId, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException {
+	public void saveAppointment(String complaints, long consultationHourId, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException {
 		Appointment appointment = new Appointment();
 		appointment.setComplaints(complaints);
 		
@@ -123,10 +129,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Transactional
-	private void saveAppointment(Appointment appointment, long consultationHourId, User user) throws ConsultationHourNotFound, BasicServiceException {
+	private void saveAppointment(Appointment appointment, long consultationHourId, User user) throws ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
 		
 		consultationHourService.validateConsultationHour(consultationHour);
+		
+		hasAppointmentInConsultationHour(consultationHour, user);
 		
 		appointment.setConsultationHour(consultationHour);
 		appointment.setPatient(user);

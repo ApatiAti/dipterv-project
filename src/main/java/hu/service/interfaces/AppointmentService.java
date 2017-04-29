@@ -34,7 +34,7 @@ public interface AppointmentService {
 	 * @throws BasicServiceException
 	 */
 	void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName)
-			throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException;
+			throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException;
 
 	/**
 	 * Appointement mentése. A beteg akihez tartozni fog az időpont az éppen aktuálisan bejelentkezett felhasználó
@@ -44,7 +44,7 @@ public interface AppointmentService {
 	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
 	 * @throws BasicServiceException
 	 */
-	void saveAppointment(String complaints, long longValue) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException;
+	void saveAppointment(String complaints, long longValue) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException;
 	
 	/**
 	 * Appointement mentése
@@ -55,7 +55,7 @@ public interface AppointmentService {
 	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
 	 * @throws BasicServiceException
 	 */
-	void saveAppointment(String complaints, long longValue, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException;
+	void saveAppointment(String complaints, long longValue, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException;
 	
 	/**
 	 * Megadott felhasználó összes Appointementjét visszaadja

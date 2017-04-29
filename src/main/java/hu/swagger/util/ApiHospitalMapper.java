@@ -88,9 +88,8 @@ public class ApiHospitalMapper {
 		apiObject.setComplaints(appointment.getComplaints());
 		apiObject.setPatientName(appointment.getPatient().getUsername());
 		apiObject.setConsultationHourId(consultationHour.getId());
-		//departmentid
-		//consultationtype id
-		
+		apiObject.setDepartmentId(consultationHour.getDepartment().getId());
+		apiObject.setConsultationTypeId(consultationHour.getType().getId());		
 		
 		return apiObject;
 	}
