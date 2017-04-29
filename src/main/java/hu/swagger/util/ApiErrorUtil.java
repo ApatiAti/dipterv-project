@@ -7,7 +7,7 @@ import io.swagger.model.Error;
 
 public class ApiErrorUtil {
 
-	public static final Error createErrorFromException(Exception e){
+	public static Error createErrorFromException(Exception e){
 		Error error = new Error();
 		error.setMessage(e.getMessage());
 		error.setCode(getErrorCodeByException(e));
@@ -15,7 +15,7 @@ public class ApiErrorUtil {
 		return error;
 	}
 	
-	private static Long getErrorCodeByException(Exception e) {
+	private static Integer getErrorCodeByException(Exception e) {
 		if (e instanceof AuthorizationException){
 			return ApiErrorCode.AUTHORIZATION.getCode();
 		}

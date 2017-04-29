@@ -101,7 +101,7 @@ public class AppointmentController extends BaseController {
 		} catch (ConsultationHourNotFound  | UserNotFoundException e) {
 			String errorString = "A megadott paraméterek nem megfelelőek.";
 			errorLogAndDisplayMessage(redirectAttributes, errorString, e);
-		} catch (BasicServiceException e) {
+		} catch (BasicServiceException | AlreadyHaveAppointmentException e) {
 			errorLogAndDisplayMessage(redirectAttributes, e);
 		}
 		

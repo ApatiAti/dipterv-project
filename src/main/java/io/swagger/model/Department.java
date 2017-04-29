@@ -8,20 +8,20 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.ConsultationHourType;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
+import javax.validation.constraints.*;
 /**
  * Department
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class Department   {
+  @JsonProperty("departmentId")
   private Long departmentId = null;
 
+  @JsonProperty("departmentName")
   private String departmentName = null;
 
+  @JsonProperty("consultationHourType")
   private List<ConsultationHourType> consultationHourType = new ArrayList<ConsultationHourType>();
 
   public Department departmentId(Long departmentId) {
@@ -30,10 +30,10 @@ public class Department   {
   }
 
    /**
-   * Id of department
+   * Id of department from server
    * @return departmentId
   **/
-  @ApiModelProperty(value = "Id of department")
+  @ApiModelProperty(value = "Id of department from server")
   public Long getDepartmentId() {
     return departmentId;
   }

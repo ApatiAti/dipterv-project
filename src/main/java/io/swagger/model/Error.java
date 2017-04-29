@@ -5,23 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
-
+import javax.validation.constraints.*;
 /**
  * Error
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class Error   {
-  private Long code = null;
+  @JsonProperty("code")
+  private Integer code = null;
 
+  @JsonProperty("message")
   private String message = null;
 
+  @JsonProperty("fields")
   private String fields = null;
 
-  public Error code(Long code) {
+  public Error code(Integer code) {
     this.code = code;
     return this;
   }
@@ -31,11 +31,11 @@ public class Error   {
    * @return code
   **/
   @ApiModelProperty(value = "")
-  public Long getCode() {
+  public Integer getCode() {
     return code;
   }
 
-  public void setCode(Long code) {
+  public void setCode(Integer code) {
     this.code = code;
   }
 

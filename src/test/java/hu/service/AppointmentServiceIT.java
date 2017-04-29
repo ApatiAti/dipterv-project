@@ -78,7 +78,7 @@ public class AppointmentServiceIT {
 	}
 	
 	@Test
-	public void saveAppointmentSuccess() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
+	public void saveAppointmentSuccess() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.PATIENT_2_USERNAME;
 		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
 		
@@ -104,7 +104,7 @@ public class AppointmentServiceIT {
 	}
 
 	@Test(expected = ConsultationHourNotFound.class)
-	public void saveAppointmentNoConsultationHour() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
+	public void saveAppointmentNoConsultationHour() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.PATIENT_2_USERNAME;
 		Long consultationHourId = TestDbConstans.NOT_EXISTING_CONSULTATION_HOUR_ID;
 		
@@ -120,7 +120,7 @@ public class AppointmentServiceIT {
 	}
 	
 	@Test(expected = UserNotFoundException.class)
-	public void saveAppointmentNoUser() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
+	public void saveAppointmentNoUser() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.NOT_EXISTING_PATIENT_USERNAME;
 		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
 		
@@ -135,7 +135,7 @@ public class AppointmentServiceIT {
 	}
 	
 	@Test(expected = BasicServiceException.class)
-	public void saveAppointmentWrongDate() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException {
+	public void saveAppointmentWrongDate() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.PATIENT_2_USERNAME;
 		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
 		
@@ -148,17 +148,5 @@ public class AppointmentServiceIT {
 		
 		appointmentService.saveAppointment(appointment, consultationHourId, patientUsername);
 	}
-	
-	/**
-	 * Appointement mentése
-	 * @param appointment 	Mentendő Appointment
-	 * @param consultationHourId 	ConsultationHour amihez szeretnénk menteni
-	 * @param currentUserName	Épp bejelentkezett felhasználó
-	 * @throws ConsultationHourNotFound		Nem létezik a megadott consultationHourId-hoz entitás
-	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
-	 * @throws BasicServiceException
-	 */
-//	void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName)
-//			throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException;
 
 }

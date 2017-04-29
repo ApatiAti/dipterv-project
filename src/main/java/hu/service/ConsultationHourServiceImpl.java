@@ -158,7 +158,7 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 	public void validateConsultationHour(ConsultationHour consultationHour)
 			throws ConsultationHourNotFound, BasicServiceException {
 		if (consultationHour == null) {
-			throw new ConsultationHourNotFound();
+			throw new ConsultationHourNotFound("Nem létezik ilyen időpont!");
 		}
 		if (consultationHour.getBeginDate().before(new Date())) {
 			throw new BasicServiceException("Nen lehet időpontot foglalni a kezdés után!");

@@ -6,22 +6,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
-
-
-
-
+import javax.validation.constraints.*;
 /**
  * ConsultationHourSearch
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class ConsultationHourSearch   {
+  @JsonProperty("departmentName")
   private String departmentName = null;
 
-  private Long type = null;
+  @JsonProperty("typeId")
+  private Long typeId = null;
 
+  @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
+  @JsonProperty("endDate")
   private DateTime endDate = null;
 
   public ConsultationHourSearch departmentName(String departmentName) {
@@ -42,22 +43,22 @@ public class ConsultationHourSearch   {
     this.departmentName = departmentName;
   }
 
-  public ConsultationHourSearch type(Long type) {
-    this.type = type;
+  public ConsultationHourSearch typeId(Long typeId) {
+    this.typeId = typeId;
     return this;
   }
 
    /**
-   * Type of the consultationHour
-   * @return type
+   * Id of the consultationHourType
+   * @return typeId
   **/
-  @ApiModelProperty(value = "Type of the consultationHour")
-  public Long getType() {
-    return type;
+  @ApiModelProperty(value = "Id of the consultationHourType")
+  public Long getTypeId() {
+    return typeId;
   }
 
-  public void setType(Long type) {
-    this.type = type;
+  public void setTypeId(Long typeId) {
+    this.typeId = typeId;
   }
 
   public ConsultationHourSearch beginDate(DateTime beginDate) {
@@ -107,14 +108,14 @@ public class ConsultationHourSearch   {
     }
     ConsultationHourSearch consultationHourSearch = (ConsultationHourSearch) o;
     return Objects.equals(this.departmentName, consultationHourSearch.departmentName) &&
-        Objects.equals(this.type, consultationHourSearch.type) &&
+        Objects.equals(this.typeId, consultationHourSearch.typeId) &&
         Objects.equals(this.beginDate, consultationHourSearch.beginDate) &&
         Objects.equals(this.endDate, consultationHourSearch.endDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(departmentName, type, beginDate, endDate);
+    return Objects.hash(departmentName, typeId, beginDate, endDate);
   }
 
   @Override
@@ -123,7 +124,7 @@ public class ConsultationHourSearch   {
     sb.append("class ConsultationHourSearch {\n");
     
     sb.append("    departmentName: ").append(toIndentedString(departmentName)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    typeId: ").append(toIndentedString(typeId)).append("\n");
     sb.append("    beginDate: ").append(toIndentedString(beginDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
     sb.append("}");
