@@ -192,9 +192,9 @@ definitions:
   ConsultationHourSearch:
     type: object
     properties:
-      departmentName:
+      departmentId:
         type: string
-        description: Department's name
+        description: Department's id
       typeId:
         type: integer
         format: int64
@@ -226,6 +226,12 @@ definitions:
         type: string
         format: date-time
         description: End date of the ConsultationHour
+      room:
+        type: string
+        description: Room of the ConsultationHour
+      doctorsName:
+        type: string
+        description: Doctors name who goint to holf the ConsultationHour
       maxPatientCount:
         type: integer
         format: int32
