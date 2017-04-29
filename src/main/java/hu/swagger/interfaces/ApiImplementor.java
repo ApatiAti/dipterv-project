@@ -4,8 +4,6 @@ import org.springframework.http.ResponseEntity;
 
 import io.swagger.model.Appointment;
 import io.swagger.model.ConsultationHourSearch;
-import io.swagger.model.LoginRequest;
-import io.swagger.model.LoginResponse;
 
 public interface ApiImplementor {
 
@@ -13,7 +11,7 @@ public interface ApiImplementor {
                    
 	ResponseEntity<Object> apiAppointmentGet(Long appointmentId);
                    
-	ResponseEntity<Object> apiAppointmentListGet(Long userId);
+	ResponseEntity<Object> apiAppointmentListGet();
 	               
 	ResponseEntity<Object> apiAppointmentPost(Appointment request);
                    
@@ -22,6 +20,4 @@ public interface ApiImplementor {
 	ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request);
                    
 	ResponseEntity<Object> apiGetDepartmentsAndTypesGet();
-
-	ResponseEntity<LoginResponse> apiLoginPost(LoginRequest email);
 }

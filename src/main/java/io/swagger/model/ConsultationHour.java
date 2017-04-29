@@ -6,44 +6,47 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
-
-
-
-
+import javax.validation.constraints.*;
 /**
  * ConsultationHour
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class ConsultationHour   {
-  private Long id = null;
+  @JsonProperty("consultationHourId")
+  private Long consultationHourId = null;
 
+  @JsonProperty("typeId")
   private Long typeId = null;
 
+  @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
+  @JsonProperty("endDate")
   private DateTime endDate = null;
 
+  @JsonProperty("maxPatientCount")
   private Integer maxPatientCount = null;
 
+  @JsonProperty("currentPatientCount")
   private Integer currentPatientCount = null;
 
-  public ConsultationHour id(Long id) {
-    this.id = id;
+  public ConsultationHour consultationHourId(Long consultationHourId) {
+    this.consultationHourId = consultationHourId;
     return this;
   }
 
    /**
    * Id of ConsultationHour
-   * @return id
+   * @return consultationHourId
   **/
   @ApiModelProperty(value = "Id of ConsultationHour")
-  public Long getId() {
-    return id;
+  public Long getConsultationHourId() {
+    return consultationHourId;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setConsultationHourId(Long consultationHourId) {
+    this.consultationHourId = consultationHourId;
   }
 
   public ConsultationHour typeId(Long typeId) {
@@ -52,10 +55,10 @@ public class ConsultationHour   {
   }
 
    /**
-   * Id of ConsultationHourType
+   * Id of ConsultationHourType from server
    * @return typeId
   **/
-  @ApiModelProperty(value = "Id of ConsultationHourType")
+  @ApiModelProperty(value = "Id of ConsultationHourType from server")
   public Long getTypeId() {
     return typeId;
   }
@@ -146,7 +149,7 @@ public class ConsultationHour   {
       return false;
     }
     ConsultationHour consultationHour = (ConsultationHour) o;
-    return Objects.equals(this.id, consultationHour.id) &&
+    return Objects.equals(this.consultationHourId, consultationHour.consultationHourId) &&
         Objects.equals(this.typeId, consultationHour.typeId) &&
         Objects.equals(this.beginDate, consultationHour.beginDate) &&
         Objects.equals(this.endDate, consultationHour.endDate) &&
@@ -156,7 +159,7 @@ public class ConsultationHour   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, typeId, beginDate, endDate, maxPatientCount, currentPatientCount);
+    return Objects.hash(consultationHourId, typeId, beginDate, endDate, maxPatientCount, currentPatientCount);
   }
 
   @Override
@@ -164,7 +167,7 @@ public class ConsultationHour   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConsultationHour {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    consultationHourId: ").append(toIndentedString(consultationHourId)).append("\n");
     sb.append("    typeId: ").append(toIndentedString(typeId)).append("\n");
     sb.append("    beginDate: ").append(toIndentedString(beginDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");

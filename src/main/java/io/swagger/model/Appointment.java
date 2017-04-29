@@ -4,37 +4,48 @@ import java.util.Objects;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import hu.web.util.json.SwaggerDateTimeJsonSerializer;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
-
 /**
  * Appointment
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class Appointment   {
+  @JsonProperty("appointmentId")
   private Long appointmentId = null;
 
   @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
   @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonProperty("endDate")
   private DateTime endDate = null;
 
+  @JsonProperty("room")
   private String room = null;
 
+  @JsonProperty("doctorsName")
   private String doctorsName = null;
 
+  @JsonProperty("complaints")
   private String complaints = null;
 
-  private Long userId = null;
+  @JsonProperty("userName")
+  private String userName = null;
 
+  @JsonProperty("consultationHourId")
   private Long consultationHourId = null;
+
+  @JsonProperty("departmentId")
+  private Long departmentId = null;
+
+  @JsonProperty("consultationTypeId")
+  private Long consultationTypeId = null;
 
   public Appointment appointmentId(Long appointmentId) {
     this.appointmentId = appointmentId;
@@ -42,10 +53,10 @@ public class Appointment   {
   }
 
    /**
-   * Id of Appointment
+   * Id of Appointment from server
    * @return appointmentId
   **/
-  @ApiModelProperty(value = "Id of Appointment")
+  @ApiModelProperty(value = "Id of Appointment from server")
   public Long getAppointmentId() {
     return appointmentId;
   }
@@ -144,22 +155,22 @@ public class Appointment   {
     this.complaints = complaints;
   }
 
-  public Appointment userId(Long userId) {
-    this.userId = userId;
+  public Appointment userName(String userName) {
+    this.userName = userName;
     return this;
   }
 
    /**
-   * Id of the patient
-   * @return userId
+   * Username of the patient
+   * @return userName
   **/
-  @ApiModelProperty(value = "Id of the patient")
-  public Long getUserId() {
-    return userId;
+  @ApiModelProperty(value = "Username of the patient")
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public Appointment consultationHourId(Long consultationHourId) {
@@ -168,16 +179,52 @@ public class Appointment   {
   }
 
    /**
-   * Id of ConsultationHour
+   * Id of ConsultationHour from server
    * @return consultationHourId
   **/
-  @ApiModelProperty(value = "Id of ConsultationHour")
+  @ApiModelProperty(value = "Id of ConsultationHour from server")
   public Long getConsultationHourId() {
     return consultationHourId;
   }
 
   public void setConsultationHourId(Long consultationHourId) {
     this.consultationHourId = consultationHourId;
+  }
+
+  public Appointment departmentId(Long departmentId) {
+    this.departmentId = departmentId;
+    return this;
+  }
+
+   /**
+   * Id of Department
+   * @return departmentId
+  **/
+  @ApiModelProperty(value = "Id of Department")
+  public Long getDepartmentId() {
+    return departmentId;
+  }
+
+  public void setDepartmentId(Long departmentId) {
+    this.departmentId = departmentId;
+  }
+
+  public Appointment consultationTypeId(Long consultationTypeId) {
+    this.consultationTypeId = consultationTypeId;
+    return this;
+  }
+
+   /**
+   * Id of ConsultationHourType from server
+   * @return consultationTypeId
+  **/
+  @ApiModelProperty(value = "Id of ConsultationHourType from server")
+  public Long getConsultationTypeId() {
+    return consultationTypeId;
+  }
+
+  public void setConsultationTypeId(Long consultationTypeId) {
+    this.consultationTypeId = consultationTypeId;
   }
 
 
@@ -196,13 +243,15 @@ public class Appointment   {
         Objects.equals(this.room, appointment.room) &&
         Objects.equals(this.doctorsName, appointment.doctorsName) &&
         Objects.equals(this.complaints, appointment.complaints) &&
-        Objects.equals(this.userId, appointment.userId) &&
-        Objects.equals(this.consultationHourId, appointment.consultationHourId);
+        Objects.equals(this.userName, appointment.userName) &&
+        Objects.equals(this.consultationHourId, appointment.consultationHourId) &&
+        Objects.equals(this.departmentId, appointment.departmentId) &&
+        Objects.equals(this.consultationTypeId, appointment.consultationTypeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appointmentId, beginDate, endDate, room, doctorsName, complaints, userId, consultationHourId);
+    return Objects.hash(appointmentId, beginDate, endDate, room, doctorsName, complaints, userName, consultationHourId, departmentId, consultationTypeId);
   }
 
   @Override
@@ -216,8 +265,10 @@ public class Appointment   {
     sb.append("    room: ").append(toIndentedString(room)).append("\n");
     sb.append("    doctorsName: ").append(toIndentedString(doctorsName)).append("\n");
     sb.append("    complaints: ").append(toIndentedString(complaints)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("    consultationHourId: ").append(toIndentedString(consultationHourId)).append("\n");
+    sb.append("    departmentId: ").append(toIndentedString(departmentId)).append("\n");
+    sb.append("    consultationTypeId: ").append(toIndentedString(consultationTypeId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

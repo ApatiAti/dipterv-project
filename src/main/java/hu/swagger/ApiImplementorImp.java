@@ -22,8 +22,6 @@ import hu.swagger.util.ApiHospitalMapper;
 import io.swagger.model.Appointment;
 import io.swagger.model.ConsultationHourSearch;
 import io.swagger.model.Error;
-import io.swagger.model.LoginRequest;
-import io.swagger.model.LoginResponse;
 
 @Service
 public class ApiImplementorImp implements ApiImplementor {
@@ -65,12 +63,12 @@ public class ApiImplementorImp implements ApiImplementor {
 
 
 	@Override
-	public ResponseEntity<Object> apiAppointmentListGet(Long userId) {
-		logger.debug("call apiAppointmentListGet. Parameters  userId = " + userId.toString());
+	public ResponseEntity<Object> apiAppointmentListGet() {
+		logger.debug("call apiAppointmentListGet. No Parameters");
 		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
-				, "Sikertelen Appointment lista lekérdezés. UserId : " + userId,
+				, "Sikertelen Appointment lista lekérdezés.",
 				() -> {
-					List<hu.model.hospital.Appointment> appointment = appointmentService.getAppointmentByUserId(userId);
+					List<hu.model.hospital.Appointment> appointment = appointmentService.getAppointmentByLoggedUserId();
 					return ApiHospitalMapper.mapAppoinmentListToApi(appointment);
 					}
 				);
@@ -84,7 +82,8 @@ public class ApiImplementorImp implements ApiImplementor {
 				new Callable<Object>() {
 					@Override
 					public Object call() throws Exception {
-						appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId(), request.getUserId());
+//						TODO 
+//						appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId(), request.getUserId());
 						return null;
 					}
 				}
@@ -134,14 +133,6 @@ public class ApiImplementorImp implements ApiImplementor {
 				);
 	}
 
-	@Override
-	public ResponseEntity<LoginResponse> apiLoginPost(LoginRequest email) {
-//		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
-//				, "Sikertelen Appointment lista lekérdezés. "
-//				, () -> ( return null )
-//				);
-		return null;
-	}
 
 	private ResponseEntity<Object> handlingServiceCall(String succesLog, String errorLog, Callable<Object> method){
 		try{
