@@ -10,11 +10,11 @@ import javax.validation.constraints.*;
 /**
  * ConsultationHourSearch
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T21:36:14.400Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T21:43:41.978Z")
 
 public class ConsultationHourSearch   {
   @JsonProperty("departmentId")
-  private String departmentId = null;
+  private Long departmentId = null;
 
   @JsonProperty("typeId")
   private Long typeId = null;
@@ -25,7 +25,7 @@ public class ConsultationHourSearch   {
   @JsonProperty("endDate")
   private DateTime endDate = null;
 
-  public ConsultationHourSearch departmentId(String departmentId) {
+  public ConsultationHourSearch departmentId(Long departmentId) {
     this.departmentId = departmentId;
     return this;
   }
@@ -35,11 +35,11 @@ public class ConsultationHourSearch   {
    * @return departmentId
   **/
   @ApiModelProperty(value = "Department's id")
-  public String getDepartmentId() {
+  public Long getDepartmentId() {
     return departmentId;
   }
 
-  public void setDepartmentId(String departmentId) {
+  public void setDepartmentId(Long departmentId) {
     this.departmentId = departmentId;
   }
 

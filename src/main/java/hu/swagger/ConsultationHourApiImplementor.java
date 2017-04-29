@@ -38,7 +38,7 @@ public class ConsultationHourApiImplementor extends AbstractImplementor implemen
 					public Object call() throws Exception {
 						hu.model.hospital.dto.ConsultationHourSearch seachEntity = ApiHospitalMapper.mapConsultationHourSearchFromApi(request);
 						
-						List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(seachEntity, request.getDepartmentName());
+						List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(seachEntity, request.getDepartmentId());
 						
 						return ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
 					}

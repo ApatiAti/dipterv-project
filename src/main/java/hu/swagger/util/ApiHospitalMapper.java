@@ -41,6 +41,8 @@ public class ApiHospitalMapper {
 				apiObject.setTypeId(consultationHour.getType().getId());
 				apiObject.setBeginDate(beginDateTime);
 				apiObject.setEndDate(endDateTime);
+				apiObject.setRoom(consultationHour.getRoom());
+				apiObject.setDoctorsName(consultationHour.getDoctor().getPersonalData().getName().getFullName());
 				apiObject.setMaxPatientCount(consultationHour.getMaxNumberOfPatient());
 				apiObject.setCurrentPatientCount(consultationHour.getNumberOfAppointment());
 				
