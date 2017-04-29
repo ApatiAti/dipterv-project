@@ -5,7 +5,7 @@ public class AlreadyHaveAppointmentException extends Exception {
 	private Long departmentId;
 
 	public AlreadyHaveAppointmentException(Long departmentId) {
-		super();
+		super("Már van foglalása erre az időpontra");
 		this.departmentId = departmentId;
 	}
 
