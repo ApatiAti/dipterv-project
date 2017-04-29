@@ -65,7 +65,7 @@ public interface AppointmentService {
 	
 	void deleteAppointment(Long appointmentId) throws BasicServiceException, AuthorizationException;
 
-	List<Appointment> getAppointmentByUserId(long longValue) throws AuthorizationException;
+	List<Appointment> getAppointmentByLoggedUserId() throws AuthorizationException;
 
 
 

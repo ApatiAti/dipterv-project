@@ -16,23 +16,19 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+import javax.validation.constraints.*;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 @Api(value = "consultationHourSearch", description = "the consultationHourSearch API")
 public interface ConsultationHourSearchApi {
 
-    @ApiOperation(value = "Search for ConsultationHour", notes = "The consultationHourSearch endpoint returns information about the searched consultationHours ", response = ConsultationHour.class, responseContainer = "List", tags={ "ConsultationHour", })
+    @ApiOperation(value = "Search for ConsultationHour", notes = "The consultationHourSearch endpoint returns information about the searched consultationHours ", response = Object.class, responseContainer = "List", tags={ "ConsultationHour", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "An array of products", response = ConsultationHour.class),
-        @ApiResponse(code = 400, message = "Unexpected error", response = ConsultationHour.class) })
+        @ApiResponse(code = 400, message = "Unexpected error", response = Error.class) })
     @RequestMapping(value = "/consultationHourSearch",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<List<ConsultationHour>> consultationHourSearchPost(
-
-@ApiParam(value = "Search data" ,required=true ) @RequestBody ConsultationHourSearch request
-
-);
+    ResponseEntity<Object> consultationHourSearchPost(@ApiParam(value = "Search data" ,required=true ) @RequestBody ConsultationHourSearch request);
 
 }

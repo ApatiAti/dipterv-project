@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+import javax.validation.constraints.*;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 @Api(value = "getDepartmentsAndTypes", description = "the getDepartmentsAndTypes API")
 public interface GetDepartmentsAndTypesApi {
 
-    @ApiOperation(value = "Get Departments and department's consultationHour's Types", notes = "The DepartmentsAndTypes endpoint returns information about the hospital's departments and about the consultation Hour's tpyes ", response = Department.class, responseContainer = "List", tags={ "Department", })
+    @ApiOperation(value = "Get Departments and department's consultationHour's Types", notes = "The DepartmentsAndTypes endpoint returns information about the hospital's departments and about the consultation Hour's tpyes ", response = Object.class, responseContainer = "List", tags={ "Department", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "An array of products", response = Department.class),
-        @ApiResponse(code = 400, message = "Unexpected error", response = Department.class) })
+        @ApiResponse(code = 400, message = "Unexpected error", response = Error.class) })
     @RequestMapping(value = "/getDepartmentsAndTypes",
         produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<List<Department>> getDepartmentsAndTypesGet();
+        method = RequestMethod.POST)
+    ResponseEntity<Object> getDepartmentsAndTypesPost();
 
 }

@@ -201,7 +201,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
 	@Override
-	public List<Appointment> getAppointmentByUserId(long patientId) throws AuthorizationException {
+	public List<Appointment> getAppointmentByLoggedUserId() throws AuthorizationException {
+		Long patientId = securityService.getCurrentUser().getId();
 		securityService.authorizeOwnerByUserId(patientId);
 		return appointmentRepository.findByPatientId(patientId);
 	}

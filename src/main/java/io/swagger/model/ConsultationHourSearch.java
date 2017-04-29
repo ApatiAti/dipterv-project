@@ -6,22 +6,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
-
-
-
-
+import javax.validation.constraints.*;
 /**
  * ConsultationHourSearch
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-04-20T03:07:35.390+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class ConsultationHourSearch   {
+  @JsonProperty("departmentName")
   private String departmentName = null;
 
+  @JsonProperty("type")
   private Long type = null;
 
+  @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
+  @JsonProperty("endDate")
   private DateTime endDate = null;
 
   public ConsultationHourSearch departmentName(String departmentName) {
