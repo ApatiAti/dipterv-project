@@ -114,7 +114,7 @@ public class ApiHospitalMapper {
 	private static List<io.swagger.model.ConsultationHourType> mapConsultationHourTypeListToApi(List<hu.model.hospital.ConsultationHourType> consultationHourTypeList){
 		List<io.swagger.model.ConsultationHourType> apiConsultationHourTypeList = new ArrayList<>();
 		
-		if (!CollectionUtils.isEmpty(consultationHourTypeList)){
+		if (CollectionUtils.isEmpty(consultationHourTypeList)){
 			return apiConsultationHourTypeList;
 		}
 		
