@@ -101,7 +101,7 @@ public class ApiHospitalMapper {
 		List<io.swagger.model.Department> apiDepartmentList = new ArrayList<>();
 		
 		for (Entry<hu.model.hospital.Department, List<ConsultationHourType>> entry : departmentAndTypes.entrySet()) {
-			io.swagger.model.Department apiDepartment = new Department();
+ 			io.swagger.model.Department apiDepartment = new Department();
 			apiDepartment.setDepartmentId(entry.getKey().getId());
 			apiDepartment.setDepartmentName(entry.getKey().getName());
 			
