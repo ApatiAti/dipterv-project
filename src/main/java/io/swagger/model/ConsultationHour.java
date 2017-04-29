@@ -1,12 +1,16 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
 import org.joda.time.DateTime;
-import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import hu.web.util.json.SwaggerDateTimeJsonDeserializer;
+import hu.web.util.json.SwaggerDateTimeJsonSerializer;
+import io.swagger.annotations.ApiModelProperty;
 /**
  * ConsultationHour
  */
@@ -19,9 +23,13 @@ public class ConsultationHour   {
   @JsonProperty("typeId")
   private Long typeId = null;
 
+  @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonDeserialize(using = SwaggerDateTimeJsonDeserializer.class)
   @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
+  @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonDeserialize(using = SwaggerDateTimeJsonDeserializer.class)
   @JsonProperty("endDate")
   private DateTime endDate = null;
 

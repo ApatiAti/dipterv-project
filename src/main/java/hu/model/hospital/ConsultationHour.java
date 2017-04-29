@@ -133,7 +133,7 @@ public class ConsultationHour implements Serializable {
 		this.type = type;
 	}
 
-	@Formula( value = "( select count(*) FROM ConsultationHour ch INNER JOIN Appointmenton on a.consultationHourId = ch.id where ch.id = id)")
+	@Formula( value = "( select count(*) FROM ConsultationHour ch INNER JOIN Appointment a on a.consultationHourId = ch.id where ch.id = id)")
 	public int getNumberOfAppointment() {
 		return numberOfAppointment;
 	}

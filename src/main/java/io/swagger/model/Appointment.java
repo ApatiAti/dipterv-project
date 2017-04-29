@@ -5,8 +5,10 @@ import java.util.Objects;
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import hu.web.util.json.SwaggerDateTimeJsonDeserializer;
 import hu.web.util.json.SwaggerDateTimeJsonSerializer;
 import io.swagger.annotations.ApiModelProperty;
 /**
@@ -19,10 +21,12 @@ public class Appointment   {
   private Long appointmentId = null;
 
   @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonDeserialize(using = SwaggerDateTimeJsonDeserializer.class)
   @JsonProperty("beginDate")
   private DateTime beginDate = null;
 
   @JsonSerialize(using = SwaggerDateTimeJsonSerializer.class)
+  @JsonDeserialize(using = SwaggerDateTimeJsonDeserializer.class)
   @JsonProperty("endDate")
   private DateTime endDate = null;
 
