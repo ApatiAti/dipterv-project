@@ -258,7 +258,7 @@ definitions:
       complaints:
         type: string
         description: Complaint of the patient
-      userName:
+      patientName:
         type: string
         description: Username of the patient
       consultationHourId:

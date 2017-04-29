@@ -7,17 +7,17 @@ public enum ApiErrorCode {
 	INVALID_CONSULTATION_HOUR(4),
 	;
 	
-	private long code;
+	private int code;
 
-	private ApiErrorCode(long code) {
+	private ApiErrorCode(int code) {
 		this.code = code;
 	}
 
-	public long getCode() {
+	public int getCode() {
 		return code;
 	}
 
-	public void setCode(long code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 

@@ -15,7 +15,7 @@ public class ApiErrorUtil {
 		return error;
 	}
 	
-	private static Long getErrorCodeByException(Exception e) {
+	private static Integer getErrorCodeByException(Exception e) {
 		if (e instanceof AuthorizationException){
 			return ApiErrorCode.AUTHORIZATION.getCode();
 		}

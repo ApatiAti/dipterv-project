@@ -3,9 +3,8 @@ package hu.swagger.interfaces;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.model.Appointment;
-import io.swagger.model.ConsultationHourSearch;
 
-public interface ApiImplementor {
+public interface AppointmentApiInterface {
 
 	ResponseEntity<Object> apiAppointmentDelete(Appointment request);
                    
@@ -16,8 +15,5 @@ public interface ApiImplementor {
 	ResponseEntity<Object> apiAppointmentPost(Appointment request);
                    
 	ResponseEntity<Object> apiAppointmentPut(Appointment request);
-                   
-	ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request);
-                   
-	ResponseEntity<Object> apiGetDepartmentsAndTypesGet();
+
 }

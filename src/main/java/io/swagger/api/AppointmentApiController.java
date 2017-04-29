@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import hu.swagger.interfaces.ApiImplementor;
+import hu.swagger.interfaces.AppointmentApiInterface;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Appointment;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
@@ -20,7 +20,7 @@ import io.swagger.model.Appointment;
 public class AppointmentApiController implements AppointmentApi {
 
 	@Autowired
-	ApiImplementor apiImplementor;
+	AppointmentApiInterface apiImplementor;
 
     public ResponseEntity<Object> appointmentDelete(@ApiParam(value = "Appointment" ,required=true ) @RequestBody Appointment request) {
         // do some magic!

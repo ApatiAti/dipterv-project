@@ -36,6 +36,15 @@ public interface AppointmentService {
 	void saveAppointment(Appointment appointment, Long consultationHourId, String currentUserName)
 			throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException;
 
+	/**
+	 * Appointement mentése. A beteg akihez tartozni fog az időpont az éppen aktuálisan bejelentkezett felhasználó
+	 * @param complaints   A beteg panasza
+	 * @param consultationHourId 	ConsultationHour id-ja, amelyhez szeretnénk menteni
+	 * @throws ConsultationHourNotFound		Nem létezik a megadott consultationHourId-hoz entitás
+	 * @throws UserNotFoundException	Nem létezik a megadott felhasználó
+	 * @throws BasicServiceException
+	 */
+	void saveAppointment(String complaints, long longValue) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException;
 	
 	/**
 	 * Appointement mentése

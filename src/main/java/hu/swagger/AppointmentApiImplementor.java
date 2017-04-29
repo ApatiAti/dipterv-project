@@ -11,31 +11,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import hu.model.hospital.ConsultationHour;
 import hu.model.hospital.ConsultationHourType;
 import hu.service.interfaces.AppointmentService;
-import hu.service.interfaces.ConsultationHourService;
 import hu.service.interfaces.DepartmentService;
-import hu.swagger.interfaces.ApiImplementor;
-import hu.swagger.util.ApiErrorUtil;
+import hu.swagger.interfaces.AppointmentApiInterface;
 import hu.swagger.util.ApiHospitalMapper;
 import io.swagger.model.Appointment;
-import io.swagger.model.ConsultationHourSearch;
-import io.swagger.model.Error;
 
 @Service
-public class ApiImplementorImp implements ApiImplementor {
+public class AppointmentApiImplementor extends AbstractImplementor implements AppointmentApiInterface {
 
-	private static final Logger logger = LoggerFactory.getLogger(ApiImplementorImp.class);
+	static final Logger logger = LoggerFactory.getLogger(AppointmentApiImplementor.class);
 	
 	@Autowired
 	AppointmentService appointmentService;
-	@Autowired
-	ConsultationHourService consultationHourService;
-	@Autowired
-	DepartmentService departmentService;
 	
-	
+	@Override
+	public Logger getLogger(){
+		return logger;
+	}
 	
 	@Override
 	public ResponseEntity<Object> apiAppointmentDelete(Appointment request) {
@@ -82,8 +76,7 @@ public class ApiImplementorImp implements ApiImplementor {
 				new Callable<Object>() {
 					@Override
 					public Object call() throws Exception {
-//						TODO 
-//						appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId(), request.getUserId());
+						appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId());
 						return null;
 					}
 				}
@@ -103,53 +96,5 @@ public class ApiImplementorImp implements ApiImplementor {
 					}
 				});
 	}
-
-	@Override
-	public ResponseEntity<Object> apiConsultationHourSearchPost(ConsultationHourSearch request) {
-		logger.debug("call apiConsultationHourSearchPost. Parameters  ConsultationHourSearch = " + request.toString());
-		return handlingServiceCall("Sikeres ConsultationHour keresés"
-				, "Sikertelen ConsultationHour keresés"
-				, new Callable<Object>() {
-					@Override
-					public Object call() throws Exception {
-						hu.model.hospital.dto.ConsultationHourSearch seachEntity = ApiHospitalMapper.mapConsultationHourSearchFromApi(request);
-						
-						List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(seachEntity, request.getDepartmentName());
-						
-						return ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
-					}
-				});
-	}
-
-	@Override
-	public ResponseEntity<Object> apiGetDepartmentsAndTypesGet() {
-		logger.debug("call apiGetDepartmentsAndTypesGet. No Parameters");
-		return handlingServiceCall("Sikeres Appointment lista lekérdezés"
-				, "Sikertelen Appointment lista lekérdezés."
-				, () -> {
-					Map<hu.model.hospital.Department, List<ConsultationHourType>> departmentAndTypes = departmentService.getAllDepartmentsAndTypesGet();
-					return ApiHospitalMapper.mapDepartmentsAndConsultationHourTypeMapToApi(departmentAndTypes);
-				}
-				);
-	}
-
-
-	private ResponseEntity<Object> handlingServiceCall(String succesLog, String errorLog, Callable<Object> method){
-		try{
-			Object result = method.call();
-			logger.info(succesLog);
-			return new ResponseEntity<Object>(result, HttpStatus.OK);
-		} catch (Exception e){
-			return exceptionHandling(e, errorLog);
-		}
-	}
-	
-	private ResponseEntity<Object> exceptionHandling(Exception e, String logMessage) {
-		Error error = ApiErrorUtil.createErrorFromException(e);
-		
-		logger.error(logMessage , e);
-		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
-	}
-
 	
 }

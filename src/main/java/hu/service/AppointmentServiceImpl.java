@@ -84,6 +84,22 @@ public class AppointmentServiceImpl implements AppointmentService {
 		saveAppointment(appointment, consultationHourId, currentUser);
 	}
 	
+
+	@Override
+	@Transactional
+	public void saveAppointment(String complaints, long consultationHourId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException{
+		Appointment appointment = new Appointment();
+		appointment.setComplaints(complaints);
+		
+		User currentUser = securityService.getCurrentUser();
+		
+		if (currentUser == null){
+			throw new UserNotFoundException();
+		}
+		
+		saveAppointment(appointment, consultationHourId, currentUser);
+	}
+	
 	@Override
 	@Transactional
 	public void saveAppointment(String complaints, long consultationHourId, long userId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException {
@@ -97,7 +113,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		
 		saveAppointment(appointment, consultationHourId, currentUser);
-		
 	}
 
 	@Transactional

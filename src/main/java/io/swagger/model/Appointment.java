@@ -35,8 +35,8 @@ public class Appointment   {
   @JsonProperty("complaints")
   private String complaints = null;
 
-  @JsonProperty("userName")
-  private String userName = null;
+  @JsonProperty("patientName")
+  private String patientName = null;
 
   @JsonProperty("consultationHourId")
   private Long consultationHourId = null;
@@ -155,22 +155,22 @@ public class Appointment   {
     this.complaints = complaints;
   }
 
-  public Appointment userName(String userName) {
-    this.userName = userName;
+  public Appointment patientName(String patientName) {
+    this.patientName = patientName;
     return this;
   }
 
    /**
    * Username of the patient
-   * @return userName
+   * @return patientName
   **/
   @ApiModelProperty(value = "Username of the patient")
-  public String getUserName() {
-    return userName;
+  public String getPatientName() {
+    return patientName;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setPatientName(String patientName) {
+    this.patientName = patientName;
   }
 
   public Appointment consultationHourId(Long consultationHourId) {
@@ -243,7 +243,7 @@ public class Appointment   {
         Objects.equals(this.room, appointment.room) &&
         Objects.equals(this.doctorsName, appointment.doctorsName) &&
         Objects.equals(this.complaints, appointment.complaints) &&
-        Objects.equals(this.userName, appointment.userName) &&
+        Objects.equals(this.patientName, appointment.patientName) &&
         Objects.equals(this.consultationHourId, appointment.consultationHourId) &&
         Objects.equals(this.departmentId, appointment.departmentId) &&
         Objects.equals(this.consultationTypeId, appointment.consultationTypeId);
@@ -251,7 +251,7 @@ public class Appointment   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(appointmentId, beginDate, endDate, room, doctorsName, complaints, userName, consultationHourId, departmentId, consultationTypeId);
+    return Objects.hash(appointmentId, beginDate, endDate, room, doctorsName, complaints, patientName, consultationHourId, departmentId, consultationTypeId);
   }
 
   @Override
@@ -265,7 +265,7 @@ public class Appointment   {
     sb.append("    room: ").append(toIndentedString(room)).append("\n");
     sb.append("    doctorsName: ").append(toIndentedString(doctorsName)).append("\n");
     sb.append("    complaints: ").append(toIndentedString(complaints)).append("\n");
-    sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
+    sb.append("    patientName: ").append(toIndentedString(patientName)).append("\n");
     sb.append("    consultationHourId: ").append(toIndentedString(consultationHourId)).append("\n");
     sb.append("    departmentId: ").append(toIndentedString(departmentId)).append("\n");
     sb.append("    consultationTypeId: ").append(toIndentedString(consultationTypeId)).append("\n");
