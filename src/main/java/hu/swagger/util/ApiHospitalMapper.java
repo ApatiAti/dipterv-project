@@ -48,6 +48,8 @@ public class ApiHospitalMapper {
 				
 				apiList.add(apiObject);
 			}
+			
+			return apiList;
 		}
 		return null;
 	}

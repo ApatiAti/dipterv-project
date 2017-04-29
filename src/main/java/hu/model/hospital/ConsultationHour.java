@@ -133,7 +133,11 @@ public class ConsultationHour implements Serializable {
 		this.type = type;
 	}
 
+<<<<<<< HEAD
 	@Formula( value = "( select count(*) FROM ConsultationHour ch INNER JOIN Appointment a where a.consultationHourId = ch.id and ch.id = id)")
+=======
+	@Formula( value = "( select count(*) FROM ConsultationHour ch INNER JOIN Appointment a on a.consultationHourId = ch.id where ch.id = id)")
+>>>>>>> 9b73615... Fixing DateTime deserialization problems
 	public int getNumberOfAppointment() {
 		return numberOfAppointment;
 	}
