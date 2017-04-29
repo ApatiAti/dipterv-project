@@ -16,7 +16,7 @@ produces:
   - application/json
 paths:
   /getDepartmentsAndTypes:
-    post:
+    get:
       summary: Get Departments and department's consultationHour's Types
       description: |
         The DepartmentsAndTypes endpoint returns information about the hospital's departments and about the consultation Hour's tpyes
