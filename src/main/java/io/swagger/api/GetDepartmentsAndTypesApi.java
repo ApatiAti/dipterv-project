@@ -21,7 +21,7 @@ public interface GetDepartmentsAndTypesApi {
         @ApiResponse(code = 400, message = "Unexpected error", response = Error.class) })
     @RequestMapping(value = "/api/getDepartmentsAndTypes",
         produces = { "application/json" }, 
-        method = RequestMethod.POST)
+        method = RequestMethod.GET)
     ResponseEntity<Object> getDepartmentsAndTypesPost();
 
 }
