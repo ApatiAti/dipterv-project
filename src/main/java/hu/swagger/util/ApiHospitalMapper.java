@@ -24,7 +24,7 @@ public class ApiHospitalMapper {
 		hu.model.hospital.dto.ConsultationHourSearch seachEntity = new hu.model.hospital.dto.ConsultationHourSearch();
 		seachEntity.setStartDate(startDate);
 		seachEntity.setEndDate(endDate);
-		seachEntity.setChTypeId(request.getType());
+		seachEntity.setChTypeId(request.getTypeId());
 		return seachEntity;
 	}
 	
@@ -37,12 +37,12 @@ public class ApiHospitalMapper {
 				DateTime endDateTime = convertDateToDateTime(consultationHour.getEndDate());
 				
 				io.swagger.model.ConsultationHour apiObject = new io.swagger.model.ConsultationHour();
+				apiObject.setConsultationHourId(consultationHour.getId());
+				apiObject.setTypeId(consultationHour.getType().getId());
 				apiObject.setBeginDate(beginDateTime);
 				apiObject.setEndDate(endDateTime);
-				apiObject.setCurrentPatientCount(consultationHour.getNumberOfAppointment());
-				apiObject.setId(consultationHour.getId());
 				apiObject.setMaxPatientCount(consultationHour.getMaxNumberOfPatient());
-				apiObject.setTypeId(consultationHour.getType().getId());
+				apiObject.setCurrentPatientCount(consultationHour.getNumberOfAppointment());
 				
 				apiList.add(apiObject);
 			}
@@ -83,11 +83,14 @@ public class ApiHospitalMapper {
 		apiObject.setAppointmentId(appointment.getId());
 		apiObject.setBeginDate(beginDateTime);
 		apiObject.setEndDate(endDateTime);
-		apiObject.setComplaints(appointment.getComplaints());
-		apiObject.setConsultationHourId(consultationHour.getId());
-		apiObject.setDoctorsName(consultationHour.getDoctor().getPersonalData().getName().getFullName());
 		apiObject.setRoom(consultationHour.getRoom());
-		apiObject.setUserId(appointment.getPatient().getId());
+		apiObject.setDoctorsName(consultationHour.getDoctor().getPersonalData().getName().getFullName());
+		apiObject.setComplaints(appointment.getComplaints());
+		apiObject.setPatientName(appointment.getPatient().getUsername());
+		apiObject.setConsultationHourId(consultationHour.getId());
+		//departmentid
+		//consultationtype id
+		
 		
 		return apiObject;
 	}
