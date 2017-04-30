@@ -151,7 +151,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment findAppointmentById(Long appointmentId) throws AuthorizationException {
 		Appointment appointment = appointmentRepository.findOne(appointmentId);
 		if (appointment != null){
-			securityService.authorizeOwner(appointment);
+			securityService.authorizeOwnerOrDoctor(appointment.getPatient().getUsername());
 		}
 		return appointment;
 	}

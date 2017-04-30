@@ -37,5 +37,7 @@ public interface SecurityService {
 
 	public void authorizeOwner(Appointment a) throws AuthorizationException;
 
-	public void authorizeOwnerByUserId(Long patientId) throws AuthorizationException;;
+	public void authorizeOwnerByUserId(Long patientId) throws AuthorizationException;
+
+	public void authorizeOwnerOrDoctor(String patientUserName) throws AuthorizationException;;
 }
