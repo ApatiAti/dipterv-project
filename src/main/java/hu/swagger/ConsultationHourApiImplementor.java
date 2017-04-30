@@ -40,7 +40,10 @@ public class ConsultationHourApiImplementor extends AbstractImplementor implemen
 						
 						List<ConsultationHour> consultationHourList = consultationHourService.sortConsultationHour(seachEntity, request.getDepartmentId());
 						
-						return ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
+						List<io.swagger.model.ConsultationHour> mapConsultationHourToApi = ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
+						logger.debug("Response of apiConsultationHourSearchPost call" );
+						mapConsultationHourToApi.stream().forEach( apiObject -> logger.debug(apiObject.toString()));
+						return mapConsultationHourToApi;
 					}
 				});
 	}
