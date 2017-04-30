@@ -43,7 +43,6 @@ public class LoginController extends BaseController{
 		return ViewNameHolder.VIEW_LOGIN;
 	}
 	
-	// TODO 403-as oldalt megcsinálni úgy hogy beleiljen a designba
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String get403Page(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

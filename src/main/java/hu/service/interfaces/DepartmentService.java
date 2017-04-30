@@ -1,10 +1,8 @@
 package hu.service.interfaces;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hu.exception.BasicServiceException;
 import hu.model.hospital.ConsultationHourType;
 import hu.model.hospital.Department;
 

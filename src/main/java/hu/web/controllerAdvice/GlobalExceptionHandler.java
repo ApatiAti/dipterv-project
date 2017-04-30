@@ -62,7 +62,6 @@ public class GlobalExceptionHandler {
 		}
 		
 		map.put(ModelKeys.ErrorUrl, builder.toString());
-		setGlobalModelVariables(map);
 		
 		mav.setViewName(ViewNameHolder.VIEW_HOME);
 		
@@ -70,18 +69,5 @@ public class GlobalExceptionHandler {
 		
 		return mav;
 	}
-	
-	public void setGlobalModelVariables(Map<String, Object> model){
-		/* TODO Current User besettelése
-		if (!model.containsKey(ModelKeys.CurrentUser)){
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-			if (principal instanceof UserDetails) {
-				String username = ((UserDetails)principal).getUsername();
-			
-				model.put(ModelKeys.CurrentUser, citizenRepository.findByUsername(username));
-			}
-		}
-		*/
-	}
+
 }

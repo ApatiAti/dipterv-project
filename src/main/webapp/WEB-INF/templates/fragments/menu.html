@@ -20,10 +20,6 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">Hírek (nincs kész)</a>
-					</li>
-					
-					<li>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" > Korházról <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
@@ -31,10 +27,6 @@
 							</li>
 							<li>
 								<a href="#" th:href="@{/department/list}">Osztályok</a>
-							</li>
-							<li>
-<!-- 								<a href="#" th:href="@{/map}">Térkép (nincs kész)</a> -->
-								<a href="#">Térkép (nincs kész)</a>
 							</li>
 						</ul>
 					</li>
@@ -44,9 +36,6 @@
 						<ul class="dropdown-menu">
 							<li>
 								<a href="#" th:href="@{/personalData}">Személyes adataim</a>
-							</li>
-							<li>
-								<a href="#">Beállítások (pl értesítésekről) (nincs kész)</a>
 							</li>
 							<li sec:authorize="hasRole('LIST_MY_APPOINTMENTS')">
 								<a href="#" th:href="@{/myAppointments}">Foglalt időpontjaim</a>
