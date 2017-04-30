@@ -1,7 +1,12 @@
 ﻿ --
 -- Table structure for table user
 --
+<<<<<<< HEAD:src/main/resources/scripts/no_table_test.sql
 ALTER TABLE user ADD password VARCHAR(255);
+=======
+ALTER TABLE users ADD password VARCHAR(255);
+ALTER TABLE user ADD COLUMN enabled SMALLINT(4) NULL DEFAULT '1';
+>>>>>>> 5387da7... Fixing errors:src/main/resources/scripts/insert.sql
 --
 -- Dumping data for table user
 --

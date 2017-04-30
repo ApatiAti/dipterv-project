@@ -18,8 +18,11 @@ public class ApiHospitalMapper {
 
 	public static hu.model.hospital.dto.ConsultationHourSearch mapConsultationHourSearchFromApi(
 			ConsultationHourSearch request) {
-		Date startDate = request.getBeginDate().toDate();
-		Date endDate = request.getEndDate().toDate();
+		DateTime beginDate = request.getBeginDate();
+		DateTime endDate2 = request.getEndDate();
+		
+		Date startDate = beginDate != null ? beginDate.toDate() : null;
+		Date endDate = endDate2 != null ? endDate2.toDate() : null;
 		
 		hu.model.hospital.dto.ConsultationHourSearch seachEntity = new hu.model.hospital.dto.ConsultationHourSearch();
 		seachEntity.setStartDate(startDate);
