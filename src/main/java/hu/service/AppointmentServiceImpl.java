@@ -100,7 +100,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	@Transactional
-	public void saveAppointment(String complaints, long consultationHourId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException{
+	public Appointment saveAppointment(String complaints, long consultationHourId) throws UserNotFoundException, ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException{
 		Appointment appointment = new Appointment();
 		appointment.setComplaints(complaints);
 		
@@ -110,7 +110,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throw new UserNotFoundException();
 		}
 		
-		saveAppointment(appointment, consultationHourId, currentUser);
+		return saveAppointment(appointment, consultationHourId, currentUser);
 	}
 	
 	@Override
@@ -129,7 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Transactional
-	private void saveAppointment(Appointment appointment, long consultationHourId, User user) throws ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException {
+	private Appointment saveAppointment(Appointment appointment, long consultationHourId, User user) throws ConsultationHourNotFound, BasicServiceException, AlreadyHaveAppointmentException {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHour(consultationHourId);
 		
 		consultationHourService.validateConsultationHour(consultationHour);
@@ -139,7 +139,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointment.setConsultationHour(consultationHour);
 		appointment.setPatient(user);
 		
-		appointmentRepository.save(appointment);
+		return appointmentRepository.save(appointment);
 	}
 	
 	@Override

@@ -94,6 +94,8 @@ paths:
       responses:
         200:
           description: Succes
+          schema:
+            $ref: '#/definitions/Appointment'
         400:
           description: Unexpected error
           schema:
@@ -145,7 +147,7 @@ paths:
       description: |
         With this endpoint user can delete an existing appointment
       parameters:
-      - name: request
+      - name: appointmentId
         in: query
         description: AppointmentId
         required: true
