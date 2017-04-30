@@ -2,6 +2,7 @@
 -- Table structure for table user
 --
 ALTER TABLE users ADD password VARCHAR(255);
+ALTER TABLE user ADD COLUMN enabled SMALLINT(4) NULL DEFAULT '1';
 --
 -- Dumping data for table user
 --
