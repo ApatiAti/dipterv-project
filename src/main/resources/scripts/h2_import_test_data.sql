@@ -11,7 +11,7 @@ CREATE TABLE "appointment" (
   KEY "FK_4ebl9nenv1fvfkd701kkgkm7n" ("consultationHourId"),
   KEY "FK_csvqd5dbp74ksv9ulxqhxh8tl" ("patientId"),
   CONSTRAINT "FK_4ebl9nenv1fvfkd701kkgkm7n" FOREIGN KEY ("consultationHourId") REFERENCES "consultationhour" ("id"),
-  CONSTRAINT "FK_csvqd5dbp74ksv9ulxqhxh8tl" FOREIGN KEY ("patientId") REFERENCES "user" ("id")
+  CONSTRAINT "FK_csvqd5dbp74ksv9ulxqhxh8tl" FOREIGN KEY ("patientId") REFERENCES "users" ("id")
 );
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE "consultationhour" (
   KEY "FK_9mjm21mex8lbtig2708niw4u" ("doctorId"),
   KEY "FK_5l5bjgiha6hg7yvvf3k84y7j6" ("consultationhour_tpyeid"),
   CONSTRAINT "FK_5l5bjgiha6hg7yvvf3k84y7j6" FOREIGN KEY ("consultationhour_tpyeid") REFERENCES "consultationhour_type" ("id"),
-  CONSTRAINT "FK_9mjm21mex8lbtig2708niw4u" FOREIGN KEY ("doctorId") REFERENCES "user" ("id"),
+  CONSTRAINT "FK_9mjm21mex8lbtig2708niw4u" FOREIGN KEY ("doctorId") REFERENCES "users" ("id"),
   CONSTRAINT "FK_nayp8fp0247jx0klf2xo5tu5f" FOREIGN KEY ("departmentId") REFERENCES "department" ("id")
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE "department" (
   "departmentHead" bigint(20) NOT NULL,
   PRIMARY KEY ("id"),
   KEY "FK_lgmat3uhaph3jsatcdv235pfo" ("departmentHead"),
-  CONSTRAINT "FK_lgmat3uhaph3jsatcdv235pfo" FOREIGN KEY ("departmentHead") REFERENCES "user" ("id")
+  CONSTRAINT "FK_lgmat3uhaph3jsatcdv235pfo" FOREIGN KEY ("departmentHead") REFERENCES "users" ("id")
 );
 
 
@@ -108,7 +108,7 @@ CREATE TABLE "department_to_user" (
   "iduser" bigint(20) NOT NULL,
   UNIQUE KEY "UK_ax7nfmbmiqp3n17j0b6ibavp0" ("iduser"),
   KEY "FK_msy3yqjsrf1x684gkhnbisiwu" ("idDepartment"),
-  CONSTRAINT "FK_ax7nfmbmiqp3n17j0b6ibavp0" FOREIGN KEY ("iduser") REFERENCES "user" ("id"),
+  CONSTRAINT "FK_ax7nfmbmiqp3n17j0b6ibavp0" FOREIGN KEY ("iduser") REFERENCES "users" ("id"),
   CONSTRAINT "FK_msy3yqjsrf1x684gkhnbisiwu" FOREIGN KEY ("idDepartment") REFERENCES "department" ("id")
 );
 
@@ -157,7 +157,7 @@ CREATE TABLE "documentfile_appointment" (
   KEY "FK_laexvpu0446punt9tu0lv04wf" ("idDocument"),
   CONSTRAINT "FK_8u44gswn5odopkxd5ejeqr9ay" FOREIGN KEY ("idAppointment") REFERENCES "appointment" ("id"),
   CONSTRAINT "FK_laexvpu0446punt9tu0lv04wf" FOREIGN KEY ("idDocument") REFERENCES "documentfile" ("id"),
-  CONSTRAINT "FK_nfaav8t8enq1is5x48hxtlpw" FOREIGN KEY ("createUserId") REFERENCES "user" ("id")
+  CONSTRAINT "FK_nfaav8t8enq1is5x48hxtlpw" FOREIGN KEY ("createUserId") REFERENCES "users" ("id")
 );
 
 --
@@ -284,7 +284,7 @@ CREATE TABLE "personaldata" (
   PRIMARY KEY ("id"),
   UNIQUE KEY "UK_e88793fceior6jijuccfp5n95" ("tajNumber"),
   KEY "FK_xxx5hd9h9o8lb3q4g7rdj3da" ("userId"),
-  CONSTRAINT "FK_xxx5hd9h9o8lb3q4g7rdj3da" FOREIGN KEY ("userId") REFERENCES "user" ("id")
+  CONSTRAINT "FK_xxx5hd9h9o8lb3q4g7rdj3da" FOREIGN KEY ("userId") REFERENCES "users" ("id")
 );
 
 --
@@ -392,10 +392,10 @@ INSERT INTO "rolegroup" VALUES (2,'DOCTOR','Orvos');
 INSERT INTO "rolegroup" VALUES (3,'ADMIN','Adminstrator');
 
 --
--- Table structure for table "user"
+-- Table structure for table "users"
 --
 
-CREATE TABLE "user" (
+CREATE TABLE "users" (
   "id" bigint(20) NOT NULL,
   "email" varchar(255) NOT NULL,
   "username" varchar(255) NOT NULL,
@@ -410,10 +410,10 @@ CREATE TABLE "user" (
 -- Dumping data for table "user"
 --
 
-INSERT INTO "user" VALUES (1,'a@a.a','beteg1',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO "user" VALUES (2,'c@c.c','beteg2',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO "user" VALUES (3,'b@b.b','orvos',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO "user" VALUES (4,'d@d.d','orvos2',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO "users" VALUES (1,'a@a.a','beteg1',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO "users" VALUES (2,'c@c.c','beteg2',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO "users" VALUES (3,'b@b.b','orvos',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO "users" VALUES (4,'d@d.d','orvos2',1,'$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 
 --
 -- Table structure for table "user_to_rolegroup"
@@ -425,7 +425,7 @@ CREATE TABLE "user_to_rolegroup" (
   KEY "FK_l8sqkpfvuusr7mpxtw6ngu3hq" ("idUser"),
   KEY "FK_3f73tvuw1odxx8lmvfy6osfec" ("idRoleGroup"),
   CONSTRAINT "FK_3f73tvuw1odxx8lmvfy6osfec" FOREIGN KEY ("idRoleGroup") REFERENCES "rolegroup" ("id"),
-  CONSTRAINT "FK_l8sqkpfvuusr7mpxtw6ngu3hq" FOREIGN KEY ("idUser") REFERENCES "user" ("id")
+  CONSTRAINT "FK_l8sqkpfvuusr7mpxtw6ngu3hq" FOREIGN KEY ("idUser") REFERENCES "users" ("id")
 );
 
 --

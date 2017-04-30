@@ -14,7 +14,7 @@
 
  delete from user_to_rolegroup;
  delete from personalData;
- delete from user;
+ delete from users;
 
  delete from role_to_rolegroup;
  delete from rolegroup;
@@ -22,8 +22,8 @@
 
 
 -- == [Tábla módosítások]== --
--- ALTER TABLE user ADD COLUMN enabled TINYINT(4) NULL DEFAULT '1';
--- ALTER TABLE user ADD COLUMN password VARCHAR(255) NULL;
+ ALTER TABLE users ADD COLUMN enabled TINYINT(4) NULL DEFAULT '1';
+ ALTER TABLE users ADD COLUMN password VARCHAR(255) NULL;
 
 -- == [Lakosok és vezetők beállítása]== --
 SET @patient1 = 'beteg1';
@@ -44,24 +44,24 @@ SET @consultationHour_type_name5 ='Lúdtalp vizsgálat';
 SET @consultationHour_type_name6 ='Protézis műtét';
 
 -- jelszó = admindocumentfile_appointmentdepartment_to_userdepartment_to_userdocumentfile_appointment
-insert into user (email, username, password) values('a@a.a', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-insert into user (email, username, password) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-insert into user (email, username, password) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-insert into user (email, username, password) values('d@d.d', @doctor2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into users (email, username, password) values('a@a.a', @patient1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into users (email, username, password) values('c@c.c', @patient2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into users (email, username, password) values('b@b.b', @doctor1, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+insert into users (email, username, password) values('d@d.d', @doctor2, '$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
      
-insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Kiss Piroska', 'Teszt', 'User1', null, '06301234567', '123456789', (select id from user where username = @patient1));
-insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Valami Ember', 'Teszt', 'User2', null, '06301234567', '123466789', (select id from user where username = @patient2));
-insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Teszt Admina', 'Admin', 'Béla', 'DR', '06301234123', '345556789', (select id from user where username = @doctor1));
-insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Doktor Róbertina', 'Doctor', 'József', 'DR', '06301234123', '345555289', (select id from user where username = @doctor2));
+insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Kiss Piroska', 'Teszt', 'User1', null, '06301234567', '123456789', (select id from users where username = @patient1));
+insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Valami Ember', 'Teszt', 'User2', null, '06301234567', '123466789', (select id from users where username = @patient2));
+insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Teszt Admina', 'Admin', 'Béla', 'DR', '06301234123', '345556789', (select id from users where username = @doctor1));
+insert into personalData(birthDate, motherName, firstName, lastName, title, phoneNumber, tajNumber, userId) values(STR_TO_DATE('1985-10-10', '%Y-%m-%d') , 'Doktor Róbertina', 'Doctor', 'József', 'DR', '06301234123', '345555289', (select id from users where username = @doctor2));
 
 
 -- ==[ Korházi osztályok beállítása ]==--
 
-insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId1 ,'Szemészet', '36305248967', 'IB025', (select id from user where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
-insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId2 ,'Ortopédia', '36305345967', 'IB025', (select id from user where username = @doctor2), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId1 ,'Szemészet', '36305248967', 'IB025', (select id from users where username = @doctor1), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+insert into department(id, name, phoneNumber, place, departmentHead, description) values ( @departmentId2 ,'Ortopédia', '36305345967', 'IB025', (select id from users where username = @doctor2), 'óóóóLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
                          
-insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor1));
-insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from user where username = @doctor2));
+insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from users where username = @doctor1));
+insert into department_to_user(idDepartment, idUser) values (@departmentId1, (select id from users where username = @doctor2));
 
 
 -- ==[ Fogadó óra típusok ]==--
@@ -109,11 +109,11 @@ insert into documenttype_to_consultationhourtype(consultationHourTypeId, documen
 
 
 -- ==[ Fogadó órák insertje ]==--
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from user where username = @doctor1));
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2), (select id from user where username = @doctor2));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from users where username = @doctor1));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2), (select id from users where username = @doctor2));
 
 -- ==[ Időpont foglalások]
-insert into appointment(complaints, consultationHourId, patientId) values ('Fáj a szemem', @consultationHourId1, (select id from user where username = @patient1));
+insert into appointment(complaints, consultationHourId, patientId) values ('Fáj a szemem', @consultationHourId1, (select id from users where username = @patient1));
 
 -- ==[ jogosultságok és szerepkörök létrehozása]== --
 insert into role (code, description) values ('ROLE_USER', 'Egyszerű bejelentkezett felhasználói jog');
@@ -178,7 +178,7 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_DEPARTMENT'));
 
 -- ==[ szerepkör beállítása 'Teszt user1' citizenhez ]==--
-insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from user where username = @patient1), (select id from rolegroup where code = 'COMMON_USER'));
-insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from user where username = @patient2), (select id from rolegroup where code = 'COMMON_USER'));
-insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from user where username = @doctor1), (select id from rolegroup where code = 'DOCTOR'));
-insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from user where username = @doctor2), (select id from rolegroup where code = 'DOCTOR'));
+insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from users where username = @patient1), (select id from rolegroup where code = 'COMMON_USER'));
+insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from users where username = @patient2), (select id from rolegroup where code = 'COMMON_USER'));
+insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from users where username = @doctor1), (select id from rolegroup where code = 'DOCTOR'));
+insert into user_to_rolegroup (iduser, idRoleGroup)  value ( (select id from users where username = @doctor2), (select id from rolegroup where code = 'DOCTOR'));

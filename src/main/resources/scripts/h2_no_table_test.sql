@@ -3,15 +3,16 @@
 --
 
 ALTER TABLE users ADD password VARCHAR(255);
-ALTER TABLE user ADD COLUMN enabled SMALLINT(4) NULL DEFAULT '1';
+ALTER TABLE users ADD COLUMN enabled TINYINT(4) NULL DEFAULT '1';
+
 --
 -- Dumping data for table user
 --
 
-INSERT INTO user(id, username, email, password) VALUES (1,'beteg1','a@a.a','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (2,'beteg2','c@c.c','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (3,'orvos' ,'b@b.b','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
-INSERT INTO user(id, username, email, password) VALUES (4,'orvos2','d@d.d','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (1,'beteg1','a@a.a','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (2,'beteg2','c@c.c','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (3,'orvos' ,'b@b.b','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
+INSERT INTO users(id, username, email, password) VALUES (4,'orvos2','d@d.d','$2a$10$03s4NFWv7Yz70.vKFMUsru.k3ARYzBxNxm/SeW.ZsBGJUAEGCbgre');
 
 
 --

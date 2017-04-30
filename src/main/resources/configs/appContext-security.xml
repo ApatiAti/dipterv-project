@@ -48,26 +48,26 @@
 				        delete-cookies="JSESSIONID"
 				        invalidate-session="true" />
  
- 		<sec:intercept-url pattern="/department/[departmentId]" access="hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')" />
- 		<sec:intercept-url pattern="/department" access="hasRole('MODIFY_DEPARTMENT')" method="POST" />
- 		<sec:intercept-url pattern="/consultationHour" access="hasRole('CREATE_CONSULTATION_HOUR')" method="POST" />
+<!--  		<sec:intercept-url pattern="/department/[departmentId]" access="hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')" /> -->
+<!--  		<sec:intercept-url pattern="/department" access="hasRole('MODIFY_DEPARTMENT')" method="POST" /> -->
+<!--  		<sec:intercept-url pattern="/consultationHour" access="hasRole('CREATE_CONSULTATION_HOUR')" method="POST" /> -->
  		
- 		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
+<!--  		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" /> -->
  
-		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
-		<sec:intercept-url pattern="/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" />
+<!-- 		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" /> -->
+<!-- 		<sec:intercept-url pattern="/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" /> -->
 		
-		<sec:intercept-url pattern="/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" />
-		<sec:intercept-url pattern="/myAppointments**" access="hasRole('LIST_MY_APPOINTMENTS')" />
-		<sec:intercept-url pattern="/appointment/**" access="hasRole('VIEW_APPOINTMENT')" />
-		<sec:intercept-url pattern="/{consultationHourId}/appointment/create**" access="hasRole('CREATE_APPOINTMENT')" />
-		<sec:intercept-url pattern="/appointment/modify/**" access="hasRole('MODIFY_APPOINTMENT')" />
-		<sec:intercept-url pattern="/appointment/delete**" access="hasRole('CANCEL_APPOINTMENT')" />
+<!-- 		<sec:intercept-url pattern="/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" /> -->
+<!-- 		<sec:intercept-url pattern="/myAppointments**" access="hasRole('LIST_MY_APPOINTMENTS')" /> -->
+<!-- 		<sec:intercept-url pattern="/appointment/**" access="hasRole('VIEW_APPOINTMENT')" /> -->
+<!-- 		<sec:intercept-url pattern="/{consultationHourId}/appointment/create**" access="hasRole('CREATE_APPOINTMENT')" /> -->
+<!-- 		<sec:intercept-url pattern="/appointment/modify/**" access="hasRole('MODIFY_APPOINTMENT')" /> -->
+<!-- 		<sec:intercept-url pattern="/appointment/delete**" access="hasRole('CANCEL_APPOINTMENT')" /> -->
 		
-		<sec:intercept-url pattern="/getDocument**" access="hasRole('UPLOAD_DOCUMENT')" />
-		<sec:intercept-url pattern="/uploadDocuments/**" access="hasRole('DOWNLOAD_DOCUMENT')" />
+<!-- 		<sec:intercept-url pattern="/getDocument**" access="hasRole('UPLOAD_DOCUMENT')" /> -->
+<!-- 		<sec:intercept-url pattern="/uploadDocuments/**" access="hasRole('DOWNLOAD_DOCUMENT')" /> -->
 		
-		<sec:intercept-url pattern="/personalDataEdit**" access="hasRole('MODIFY_PERSONAL_DATA')" />
+<!-- 		<sec:intercept-url pattern="/personalDataEdit**" access="hasRole('MODIFY_PERSONAL_DATA')" /> -->
 		 
 
 		<sec:intercept-url pattern="/login**" access="permitAll()" />
@@ -83,8 +83,8 @@
 		<sec:authentication-provider>
 			<sec:password-encoder ref="bcyritEncoder" />
 			<sec:jdbc-user-service data-source-ref="dataSource" 
-		 		users-by-username-query="select c.username,c.password,c.enabled from user c where c.username=?"
-		 		authorities-by-username-query="select c.username, r.code from user c , user_to_rolegroup u_t_rg , rolegroup rg , role_to_rolegroup r_t_rg , role r where c.username = ? and c.id = u_t_rg.idUser and u_t_rg.idRoleGroup = rg.id and rg.id = r_t_rg.idRoleGroup and r_t_rg.idRole = r.id" />
+		 		users-by-username-query="select c.username,c.password,c.enabled from users c where c.username=?"
+		 		authorities-by-username-query="select c.username, r.code from users c , user_to_rolegroup u_t_rg , rolegroup rg , role_to_rolegroup r_t_rg , role r where c.username = ? and c.id = u_t_rg.idUser and u_t_rg.idRoleGroup = rg.id and rg.id = r_t_rg.idRoleGroup and r_t_rg.idRole = r.id" />
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 
