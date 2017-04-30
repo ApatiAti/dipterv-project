@@ -13,6 +13,7 @@ import hu.model.hospital.ConsultationHourType;
 import hu.service.interfaces.DepartmentService;
 import hu.swagger.interfaces.DepartmentApiInterface;
 import hu.swagger.util.ApiHospitalMapper;
+import io.swagger.model.Department;
 
 @Service
 public class DepartmentApiImplementor extends AbstractImplementor implements DepartmentApiInterface{
@@ -34,7 +35,11 @@ public class DepartmentApiImplementor extends AbstractImplementor implements Dep
 				, "Sikertelen Appointment lista lekérdezés."
 				, () -> {
 					Map<hu.model.hospital.Department, List<ConsultationHourType>> departmentAndTypes = departmentService.getAllDepartmentsAndTypesGet();
-					return ApiHospitalMapper.mapDepartmentsAndConsultationHourTypeMapToApi(departmentAndTypes);
+
+					List<Department> mapDepartmentsAndConsultationHourTypeMapToApi = ApiHospitalMapper.mapDepartmentsAndConsultationHourTypeMapToApi(departmentAndTypes);
+					logger.debug("Response of apiGetDepartmentsAndTypesGet call" );
+					mapDepartmentsAndConsultationHourTypeMapToApi.stream().forEach(item -> logger.debug(item.toString()));
+					return mapDepartmentsAndConsultationHourTypeMapToApi;
 				}
 				);
 	}
