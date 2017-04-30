@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import hu.model.hospital.ConsultationHour;
 import hu.service.interfaces.ConsultationHourService;
@@ -42,10 +43,10 @@ public class ConsultationHourApiImplementor extends AbstractImplementor implemen
 						
 						List<io.swagger.model.ConsultationHour> mapConsultationHourToApi = ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
 						logger.debug("Response of apiConsultationHourSearchPost call" );
-						if (mapConsultationHourToApi != null){
-							mapConsultationHourToApi.stream().forEach( apiObject -> logger.debug(apiObject.toString()));
-						} else {
+						if (CollectionUtils.isEmpty(mapConsultationHourToApi)){
 							logger.debug("response : null");
+						} else {
+							mapConsultationHourToApi.stream().forEach( apiObject -> logger.debug(apiObject.toString()));
 						}
 						return mapConsultationHourToApi;
 					}
