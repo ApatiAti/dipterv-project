@@ -38,7 +38,7 @@ public class DepartmentApiImplementor extends AbstractImplementor implements Dep
 
 					List<Department> mapDepartmentsAndConsultationHourTypeMapToApi = ApiHospitalMapper.mapDepartmentsAndConsultationHourTypeMapToApi(departmentAndTypes);
 					logger.debug("Response of apiGetDepartmentsAndTypesGet call" );
-					mapDepartmentsAndConsultationHourTypeMapToApi.stream().forEach(item -> logger.debug(item.toString()));
+					logResultCollection(mapDepartmentsAndConsultationHourTypeMapToApi);
 					return mapDepartmentsAndConsultationHourTypeMapToApi;
 				}
 				);

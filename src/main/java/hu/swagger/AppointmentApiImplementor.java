@@ -1,7 +1,6 @@
 package hu.swagger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.slf4j.Logger;
@@ -11,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import hu.model.hospital.ConsultationHourType;
 import hu.service.interfaces.AppointmentService;
-import hu.service.interfaces.DepartmentService;
 import hu.swagger.interfaces.AppointmentApiInterface;
 import hu.swagger.util.ApiHospitalMapper;
 import io.swagger.model.Appointment;
@@ -50,7 +47,10 @@ public class AppointmentApiImplementor extends AbstractImplementor implements Ap
 		return handlingServiceCall("Sikeres Appointment lekérdezés", "Sikertelen Appointment lekérdezés. Id : " + appointmentId,
 				() -> { 
 					hu.model.hospital.Appointment appointment = appointmentService.findAppointmentById(appointmentId);
-					return ApiHospitalMapper.mapAppoinmentToApi(appointment);
+					Appointment mapAppoinmentToApi = ApiHospitalMapper.mapAppoinmentToApi(appointment);
+					logger.debug("apiAppointmentGet response");
+					logger.debug(mapAppoinmentToApi != null ? mapAppoinmentToApi.toString() : "null");
+					return mapAppoinmentToApi;
 				}
 				);
 	}
@@ -63,7 +63,11 @@ public class AppointmentApiImplementor extends AbstractImplementor implements Ap
 				, "Sikertelen Appointment lista lekérdezés.",
 				() -> {
 					List<hu.model.hospital.Appointment> appointment = appointmentService.getAppointmentByLoggedUserId();
-					return ApiHospitalMapper.mapAppoinmentListToApi(appointment);
+					List<Appointment> mapAppoinmentListToApi = ApiHospitalMapper.mapAppoinmentListToApi(appointment);
+					logger.debug("apiAppointmentListGet response");
+					logResultCollection(mapAppoinmentListToApi);
+					
+					return mapAppoinmentListToApi;
 					}
 				);
 	}
