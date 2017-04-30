@@ -146,11 +146,11 @@ paths:
         With this endpoint user can delete an existing appointment
       parameters:
       - name: request
-        in: body
-        description: Appointment
+        in: query
+        description: AppointmentId
         required: true
-        schema:
-          $ref: '#/definitions/Appointment'
+        type: integer
+        format: int64
       tags:
         - Appointment
       responses:

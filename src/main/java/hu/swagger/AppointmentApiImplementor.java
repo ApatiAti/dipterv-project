@@ -29,15 +29,15 @@ public class AppointmentApiImplementor extends AbstractImplementor implements Ap
 	}
 	
 	@Override
-	public ResponseEntity<Object> apiAppointmentDelete(Appointment request) {
-		logger.debug("call apiAppointmentDelete. Parameters  Appointment = " + request.toString());
+	public ResponseEntity<Object> apiAppointmentDelete(Long appointmentId) {
+		logger.debug("call apiAppointmentDelete. Parameters  AppointmentId = " + appointmentId.toString());
 		try {
-			appointmentService.deleteAppointment(request.getAppointmentId());
+			appointmentService.deleteAppointment(appointmentId);
 			
 			logger.info("Sikeres Appointment törlés");
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} catch (Exception e) {
-			return exceptionHandling(e, "Sikertelen Appointment törlés. Id : " + request.getAppointmentId());
+			return exceptionHandling(e, "Sikertelen Appointment törlés. Id : " + appointmentId);
 		}
 	}
 

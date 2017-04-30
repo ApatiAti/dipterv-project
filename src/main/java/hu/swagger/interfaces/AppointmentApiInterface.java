@@ -6,7 +6,7 @@ import io.swagger.model.Appointment;
 
 public interface AppointmentApiInterface {
 
-	ResponseEntity<Object> apiAppointmentDelete(Appointment request);
+	ResponseEntity<Object> apiAppointmentDelete(Long appointmentId);
                    
 	ResponseEntity<Object> apiAppointmentGet(Long appointmentId);
                    
