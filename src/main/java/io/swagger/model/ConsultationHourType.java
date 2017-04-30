@@ -1,19 +1,16 @@
 package io.swagger.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
 /**
  * ConsultationHourType
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
 
 public class ConsultationHourType   {
-  @JsonProperty("id")
-  private Long id = null;
 
   @JsonProperty("consultationTypeid")
   private Long consultationTypeid = null;
@@ -21,23 +18,6 @@ public class ConsultationHourType   {
   @JsonProperty("name")
   private String name = null;
 
-  public ConsultationHourType id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Id of ConsultationHourType
-   * @return id
-  **/
-  @ApiModelProperty(value = "Id of ConsultationHourType")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public ConsultationHourType consultationTypeid(Long consultationTypeid) {
     this.consultationTypeid = consultationTypeid;
@@ -85,22 +65,19 @@ public class ConsultationHourType   {
       return false;
     }
     ConsultationHourType consultationHourType = (ConsultationHourType) o;
-    return Objects.equals(this.id, consultationHourType.id) &&
-        Objects.equals(this.consultationTypeid, consultationHourType.consultationTypeid) &&
+    return Objects.equals(this.consultationTypeid, consultationHourType.consultationTypeid) &&
         Objects.equals(this.name, consultationHourType.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, consultationTypeid, name);
+    return Objects.hash(consultationTypeid, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConsultationHourType {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    consultationTypeid: ").append(toIndentedString(consultationTypeid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");

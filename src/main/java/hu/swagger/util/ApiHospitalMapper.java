@@ -140,7 +140,7 @@ public class ApiHospitalMapper {
 	public static io.swagger.model.ConsultationHourType mapConsultationHourTypeToApi(
 			hu.model.hospital.ConsultationHourType consultationHourType) {
 		io.swagger.model.ConsultationHourType apiConsultationHourType = new io.swagger.model.ConsultationHourType();
-		apiConsultationHourType.setId(consultationHourType.getId());
+		apiConsultationHourType.setConsultationTypeid(consultationHourType.getId());
 		apiConsultationHourType.setName(consultationHourType.getName());
 		return apiConsultationHourType;
 	}
