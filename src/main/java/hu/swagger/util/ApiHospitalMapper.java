@@ -32,9 +32,9 @@ public class ApiHospitalMapper {
 	}
 	
 	public static List<io.swagger.model.ConsultationHour> mapConsultationHourToApi(List<ConsultationHour> consultationHourList) {
+		List<io.swagger.model.ConsultationHour> apiList = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(consultationHourList)){
-			List<io.swagger.model.ConsultationHour> apiList = new ArrayList<>();
-			
+						
 			for (ConsultationHour consultationHour : consultationHourList) {
 				DateTime beginDateTime = convertDateToDateTime(consultationHour.getBeginDate());
 				DateTime endDateTime = convertDateToDateTime(consultationHour.getEndDate());
@@ -51,10 +51,9 @@ public class ApiHospitalMapper {
 				
 				apiList.add(apiObject);
 			}
-			
-			return apiList;
 		}
-		return null;
+		
+		return apiList;
 	}
 
 	public static DateTime convertDateToDateTime(Date beginDate) {
