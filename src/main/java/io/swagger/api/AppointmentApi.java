@@ -27,7 +27,7 @@ public interface AppointmentApi {
     @RequestMapping(value = "/api/appointment",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "appointmentId", required = true) Long request);
+    ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "appointmentId", required = true) Long appointmentId);
 
 
     @ApiOperation(value = "Get appointment", notes = "With this endpoint user can get an existing appointment with it's id ", response = Object.class, tags={ "Appointment", })

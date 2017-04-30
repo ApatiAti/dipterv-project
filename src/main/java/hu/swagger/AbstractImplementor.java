@@ -44,5 +44,9 @@ public abstract class AbstractImplementor {
 	}
 
 	public abstract Logger getLogger();
+
+	public void logResultObject(Object item) {
+		getLogger().debug(item != null ? item.toString() : "null");
+	}
 	
 }

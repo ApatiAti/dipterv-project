@@ -49,12 +49,11 @@ public class AppointmentApiImplementor extends AbstractImplementor implements Ap
 					hu.model.hospital.Appointment appointment = appointmentService.findAppointmentById(appointmentId);
 					Appointment mapAppoinmentToApi = ApiHospitalMapper.mapAppoinmentToApi(appointment);
 					logger.debug("apiAppointmentGet response");
-					logger.debug(mapAppoinmentToApi != null ? mapAppoinmentToApi.toString() : "null");
+					logResultObject(mapAppoinmentToApi);
 					return mapAppoinmentToApi;
 				}
 				);
 	}
-
 
 	@Override
 	public ResponseEntity<Object> apiAppointmentListGet() {
@@ -80,8 +79,10 @@ public class AppointmentApiImplementor extends AbstractImplementor implements Ap
 				new Callable<Object>() {
 					@Override
 					public Object call() throws Exception {
-						appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId());
-						return null;
+						hu.model.hospital.Appointment savedAppointment = appointmentService.saveAppointment(request.getComplaints(), request.getConsultationHourId());
+						Appointment mapAppoinmentToApi = ApiHospitalMapper.mapAppoinmentToApi(savedAppointment);
+						logResultObject(mapAppoinmentToApi);
+						return mapAppoinmentToApi;
 					}
 				}
 			); 
