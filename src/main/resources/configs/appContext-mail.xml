@@ -40,10 +40,10 @@
 	
 		<!-- MailService-be -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="schoretes@gmail.com" />
-		<property name="password" value="*****" />
+		<property name="host" value="${mail.server.host}" />
+		<property name="port" value="${mail.server.port}" />
+		<property name="username" value="${mail.server.username}" />
+		<property name="password" value="${mail.server.password}" />
 
 		<property name="javaMailProperties">
 			<props>
