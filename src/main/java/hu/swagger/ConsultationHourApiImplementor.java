@@ -42,7 +42,11 @@ public class ConsultationHourApiImplementor extends AbstractImplementor implemen
 						
 						List<io.swagger.model.ConsultationHour> mapConsultationHourToApi = ApiHospitalMapper.mapConsultationHourToApi(consultationHourList);
 						logger.debug("Response of apiConsultationHourSearchPost call" );
-						mapConsultationHourToApi.stream().forEach( apiObject -> logger.debug(apiObject.toString()));
+						if (mapConsultationHourToApi != null){
+							mapConsultationHourToApi.stream().forEach( apiObject -> logger.debug(apiObject.toString()));
+						} else {
+							logger.debug("response : null");
+						}
 						return mapConsultationHourToApi;
 					}
 				});
