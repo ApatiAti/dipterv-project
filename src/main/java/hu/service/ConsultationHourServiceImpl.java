@@ -83,6 +83,8 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 
 	@Override
 	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
+		logger.debug("searchEntity.startEnd : " + searchEntity.getStartDate().toString());
+		logger.debug("searchEntity.beginEnd : " + searchEntity.getEndDate().toString());
 		if (searchEntity != null) {
 			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(departmentId, searchEntity.getStartDate(),
 					searchEntity.getEndDate(), searchEntity.getChTypeId());

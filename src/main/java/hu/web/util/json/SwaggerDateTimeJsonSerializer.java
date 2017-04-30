@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +21,10 @@ public class SwaggerDateTimeJsonSerializer extends JsonSerializer<DateTime> {
 	@Override
 	public void serialize(DateTime value, JsonGenerator jgen, SerializerProvider provider)
 			throws IOException, JsonProcessingException {
+		
+		if (value == null){
+			return;
+		}
 		
 		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		String dateString = dtf.print(value);

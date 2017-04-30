@@ -150,7 +150,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Appointment findAppointmentById(Long appointmentId) throws AuthorizationException {
 		Appointment appointment = appointmentRepository.findOne(appointmentId);
-		securityService.authorizeOwner(appointment);
+		if (appointment != null){
+			securityService.authorizeOwner(appointment);
+		}
 		return appointment;
 	}
 
