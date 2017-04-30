@@ -62,7 +62,8 @@ public class SecurityServiceImpl implements SecurityService{
 		
 	}
 
-	private void authorizeOwnerOrDoctor(String patientUserName) throws AuthorizationException {
+	@Override
+	public void authorizeOwnerOrDoctor(String patientUserName) throws AuthorizationException {
 		User currentUser = getCurrentUser();
 		if (!currentUser.getUsername().equals(patientUserName)){
 			
