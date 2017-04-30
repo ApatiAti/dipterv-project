@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.model.Appointment;
 import io.swagger.model.Error;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-29T11:37:00.219Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-04-30T19:21:17.373Z")
 
 @Api(value = "appointment", description = "the appointment API")
 public interface AppointmentApi {
@@ -27,7 +27,7 @@ public interface AppointmentApi {
     @RequestMapping(value = "/api/appointment",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Object> appointmentDelete(@ApiParam(value = "Appointment" ,required=true ) @RequestBody Appointment request);
+    ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "request", required = true) Long request);
 
 
     @ApiOperation(value = "Get appointment", notes = "With this endpoint user can get an existing appointment with it's id ", response = Object.class, tags={ "Appointment", })

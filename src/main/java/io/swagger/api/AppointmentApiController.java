@@ -1,11 +1,8 @@
 package io.swagger.api;
 
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,13 +19,11 @@ public class AppointmentApiController implements AppointmentApi {
 	@Autowired
 	AppointmentApiInterface apiImplementor;
 
-    public ResponseEntity<Object> appointmentDelete(@ApiParam(value = "Appointment" ,required=true ) @RequestBody Appointment request) {
-        // do some magic!
+    public ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "request", required = true) Long request) {
         return apiImplementor.apiAppointmentDelete(request);
     }
 
     public ResponseEntity<Object> appointmentGet( @NotNull @ApiParam(value = "Appointment", required = true) @RequestParam(value = "appointmentId", required = true) Long appointmentId) {
-        // do some magic!
     	return apiImplementor.apiAppointmentGet(appointmentId);
     }
 
