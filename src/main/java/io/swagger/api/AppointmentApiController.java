@@ -19,8 +19,8 @@ public class AppointmentApiController implements AppointmentApi {
 	@Autowired
 	AppointmentApiInterface apiImplementor;
 
-    public ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "request", required = true) Long request) {
-        return apiImplementor.apiAppointmentDelete(request);
+    public ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "appointmentId", required = true) Long appointmentId) {
+        return apiImplementor.apiAppointmentDelete(appointmentId);
     }
 
     public ResponseEntity<Object> appointmentGet( @NotNull @ApiParam(value = "Appointment", required = true) @RequestParam(value = "appointmentId", required = true) Long appointmentId) {
