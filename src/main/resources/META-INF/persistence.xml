@@ -21,16 +21,13 @@
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
-			<!-- Ez kell ide nem elég a jetty-s jetty-env.xml-ben leirni a connection-t mert
-			különben nem fog jól csatlakozni a DB-hez -->
-			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
 			
-<!-- 			<property name="hibernate.hbm2ddl.import_files" value="scripts/import.sql" /> -->
-<!-- 			<property name="hibernate.hbm2ddl.auto" value="update" /> -->
-<!-- 			<property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
-			<property name="hibernate.show_sql" value="true" />
+<!-- 			<property name="hibernate.hbm2ddl.import_files" value="scripts/mysql_clean_import.sql" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>
 </persistence>
