@@ -62,18 +62,25 @@ public class MailServiceImpl implements MailService {
 			return;
 		}
 		try{
-		    final Context ctx = new Context();
+			logger.debug("Email küldése megkezdése.");
+			final Context ctx = new Context();
 		    ctx.setVariables(model);
 
 		    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
 		    final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, UTF_8);
 		    message.setSubject(emailType.getEmailSubject());
+		    logger.debug("Email tárgy: {}", emailType.getEmailSubject());
 		    
 		    boolean isTestServer = env.getProperty(EnviromentConstans.IS_TEST_SERVER, Boolean.class, true);
-			if (Boolean.TRUE.equals(isTestServer)){
-		    	message.setTo(env.getProperty(EnviromentConstans.MAIL_SERVIC_DEFAULT_EMAIL));
+			
+		    if (Boolean.TRUE.equals(isTestServer)){
+		    	
+		    	String emailTo = env.getProperty(EnviromentConstans.MAIL_SERVIC_DEFAULT_EMAIL);
+				message.setTo(emailTo);
+		    	logger.debug("Címzet : {}", emailTo );
 		    } else {
 		    	message.setTo(to);
+		    	logger.debug("Címzet : {}", to );
 		    }
 		    
 		    // HTML üzenet létrehozása Thymeleaf-fel
@@ -82,6 +89,7 @@ public class MailServiceImpl implements MailService {
 	
 		    addFooterImage(message);
 	
+		    logger.debug("Email kiküldése.");
 		    this.mailSender.send(mimeMessage);
 		    
 		} catch (MailException | MessagingException | IOException e) {
