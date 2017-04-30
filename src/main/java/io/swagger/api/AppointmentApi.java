@@ -27,7 +27,7 @@ public interface AppointmentApi {
     @RequestMapping(value = "/api/appointment",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "request", required = true) Long request);
+    ResponseEntity<Object> appointmentDelete( @NotNull @ApiParam(value = "AppointmentId", required = true) @RequestParam(value = "appointmentId", required = true) Long request);
 
 
     @ApiOperation(value = "Get appointment", notes = "With this endpoint user can get an existing appointment with it's id ", response = Object.class, tags={ "Appointment", })
@@ -52,7 +52,7 @@ public interface AppointmentApi {
 
     @ApiOperation(value = "Post appointment", notes = "With this endpoint user can create a new appointment ", response = Object.class, tags={ "Appointment", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Succes", response = Void.class),
+        @ApiResponse(code = 200, message = "Succes", response = Appointment.class),
         @ApiResponse(code = 400, message = "Unexpected error", response = Error.class) })
     @RequestMapping(value = "/api/appointment",
         produces = { "application/json" }, 
