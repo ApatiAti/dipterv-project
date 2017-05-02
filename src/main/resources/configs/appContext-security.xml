@@ -55,7 +55,7 @@
  		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
  
 		<sec:intercept-url pattern="/{departmentId}/consultationHour/List**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
-		<sec:intercept-url pattern="/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')" />
+		<sec:intercept-url pattern="/{departmentId}/consultationHour/**" access="hasRole('VIEW_CONSULTATION_HOUR')" />
 		
 <!-- 		<sec:intercept-url pattern="/{departmentId}/consultationHour**" access="hasRole('CREATE_CONSULTATION_HOUR')" /> -->
 		

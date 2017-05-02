@@ -65,7 +65,7 @@
 								th:href="@{/appointment/create(chId=__*{id}__)}"
 								th:if="*{beginDate >= #dates.createNow()}"> Foglalás </a>
 
-							<a class="btn btn-info" href="#" sec:authorize="hasRole('VIEW_CONSULTATION_HOUR_APPOINTMENTS')"
+							<a class="btn btn-info" href="#"
 								th:href="@{/__${department.id}__/consultationHour/__*{id}__}"> Megtekintés</a>
 								
 							<!--csak orvos/admin kell hozzá role is  -->
