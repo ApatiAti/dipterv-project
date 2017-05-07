@@ -85,14 +85,19 @@ public class ConsultationHourDetailsController extends BaseController {
 	/**
 	 * A kapott ConsoltationHour módosítása 
 	 */
-	@RequestMapping(value = "/consultationHour/edit", method=RequestMethod.POST)
+	@RequestMapping(value = "/{departmentId}/consultationHour/edit", method=RequestMethod.POST)
 	public String modifyConsultationHour(Map<String, Object> model
+			, @PathVariable Long departmentId
 			, @Valid ConsultationHour consultationHour, BindingResult bindingResult
 			, RedirectAttributes redirectAttributes){
 
 		boolean hasError = handleValidationErrors(bindingResult, model);
 		if (hasError){
 			errorLogAndDisplayMessage(redirectAttributes);
+			Department department = new Department();
+			department.setId(departmentId);
+			consultationHour.setDepartment(department);
+			redirectAttributes.addFlashAttribute(ModelKeys.ConsultationHour, consultationHour);
 			return ViewNameHolder.redirectToConsultationHourDetailsModify(consultationHour);
 		}
 		
@@ -113,6 +118,6 @@ public class ConsultationHourDetailsController extends BaseController {
 		ConsultationHour consultationHour = consultationHourService.findConsultationHourWithAppointment(consultationHourId);
 		
 		addConsultationTypesToModel(model, departmentId, consultationHourService);
-		model.put(ModelKeys.ConsultationHour, consultationHour);
+		model.putIfAbsent(ModelKeys.ConsultationHour, consultationHour);
 	}
 }
