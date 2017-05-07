@@ -19,16 +19,16 @@ import hu.model.document.enums.DocumentTypeEnum;
 public class DocumentFileValidatorFactory {
 	
 	@Autowired
-	List<DocumentFileValidator> validatorList;
+	private List<DocumentFileValidator> validatorList;
 	
 	@Autowired
-	DefaultDocumentFileValidator defaultValidator;
+	private DefaultDocumentFileValidator defaultValidator;
 	
 	private static final Map<DocumentTypeEnum, DocumentFileValidator> validatorCache = new HashMap<>();
 	
 	
 	@PostConstruct
-	public void initValidatorCache(){
+	protected void initValidatorCache(){
 		for (DocumentFileValidator validator : validatorList){
 			DocumentTypeEnum support = validator.getSupport();
 			if (support != null){

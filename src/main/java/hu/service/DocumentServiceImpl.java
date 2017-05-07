@@ -80,9 +80,9 @@ public class DocumentServiceImpl implements DocumentService{
 				if (documentType != null){
 					DocumentFileValidator documentumTypeValidator = documentFileValidatorFactory.getDocumentFileValidator(documentType.getTypeName());
 					
-					String errorMessage = documentumTypeValidator.validate(appointment, file, fileName, documentType);
+					boolean validat = documentumTypeValidator.validate(appointment, file, fileName, documentType);
 				
-					if (errorMessage == null){
+					if (validat){
 				
 						DocumentFile doc = createNewDocumentFile(file, fileName, documentType);
 						DocumentFileAppointment docFileApp = createNewDocumentFileAppointment(doc, appointment);
@@ -91,7 +91,7 @@ public class DocumentServiceImpl implements DocumentService{
 						
 						return true;
 					} else {
-						throw new BasicServiceException(errorMessage);
+						throw new BasicServiceException("Hiba történt a validálás során");
 					}
 				} else {
 					throw new BasicServiceException("Nincs ilyen document típus!");
@@ -99,6 +99,9 @@ public class DocumentServiceImpl implements DocumentService{
 			} else {
 				throw new BasicServiceException("Appointment nem található");
 			}
+		} catch ( BasicServiceException e){
+			logger.error("Hiba történt a validálás során", e);
+			throw e;
 		} catch (IOException | AuthorizationException e) {
 			String errorMessage = "Hiba történt a file mentése során";
 			logger.error(errorMessage, e);
