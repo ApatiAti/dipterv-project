@@ -15,6 +15,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import hu.exception.BasicServiceException;
 import hu.exception.ConsultationHourNotFound;
@@ -84,8 +85,8 @@ public class ConsultationHourServiceImpl implements ConsultationHourService {
 	@Override
 	public List<ConsultationHour> sortConsultationHour(ConsultationHourSearch searchEntity, Long departmentId) {
 		if (searchEntity != null) {
-			logger.debug("searchEntity.startEnd : " + searchEntity.getStartDate().toString());
-			logger.debug("searchEntity.beginEnd : " + searchEntity.getEndDate().toString());
+			logger.debug("searchEntity.startEnd : " + ObjectUtils.nullSafeToString(searchEntity.getStartDate()));
+			logger.debug("searchEntity.beginEnd : " + ObjectUtils.nullSafeToString(searchEntity.getEndDate()));
 			
 			return consultationHourRepository.searchByDepartmentIdAndSearchEntityProperties(departmentId, searchEntity.getStartDate(),
 					searchEntity.getEndDate(), searchEntity.getChTypeId());
