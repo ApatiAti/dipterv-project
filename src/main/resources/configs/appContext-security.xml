@@ -48,7 +48,8 @@
 				        delete-cookies="JSESSIONID"
 				        invalidate-session="true" />
  
- 		<sec:intercept-url pattern="/department/[departmentId]" access="hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')" />
+ 		<sec:intercept-url pattern="/department/list" access="hasRole('ROLE_USER')" method="GET" />
+ 		<sec:intercept-url pattern="/department/{departmentId}" access="hasRole('MODIFY_DEPARTMENT') or hasRole('CREATE_CONSULTATION_HOUR')" />
  		<sec:intercept-url pattern="/department" access="hasRole('MODIFY_DEPARTMENT')" method="POST" />
  		<sec:intercept-url pattern="/consultationHour" access="hasRole('CREATE_CONSULTATION_HOUR')" method="POST" />
  		

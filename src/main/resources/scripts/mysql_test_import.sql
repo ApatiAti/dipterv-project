@@ -174,7 +174,6 @@ insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from roleg
 -- ==[adminisztrátor jogosultágainak létrehozása ]==--
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_USER'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR'));
-insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_VIEW_CONSULTATION_HOUR_APPOINTMENTS'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_CREATE_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_CONSULTATION_HOUR'));
 insert into role_to_rolegroup (idRoleGroup, idRole) values((select id from rolegroup where code = 'ADMIN'), (select id from role where code = 'ROLE_MODIFY_PERSONAL_DATA'));

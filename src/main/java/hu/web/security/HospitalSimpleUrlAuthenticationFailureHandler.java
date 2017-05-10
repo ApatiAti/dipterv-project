@@ -27,7 +27,7 @@ public class HospitalSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuth
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		
-		if (authenticationHelper.isRequestToAPI(request)){
+		if (authenticationHelper.isRequestToAPI(request) || authenticationHelper.isRequestIsApiLogin(request)){
 			logger.debug("APi hívás, nincs redirect csak 401 Unauthorized error");
 
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
