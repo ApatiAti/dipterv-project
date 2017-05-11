@@ -12,8 +12,8 @@ public class TestDbConstans {
 	 * ConsultationHour azonosítók
 	 */
 	public static final long CONSULTATION_HOUR_ID_0 = 10000;
-	public static final long CONSULTATION_HOUR_ID_1 = 10001;
 	/** Lejárt dátumú */
+	public static final long CONSULTATION_HOUR_ID_1_EXPIRED = 10001;
 	public static final long CONSULTATION_HOUR_ID_2 = 10002;
 	
 	

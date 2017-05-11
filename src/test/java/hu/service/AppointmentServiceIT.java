@@ -36,7 +36,7 @@ public class AppointmentServiceIT {
 	
 	@Test
 	public void buildNewAppointmentSuccess() throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException{
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
 		String patientUsername = TestDbConstans.PATIENT_1_USERNAME;
 		
 		Appointment appointment = appointmentService.buildNewAppointment(consultationHourId, patientUsername);
@@ -47,7 +47,7 @@ public class AppointmentServiceIT {
 	
 	@Test(expected = UserNotFoundException.class)
 	public void buildNewAppointmentNoUser() throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException{
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
 		String patientUsername = TestDbConstans.NOT_EXISTING_PATIENT_USERNAME;
 		
 		appointmentService.buildNewAppointment(consultationHourId, patientUsername);
@@ -71,7 +71,7 @@ public class AppointmentServiceIT {
 
 	@Test(expected = BasicServiceException.class)
 	public void buildNewAppointmentWrongDate() throws ConsultationHourNotFound, UserNotFoundException, AlreadyHaveAppointmentException, BasicServiceException{
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1_EXPIRED;
 		String patientUsername = TestDbConstans.PATIENT_1_USERNAME;
 		
 		appointmentService.buildNewAppointment(consultationHourId, patientUsername);
@@ -80,7 +80,7 @@ public class AppointmentServiceIT {
 	@Test
 	public void saveAppointmentSuccess() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.PATIENT_2_USERNAME;
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
 		
 		String complaints = TestDbConstans.APPOINTMENT_NEW_COMPLAINT;
 		
@@ -122,7 +122,7 @@ public class AppointmentServiceIT {
 	@Test(expected = UserNotFoundException.class)
 	public void saveAppointmentNoUser() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.NOT_EXISTING_PATIENT_USERNAME;
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
 		
 		String complaints = TestDbConstans.APPOINTMENT_NEW_COMPLAINT;
 		
@@ -137,7 +137,7 @@ public class AppointmentServiceIT {
 	@Test(expected = BasicServiceException.class)
 	public void saveAppointmentWrongDate() throws ConsultationHourNotFound, UserNotFoundException, BasicServiceException, AlreadyHaveAppointmentException {
 		String patientUsername = TestDbConstans.PATIENT_2_USERNAME;
-		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_2;
+		Long consultationHourId = TestDbConstans.CONSULTATION_HOUR_ID_1_EXPIRED;
 		
 		String complaints = TestDbConstans.APPOINTMENT_NEW_COMPLAINT;
 		
