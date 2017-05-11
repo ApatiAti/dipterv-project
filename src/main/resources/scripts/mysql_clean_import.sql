@@ -35,6 +35,7 @@ SET @departmentId1 = 10000;
 SET @departmentId2 = 10001;
 SET @consultationHourId1 = 10000;
 SET @consultationHourId2 = 10001;
+SET @consultationHourId3 = 10002;
 
 SET @consultationHour_type_name1 ='Szem műtét';
 SET @consultationHour_type_name2 ='Látás vizsgálat';
@@ -112,8 +113,10 @@ insert into documenttype_to_consultationhourtype(consultationHourTypeId, documen
 
 
 -- ==[ Fogadó órák insertje ]==--
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from users where username = @doctor1));
-insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2), (select id from users where username = @doctor2));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId1, STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-01 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41' , @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from users where username = @doctor1));
+insert into consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId2, STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-05-10 16:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'RD41' , @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name4 and departmentId = @departmentId2), (select id from users where username = @doctor2));
+INSERT INTO consultationhour(id, beginDate, endDate, maxNumberOfPatient, room, departmentId, consultationhour_tpyeid, doctorId) values ( @consultationHourId3, STR_TO_DATE('2017-06-09 16:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2017-06-09 17:00:00', '%Y-%m-%d %H:%i:%s'), 7, 'IB025', @departmentId1, (select id from consultationhour_type where name = @consultationHour_type_name1 and departmentId = @departmentId1), (select id from users where username = @doctor1));
+
 
 -- ==[ Időpont foglalások]
 insert into appointment(complaints, consultationHourId, patientId) values ('Fáj a szemem', @consultationHourId1, (select id from users where username = @patient1));
